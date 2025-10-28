@@ -1,6 +1,6 @@
 {
   "name": "@openlibx402/langgraph",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "LangGraph.js integration for X402 payment protocol",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,7 +29,7 @@
     "url": "https://github.com/openlibx402/openlibx402.git",
     "directory": "packages/typescript/openlibx402-langgraph"
   },
-  "homepage": "https://github.com/openlibx402/openlibx402#readme",
+  "homepage": "https://openlib.xyz",
   "bugs": {
     "url": "https://github.com/openlibx402/openlibx402/issues"
   },
