@@ -458,8 +458,8 @@ A: Yes! Once configured with a wallet, agents can discover, pay for, and use API
 ## Community
 
 - 💬 [Discord](#) - Coming soon
-- 🐦 [Twitter](#) - Coming soon
-- 📧 [Email](#) - x402@openlib.xyz
+- 🐦 [Twitter](https://x.com/openlibx402) - @openlibx402
+- 📧 [Email](mailto:x402@openlib.xyz) - x402@openlib.xyz
 
 ## License
 
