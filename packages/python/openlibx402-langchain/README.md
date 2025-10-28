@@ -230,7 +230,7 @@ print("Fund this wallet with SOL and USDC on devnet!")
 ## Documentation
 
 For complete API reference and guides, see:
-- [Documentation](https://docs.openlibx402.org)
+- [Documentation](https://openlibx402.github.io/docs)
 - [GitHub Repository](https://github.com/openlibx402/openlibx402)
 - [Full Example](https://github.com/openlibx402/openlibx402/tree/main/examples/python/langchain-agent)
 

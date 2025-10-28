@@ -1562,7 +1562,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "openlibx402-core"
-version = "0.1.0"
+version = "0.1.1"
 description = "Core implementation of X402 payment protocol"
 authors = [
     {name = "OpenLibx402 Contributors", email = "hello@openlibx402.org"},
@@ -1586,8 +1586,8 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/openlibx402/openlibx402"
-Documentation = "https://docs.openlibx402.org"
+Homepage = "https://openlib.xyz"
+Documentation = "https://openlibx402.github.io/docs"
 Repository = "https://github.com/openlibx402/openlibx402"
 ```
 
