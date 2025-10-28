@@ -1,6 +1,6 @@
 ## Documentation Workspace
 
-This directory hosts the MkDocs project for the OpenLibX402 documentation portal.
+This directory hosts the MkDocs project for the OpenLibx402 documentation portal.
 
 ### Quick commands
 

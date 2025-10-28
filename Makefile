@@ -1,11 +1,11 @@
-# OpenLibX402 TypeScript Monorepo Makefile
+# OpenLibx402 TypeScript Monorepo Makefile
 # Similar to Python's uv-based Makefile
 
 .PHONY: help install install-typescript install-python build test clean dev example-express example-langchain example-langgraph example-python-fastapi example-python-langchain example-python-langgraph
 
 # Default target
 help:
-	@echo "OpenLibX402 TypeScript Monorepo Commands"
+	@echo "OpenLibx402 TypeScript Monorepo Commands"
 	@echo "======================================"
 	@echo ""
 	@echo "Setup:"

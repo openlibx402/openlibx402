@@ -7,7 +7,7 @@ name = "openlibx402-client"
 version = "0.1.0"
 description = "HTTP client library for X402 payment protocol with automatic payment handling"
 authors = [
-    {name = "OpenLibX402 Contributors", email = "hello@openlibx402.org"},
+    {name = "OpenLibx402 Contributors", email = "hello@openlibx402.org"},
 ]
 readme = "README.md"
 license = {text = "MIT"}

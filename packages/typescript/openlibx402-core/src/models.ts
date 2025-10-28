@@ -1,10 +1,10 @@
 /**
- * OpenLibX402 Payment Models
+ * OpenLibx402 Payment Models
  *
  * Defines core data structures for X402 payment protocol.
  */
 
-import { InvalidPaymentRequestError } from './errors';
+import { InvalidPaymentRequestError } from "./errors";
 
 export interface PaymentRequestData {
   max_amount_required: string;
@@ -37,9 +37,10 @@ export class PaymentRequest {
     this.assetAddress = data.asset_address;
     this.paymentAddress = data.payment_address;
     this.network = data.network;
-    this.expiresAt = typeof data.expires_at === 'string'
-      ? new Date(data.expires_at)
-      : data.expires_at;
+    this.expiresAt =
+      typeof data.expires_at === "string"
+        ? new Date(data.expires_at)
+        : data.expires_at;
     this.nonce = data.nonce;
     this.paymentId = data.payment_id;
     this.resource = data.resource;
@@ -64,10 +65,10 @@ export class PaymentRequest {
   static fromDict(data: any): PaymentRequest {
     try {
       // Parse datetime from ISO format
-      if (typeof data.expires_at === 'string') {
+      if (typeof data.expires_at === "string") {
         data.expires_at = new Date(data.expires_at);
       } else if (!(data.expires_at instanceof Date)) {
-        throw new Error('expires_at must be a Date or ISO format string');
+        throw new Error("expires_at must be a Date or ISO format string");
       }
 
       return new PaymentRequest(data);
@@ -117,9 +118,10 @@ export class PaymentAuthorization {
     this.paymentAddress = data.payment_address;
     this.assetAddress = data.asset_address;
     this.network = data.network;
-    this.timestamp = typeof data.timestamp === 'string'
-      ? new Date(data.timestamp)
-      : data.timestamp;
+    this.timestamp =
+      typeof data.timestamp === "string"
+        ? new Date(data.timestamp)
+        : data.timestamp;
     this.signature = data.signature;
     this.publicKey = data.public_key;
     this.transactionHash = data.transaction_hash;
@@ -140,18 +142,18 @@ export class PaymentAuthorization {
 
     // Encode as base64 JSON for header
     const jsonStr = JSON.stringify(data);
-    const encoded = Buffer.from(jsonStr).toString('base64');
+    const encoded = Buffer.from(jsonStr).toString("base64");
     return encoded;
   }
 
   static fromHeader(headerValue: string): PaymentAuthorization {
     try {
       // Decode base64
-      const decoded = Buffer.from(headerValue, 'base64').toString('utf-8');
+      const decoded = Buffer.from(headerValue, "base64").toString("utf-8");
       const data = JSON.parse(decoded);
 
       // Parse datetime
-      if (typeof data.timestamp === 'string') {
+      if (typeof data.timestamp === "string") {
         data.timestamp = new Date(data.timestamp);
       }
 

@@ -1,4 +1,4 @@
-# OpenLibX402 Examples
+# OpenLibx402 Examples
 
 This directory contains example applications demonstrating the X402 payment protocol in both Python and TypeScript.
 

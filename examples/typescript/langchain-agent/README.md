@@ -151,6 +151,6 @@ The example automatically creates a wallet file (`wallet.json`) on first run:
 
 ## Learn More
 
-- [OpenLibX402 Documentation](../../../README.md)
+- [OpenLibx402 Documentation](../../../README.md)
 - [LangChain.js Documentation](https://js.langchain.com)
 - [X402 Protocol Specification](https://www.x402.org)

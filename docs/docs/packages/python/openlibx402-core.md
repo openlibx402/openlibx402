@@ -1,4 +1,4 @@
-# OpenLibX402 Core
+# OpenLibx402 Core
 
 Core implementation of the X402 payment protocol for autonomous AI agent payments.
 

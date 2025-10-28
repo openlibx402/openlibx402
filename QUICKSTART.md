@@ -1,6 +1,6 @@
-# OpenLibX402 Quick Start Guide
+# OpenLibx402 Quick Start Guide
 
-Get up and running with OpenLibX402 in 5 minutes!
+Get up and running with OpenLibx402 in 5 minutes!
 
 ## Prerequisites
 
@@ -297,4 +297,4 @@ Need help?
 
 ---
 
-**You're ready to build with OpenLibX402! 🚀**
+**You're ready to build with OpenLibx402! 🚀**

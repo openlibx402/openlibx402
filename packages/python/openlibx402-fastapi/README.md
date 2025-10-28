@@ -1,6 +1,6 @@
 # openlibx402-fastapi
 
-FastAPI server implementation for OpenLibX402 protocol in Python.
+FastAPI server implementation for OpenLibx402 protocol in Python.
 
 ## Features
 

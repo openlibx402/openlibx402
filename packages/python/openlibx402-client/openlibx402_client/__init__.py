@@ -1,5 +1,5 @@
 """
-OpenLibX402 Client Package
+OpenLibx402 Client Package
 
 HTTP client libraries for making X402-enabled API calls with automatic payment handling.
 """

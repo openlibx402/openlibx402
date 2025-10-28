@@ -1,8 +1,8 @@
-# OpenLibX402 Technical Specification
+# OpenLibx402 Technical Specification
 
 ## Project Overview
 
-OpenLibX402 is a library ecosystem that implements the X402 protocol for enabling autonomous, frictionless payments in AI agents and web APIs. The protocol leverages HTTP 402 "Payment Required" status code and Solana blockchain for instant, low-cost transactions.
+OpenLibx402 is a library ecosystem that implements the X402 protocol for enabling autonomous, frictionless payments in AI agents and web APIs. The protocol leverages HTTP 402 "Payment Required" status code and Solana blockchain for instant, low-cost transactions.
 
 ## Core Principles
 
@@ -1565,7 +1565,7 @@ name = "openlibx402-core"
 version = "0.1.0"
 description = "Core implementation of X402 payment protocol"
 authors = [
-    {name = "OpenLibX402 Contributors", email = "hello@openlibx402.org"},
+    {name = "OpenLibx402 Contributors", email = "hello@openlibx402.org"},
 ]
 readme = "README.md"
 license = {text = "MIT"}
@@ -1608,7 +1608,7 @@ Repository = "https://github.com/openlibx402/openlibx402"
     "lint": "eslint src/**/*.ts"
   },
   "keywords": ["x402", "payments", "solana", "ai-agents", "web3"],
-  "author": "OpenLibX402 Contributors",
+  "author": "OpenLibx402 Contributors",
   "license": "MIT",
   "dependencies": {
     "@solana/web3.js": "^1.87.0",
@@ -1772,4 +1772,4 @@ logger.error(
 
 ## End of Technical Specification
 
-This specification provides a comprehensive blueprint for implementing the OpenLibX402 library ecosystem. The architecture is modular, allowing for incremental development and easy addition of new framework integrations.
+This specification provides a comprehensive blueprint for implementing the OpenLibx402 library ecosystem. The architecture is modular, allowing for incremental development and easy addition of new framework integrations.

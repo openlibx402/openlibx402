@@ -1,6 +1,7 @@
 """
-Tests for OpenLibX402 testing utilities
+Tests for OpenLibx402 testing utilities
 """
+
 import pytest
 from openlibx402_core.testing import (
     MockSolanaPaymentProcessor,
@@ -65,10 +66,7 @@ class TestMockServer:
         """Test creating payment request"""
         server = MockPaymentServer("payment_addr", "token_mint")
 
-        request = server.create_payment_request(
-            amount="0.10",
-            resource="/api/data"
-        )
+        request = server.create_payment_request(amount="0.10", resource="/api/data")
 
         assert request.max_amount_required == "0.10"
         assert request.payment_address == "payment_addr"

@@ -1,6 +1,6 @@
-# OpenLibX402 Setup Guide
+# OpenLibx402 Setup Guide
 
-Complete setup guide for OpenLibX402 - HTTP 402 Payment Protocol for AI Agents.
+Complete setup guide for OpenLibx402 - HTTP 402 Payment Protocol for AI Agents.
 
 This project contains implementations in both **Python** and **TypeScript/Node.js**, each organized as a monorepo.
 

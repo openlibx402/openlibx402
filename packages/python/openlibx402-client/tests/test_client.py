@@ -1,6 +1,7 @@
 """
-Tests for OpenLibX402 client
+Tests for OpenLibx402 client
 """
+
 import pytest
 from unittest.mock import Mock, AsyncMock, patch
 from openlibx402_client.explicit_client import X402Client

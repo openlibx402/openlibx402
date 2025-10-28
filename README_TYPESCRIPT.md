@@ -1,10 +1,10 @@
-# OpenLibX402 - TypeScript/Node.js Implementation
+# OpenLibx402 - TypeScript/Node.js Implementation
 
 Complete TypeScript/Node.js implementation of the X402 payment protocol for autonomous AI agent payments.
 
 ## Overview
 
-OpenLibX402 brings HTTP 402 "Payment Required" to life using Solana blockchain for micropayments. This TypeScript implementation provides the same functionality as the Python version, with full support for Express.js, LangChain.js, and LangGraph.js.
+OpenLibx402 brings HTTP 402 "Payment Required" to life using Solana blockchain for micropayments. This TypeScript implementation provides the same functionality as the Python version, with full support for Express.js, LangChain.js, and LangGraph.js.
 
 ## 🎯 Key Features
 

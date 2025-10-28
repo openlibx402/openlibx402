@@ -1,10 +1,10 @@
 /**
- * OpenLibX402 LangGraph Package
+ * OpenLibx402 LangGraph Package
  *
  * LangGraph.js integration for X402 payment protocol.
  */
 
-export const VERSION = '0.1.0';
+export const VERSION = "0.1.0";
 
 // Payment nodes
 export {
@@ -12,9 +12,9 @@ export {
   fetchWithPaymentNode,
   checkPaymentRequired,
   checkPaymentCompleted,
-} from './nodes';
+} from "./nodes";
 
-export type { PaymentState } from './nodes';
+export type { PaymentState } from "./nodes";
 
 // Re-export client for convenience
-export { X402AutoClient } from '@openlibx402/client';
+export { X402AutoClient } from "@openlibx402/client";

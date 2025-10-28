@@ -1,5 +1,5 @@
 /**
- * Configuration Management for OpenLibX402 Express
+ * Configuration Management for OpenLibx402 Express
  *
  * Global configuration and settings management.
  */
@@ -26,11 +26,12 @@ export class X402Config {
   constructor(options: X402ConfigOptions) {
     this.paymentAddress = options.paymentAddress;
     this.tokenMint = options.tokenMint;
-    this.network = options.network || 'solana-devnet';
+    this.network = options.network || "solana-devnet";
     this.rpcUrl = options.rpcUrl;
-    this.defaultAmount = options.defaultAmount || '0.01';
+    this.defaultAmount = options.defaultAmount || "0.01";
     this.paymentTimeout = options.paymentTimeout || 300;
-    this.autoVerify = options.autoVerify !== undefined ? options.autoVerify : true;
+    this.autoVerify =
+      options.autoVerify !== undefined ? options.autoVerify : true;
   }
 
   getRpcUrl(): string {
@@ -40,11 +41,11 @@ export class X402Config {
 
     // Default URLs by network
     const urls: Record<string, string> = {
-      'solana-mainnet': 'https://api.mainnet-beta.solana.com',
-      'solana-devnet': 'https://api.devnet.solana.com',
-      'solana-testnet': 'https://api.testnet.solana.com',
+      "solana-mainnet": "https://api.mainnet-beta.solana.com",
+      "solana-devnet": "https://api.devnet.solana.com",
+      "solana-testnet": "https://api.testnet.solana.com",
     };
-    return urls[this.network] || 'https://api.devnet.solana.com';
+    return urls[this.network] || "https://api.devnet.solana.com";
   }
 }
 
@@ -57,7 +58,7 @@ export function initX402(config: X402Config): void {
 
 export function getConfig(): X402Config {
   if (_config === null) {
-    throw new Error('X402 not initialized. Call initX402() first.');
+    throw new Error("X402 not initialized. Call initX402() first.");
   }
   return _config;
 }

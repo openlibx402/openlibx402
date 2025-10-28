@@ -1,6 +1,7 @@
 """
-Tests for OpenLibX402 core models
+Tests for OpenLibx402 core models
 """
+
 import pytest
 from datetime import datetime, timedelta, timezone
 
@@ -23,7 +24,7 @@ class TestPaymentRequest:
             nonce="test_nonce",
             payment_id="test_payment_id",
             resource="/api/data",
-            description="Test payment"
+            description="Test payment",
         )
 
         assert request.max_amount_required == "0.10"

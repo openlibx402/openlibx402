@@ -222,7 +222,7 @@ while (attempts < 3 && !state.payment_completed) {
 
 ## Learn More
 
-- [OpenLibX402 Documentation](../../../README.md)
+- [OpenLibx402 Documentation](../../../README.md)
 - [LangGraph.js Documentation](https://langchain-ai.github.io/langgraphjs/)
 - [X402 Protocol Specification](https://www.x402.org)
 - [State Management in LangGraph](https://langchain-ai.github.io/langgraphjs/concepts/state/)

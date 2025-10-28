@@ -1,8 +1,9 @@
 """
-OpenLibX402 Error Classes
+OpenLibx402 Error Classes
 
 Defines all exception types for the X402 payment protocol.
 """
+
 from typing import Optional, Dict, Any
 
 
@@ -10,10 +11,7 @@ class X402Error(Exception):
     """Base exception for X402 protocol errors"""
 
     def __init__(
-        self,
-        message: str,
-        code: str,
-        details: Optional[Dict[str, Any]] = None
+        self, message: str, code: str, details: Optional[Dict[str, Any]] = None
     ):
         self.message = message
         self.code = code
@@ -32,7 +30,7 @@ class PaymentRequiredError(X402Error):
         super().__init__(
             message or "Payment is required to access this resource",
             "PAYMENT_REQUIRED",
-            {"payment_request": payment_request}
+            {"payment_request": payment_request},
         )
 
 
@@ -44,7 +42,7 @@ class PaymentExpiredError(X402Error):
         super().__init__(
             message or "Payment request has expired",
             "PAYMENT_EXPIRED",
-            {"payment_request": payment_request}
+            {"payment_request": payment_request},
         )
 
 
@@ -57,10 +55,7 @@ class InsufficientFundsError(X402Error):
         super().__init__(
             f"Insufficient funds: need {required_amount}, have {available_amount}",
             "INSUFFICIENT_FUNDS",
-            {
-                "required_amount": required_amount,
-                "available_amount": available_amount
-            }
+            {"required_amount": required_amount, "available_amount": available_amount},
         )
 
 
@@ -71,7 +66,7 @@ class PaymentVerificationError(X402Error):
         super().__init__(
             f"Payment verification failed: {reason}",
             "PAYMENT_VERIFICATION_FAILED",
-            {"reason": reason}
+            {"reason": reason},
         )
 
 
@@ -82,7 +77,7 @@ class TransactionBroadcastError(X402Error):
         super().__init__(
             f"Failed to broadcast transaction: {reason}",
             "TRANSACTION_BROADCAST_FAILED",
-            {"reason": reason}
+            {"reason": reason},
         )
 
 
@@ -93,7 +88,7 @@ class InvalidPaymentRequestError(X402Error):
         super().__init__(
             f"Invalid payment request: {reason}",
             "INVALID_PAYMENT_REQUEST",
-            {"reason": reason}
+            {"reason": reason},
         )
 
 
@@ -103,36 +98,36 @@ ERROR_CODES = {
         "code": "PAYMENT_REQUIRED",
         "message": "Payment is required to access this resource",
         "retry": True,
-        "user_action": "Ensure wallet has sufficient funds and retry"
+        "user_action": "Ensure wallet has sufficient funds and retry",
     },
     "PAYMENT_EXPIRED": {
         "code": "PAYMENT_EXPIRED",
         "message": "Payment request has expired",
         "retry": True,
-        "user_action": "Request a new payment authorization"
+        "user_action": "Request a new payment authorization",
     },
     "INSUFFICIENT_FUNDS": {
         "code": "INSUFFICIENT_FUNDS",
         "message": "Wallet has insufficient token balance",
         "retry": False,
-        "user_action": "Add funds to wallet"
+        "user_action": "Add funds to wallet",
     },
     "PAYMENT_VERIFICATION_FAILED": {
         "code": "PAYMENT_VERIFICATION_FAILED",
         "message": "Server could not verify payment",
         "retry": True,
-        "user_action": "Contact API provider if issue persists"
+        "user_action": "Contact API provider if issue persists",
     },
     "TRANSACTION_BROADCAST_FAILED": {
         "code": "TRANSACTION_BROADCAST_FAILED",
         "message": "Failed to broadcast transaction to blockchain",
         "retry": True,
-        "user_action": "Check network connection and RPC endpoint"
+        "user_action": "Check network connection and RPC endpoint",
     },
     "INVALID_PAYMENT_REQUEST": {
         "code": "INVALID_PAYMENT_REQUEST",
         "message": "Payment request format is invalid",
         "retry": False,
-        "user_action": "Contact API provider"
+        "user_action": "Contact API provider",
     },
 }

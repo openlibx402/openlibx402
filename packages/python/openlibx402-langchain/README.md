@@ -1,6 +1,6 @@
 # openlibx402-langchain
 
-LangChain integration for OpenLibX402 protocol in Python.
+LangChain integration for OpenLibx402 protocol in Python.
 
 ## Features
 

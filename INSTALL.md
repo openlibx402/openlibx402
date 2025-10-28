@@ -1,6 +1,6 @@
 # Installation Guide
 
-Complete installation guide for OpenLibX402.
+Complete installation guide for OpenLibx402.
 
 ## Prerequisites
 

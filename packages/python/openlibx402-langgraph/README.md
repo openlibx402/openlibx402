@@ -1,6 +1,6 @@
 # openlibx402-langgraph
 
-LangGraph integration for OpenLibX402 protocol in Python.
+LangGraph integration for OpenLibx402 protocol in Python.
 
 ## Features
 

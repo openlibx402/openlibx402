@@ -7,7 +7,11 @@ pay for API access using the X402 protocol.
 
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
-from openlibx402_langchain import X402PaymentTool, X402RequestsWrapper, create_x402_agent
+from openlibx402_langchain import (
+    X402PaymentTool,
+    X402RequestsWrapper,
+    create_x402_agent,
+)
 from solders.keypair import Keypair
 import json
 import os
@@ -195,7 +199,7 @@ def example_3_multi_api():
 def main():
     """Run all examples"""
     print("\n" + "=" * 70)
-    print("🚀 OpenLibX402 LangChain Agent Examples")
+    print("🚀 OpenLibx402 LangChain Agent Examples")
     print("=" * 70)
     print("\nThese examples demonstrate how AI agents can autonomously")
     print("pay for API access using the X402 payment protocol.")

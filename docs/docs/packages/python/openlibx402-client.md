@@ -1,4 +1,4 @@
-# OpenLibX402 Client
+# OpenLibx402 Client
 
 HTTP client library for making X402-enabled API calls with automatic payment handling.
 

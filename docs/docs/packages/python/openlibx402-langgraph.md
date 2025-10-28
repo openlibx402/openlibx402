@@ -1,4 +1,4 @@
-# OpenLibX402 LangGraph
+# OpenLibx402 LangGraph
 
 LangGraph integration for X402 payment protocol.
 

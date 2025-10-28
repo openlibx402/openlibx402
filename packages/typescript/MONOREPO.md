@@ -1,6 +1,6 @@
 # TypeScript Monorepo Setup
 
-This directory contains all TypeScript/Node.js packages for OpenLibX402, organized as a **pnpm workspace monorepo** (similar to the Python packages using `uv`).
+This directory contains all TypeScript/Node.js packages for OpenLibx402, organized as a **pnpm workspace monorepo** (similar to the Python packages using `uv`).
 
 ## 📦 Monorepo Structure
 

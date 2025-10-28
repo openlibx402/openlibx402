@@ -1,6 +1,6 @@
-# Contributing to OpenLibX402
+# Contributing to OpenLibx402
 
-Thank you for your interest in contributing to OpenLibX402! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to OpenLibx402! This document provides guidelines and instructions for contributing.
 
 ## Code of Conduct
 
@@ -224,4 +224,4 @@ Add payment verification for FastAPI endpoints
 - Search [existing issues](https://github.com/openlibx402/openlibx402/issues)
 - Ask in discussions or open a new issue
 
-Thank you for contributing to OpenLibX402! 🚀
+Thank you for contributing to OpenLibx402! 🚀

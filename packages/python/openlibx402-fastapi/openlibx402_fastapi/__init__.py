@@ -1,5 +1,5 @@
 """
-OpenLibX402 FastAPI Package
+OpenLibx402 FastAPI Package
 
 FastAPI middleware and decorators for X402 payment protocol.
 """

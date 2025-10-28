@@ -1,10 +1,10 @@
 # openlibx402-client (TypeScript)
 
-TypeScript client for OpenLibX402 protocol and APIs.
+TypeScript client for OpenLibx402 protocol and APIs.
 
 ## Features
 
-- Easy integration with OpenLibX402 services
+- Easy integration with OpenLibx402 services
 - Authentication and wallet management
 - Request/response handling
 

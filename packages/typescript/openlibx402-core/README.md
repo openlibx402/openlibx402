@@ -1,6 +1,6 @@
 # openlibx402-core (TypeScript)
 
-Core TypeScript implementation of OpenLibX402 protocol logic and utilities.
+Core TypeScript implementation of OpenLibx402 protocol logic and utilities.
 
 ## Features
 

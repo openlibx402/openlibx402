@@ -279,7 +279,7 @@ async function main() {
    * Run all examples
    */
   console.log("\n" + "=".repeat(70));
-  console.log("🚀 OpenLibX402 LangGraph.js Payment Node Examples");
+  console.log("🚀 OpenLibx402 LangGraph.js Payment Node Examples");
   console.log("=".repeat(70));
   console.log("\nThese examples demonstrate how to use payment nodes from");
   console.log("@openlibx402/langgraph for accessing paid APIs.");

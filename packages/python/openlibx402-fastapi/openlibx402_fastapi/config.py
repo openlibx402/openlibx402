@@ -1,8 +1,9 @@
 """
-Configuration Management for OpenLibX402 FastAPI
+Configuration Management for OpenLibx402 FastAPI
 
 Global configuration and settings management.
 """
+
 from typing import Optional
 from pydantic import BaseModel
 

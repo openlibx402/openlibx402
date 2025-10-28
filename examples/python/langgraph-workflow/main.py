@@ -4,6 +4,7 @@ Example LangGraph Workflow with X402 Payment Support
 This example demonstrates how to build workflows that include payment nodes
 for accessing paid APIs.
 """
+
 from typing import TypedDict, Optional
 from langgraph.graph import StateGraph, END
 from openlibx402_langgraph import (
@@ -54,9 +55,9 @@ def example_1_simple_workflow():
 
     This is the easiest way to create a payment-enabled workflow.
     """
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("📝 Example 1: Simple Payment Workflow")
-    print("="*60)
+    print("=" * 60)
 
     # Load wallet
     keypair = load_wallet_keypair()
@@ -65,7 +66,7 @@ def example_1_simple_workflow():
     workflow = create_simple_payment_workflow(
         wallet_keypair=keypair,
         api_url="http://localhost:8000/premium-data",
-        max_payment="1.0"
+        max_payment="1.0",
     )
 
     print("\n🔄 Running workflow...")
@@ -73,9 +74,9 @@ def example_1_simple_workflow():
         result = workflow()
         print(f"\n✅ Workflow completed!")
         print(f"   Payment completed: {result.get('payment_completed', False)}")
-        if result.get('payment_error'):
+        if result.get("payment_error"):
             print(f"   Payment error: {result.get('payment_error')}")
-        if result.get('api_response'):
+        if result.get("api_response"):
             print(f"   Response: {result.get('api_response', '')[:100]}...")
         else:
             print(f"   Response: No response received")
@@ -89,9 +90,9 @@ def example_2_custom_workflow():
 
     This shows how to build a workflow with explicit payment handling.
     """
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("📝 Example 2: Custom Workflow with Separate Nodes")
-    print("="*60)
+    print("=" * 60)
 
     # Define state
     class ResearchState(TypedDict):
@@ -176,11 +177,7 @@ def example_2_custom_workflow():
     workflow.add_conditional_edges(
         "fetch",
         check_payment_required,
-        {
-            "payment_required": "payment",
-            "success": "process",
-            "error": END
-        }
+        {"payment_required": "payment", "success": "process", "error": END},
     )
 
     workflow.add_edge("payment", "process")  # Process response after payment
@@ -191,17 +188,19 @@ def example_2_custom_workflow():
     # Run workflow
     print("\n🔄 Running workflow...")
     try:
-        result = app.invoke({
-            "api_url": "http://localhost:8000/premium-data",
-            "wallet_keypair": keypair,
-            "payment_required": False,
-            "payment_completed": False,
-        })
+        result = app.invoke(
+            {
+                "api_url": "http://localhost:8000/premium-data",
+                "wallet_keypair": keypair,
+                "payment_required": False,
+                "payment_completed": False,
+            }
+        )
 
         print(f"\n✅ Workflow completed!")
         print(f"   Summary: {result.get('summary')}")
         print(f"   Payment completed: {result.get('payment_completed', False)}")
-        if result.get('payment_error'):
+        if result.get("payment_error"):
             print(f"   Payment error: {result.get('payment_error')}")
     except Exception as e:
         print(f"\n❌ Error: {e}")
@@ -213,9 +212,9 @@ def example_3_multi_step_workflow():
 
     This demonstrates a workflow that accesses multiple paid APIs.
     """
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("📝 Example 3: Multi-Step Research Workflow")
-    print("="*60)
+    print("=" * 60)
 
     # Define state
     class MultiStepState(TypedDict):
@@ -256,13 +255,17 @@ def example_3_multi_step_workflow():
 
         # Collect result if available
         if state.get("api_response"):
-            state["results"].append({
-                "api": state["api_url"],
-                "response": state["api_response"][:100] + "..."
-            })
+            state["results"].append(
+                {
+                    "api": state["api_url"],
+                    "response": state["api_response"][:100] + "...",
+                }
+            )
             print(f"   ✅ Collected response from {state['api_url']}")
         elif state.get("payment_error"):
-            print(f"   ⚠️  Failed to get response: {state.get('payment_error', 'Unknown error')}")
+            print(
+                f"   ⚠️  Failed to get response: {state.get('payment_error', 'Unknown error')}"
+            )
 
         # Move to next API
         state["current_api_index"] += 1
@@ -296,12 +299,7 @@ def example_3_multi_step_workflow():
     workflow.add_edge("fetch", "collect")
 
     workflow.add_conditional_edges(
-        "collect",
-        check_more_apis,
-        {
-            "fetch_next": "fetch",
-            "complete": END
-        }
+        "collect", check_more_apis, {"fetch_next": "fetch", "complete": END}
     )
 
     app = workflow.compile()
@@ -309,17 +307,14 @@ def example_3_multi_step_workflow():
     # Run workflow
     print("\n🔄 Running multi-step workflow...")
     try:
-        result = app.invoke({
-            "wallet_keypair": keypair,
-            "max_payment_amount": "5.0"
-        })
+        result = app.invoke({"wallet_keypair": keypair, "max_payment_amount": "5.0"})
 
         print(f"\n✅ Workflow completed!")
-        results = result.get('results', [])
+        results = result.get("results", [])
         print(f"   APIs processed: {len(results)}")
         for i, res in enumerate(results, 1):
             print(f"   {i}. {res['api']}: {len(res.get('response', ''))} chars")
-        if result.get('payment_error'):
+        if result.get("payment_error"):
             print(f"   Final payment error: {result.get('payment_error')}")
     except Exception as e:
         print(f"\n❌ Error: {e}")
@@ -327,9 +322,9 @@ def example_3_multi_step_workflow():
 
 def main():
     """Run all examples"""
-    print("\n" + "="*70)
-    print("🚀 OpenLibX402 LangGraph Workflow Examples")
-    print("="*70)
+    print("\n" + "=" * 70)
+    print("🚀 OpenLibx402 LangGraph Workflow Examples")
+    print("=" * 70)
     print("\nThese examples demonstrate how to build workflows that include")
     print("payment nodes for accessing paid APIs.")
     print("\n⚠️  Prerequisites:")
@@ -338,7 +333,7 @@ def main():
     print("\n💡 Note: If you see payment errors, make sure your wallet is funded:")
     print("   - SOL for transaction fees: solana airdrop 1 <ADDRESS> --url devnet")
     print("   - USDC for payments (you'll need devnet USDC tokens)")
-    print("="*70)
+    print("=" * 70)
 
     # Run examples
     try:
@@ -352,9 +347,9 @@ def main():
     except Exception as e:
         print(f"\n\n❌ Unexpected error: {e}")
 
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("✅ Examples completed!")
-    print("="*70 + "\n")
+    print("=" * 70 + "\n")
 
 
 if __name__ == "__main__":

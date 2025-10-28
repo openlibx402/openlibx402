@@ -1,4 +1,4 @@
-# OpenLibX402: Autonomous Payments for AI Agents
+# OpenLibx402: Autonomous Payments for AI Agents
 
 > Enable AI agents and web APIs to autonomously pay for services using HTTP 402 "Payment Required" and Solana blockchain
 
@@ -7,9 +7,9 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js 18+](https://img.shields.io/badge/node-18+-green.svg)](https://nodejs.org/)
 
-## What is OpenLibX402?
+## What is OpenLibx402?
 
-OpenLibX402 is a library ecosystem that implements the [X402 protocol](https://www.x402.org/x402-whitepaper.pdf) - an open standard for enabling AI agents to autonomously pay for API access using HTTP 402 "Payment Required" status code and blockchain micropayments on Solana.
+OpenLibx402 is a library ecosystem that implements the [X402 protocol](https://www.x402.org/x402-whitepaper.pdf) - an open standard for enabling AI agents to autonomously pay for API access using HTTP 402 "Payment Required" status code and blockchain micropayments on Solana.
 
 ### Key Features
 
@@ -23,7 +23,7 @@ OpenLibX402 is a library ecosystem that implements the [X402 protocol](https://w
 
 ## Available in Python & TypeScript
 
-OpenLibX402 is available in both **Python** and **TypeScript/Node.js**, with full feature parity:
+OpenLibx402 is available in both **Python** and **TypeScript/Node.js**, with full feature parity:
 
 - 🐍 **Python**: FastAPI, LangChain, LangGraph
 - 📦 **TypeScript**: Express.js, LangChain.js, LangGraph.js
@@ -417,7 +417,7 @@ A: Yes! Once configured with a wallet, agents can discover, pay for, and use API
 
 ## License
 
-OpenLibX402 is released under the [MIT License](LICENSE).
+OpenLibx402 is released under the [MIT License](LICENSE).
 
 ## Acknowledgments
 

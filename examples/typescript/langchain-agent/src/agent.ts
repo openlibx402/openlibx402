@@ -185,7 +185,7 @@ async function main() {
    * Run all examples
    */
   console.log("\n" + "=".repeat(70));
-  console.log("🚀 OpenLibX402 LangChain.js Payment Tool Examples");
+  console.log("🚀 OpenLibx402 LangChain.js Payment Tool Examples");
   console.log("=".repeat(70));
   console.log(
     "\nThese examples demonstrate the X402 payment tool for LangChain.js."

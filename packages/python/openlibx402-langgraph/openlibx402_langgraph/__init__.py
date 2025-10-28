@@ -1,5 +1,5 @@
 """
-OpenLibX402 LangGraph Package
+OpenLibx402 LangGraph Package
 
 LangGraph integration for X402 payment protocol.
 """

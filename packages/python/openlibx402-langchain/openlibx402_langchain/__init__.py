@@ -1,5 +1,5 @@
 """
-OpenLibX402 LangChain Package
+OpenLibx402 LangChain Package
 
 LangChain integration for X402 payment protocol.
 """

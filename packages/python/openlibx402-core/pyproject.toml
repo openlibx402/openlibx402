@@ -7,7 +7,7 @@ name = "openlibx402-core"
 version = "0.1.0"
 description = "Core implementation of X402 payment protocol for autonomous AI agent payments"
 authors = [
-    {name = "OpenLibX402 Contributors", email = "hello@openlibx402.org"},
+    {name = "OpenLibx402 Contributors", email = "hello@openlibx402.org"},
 ]
 readme = "README.md"
 license = {text = "MIT"}

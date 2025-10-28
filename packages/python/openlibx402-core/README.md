@@ -1,6 +1,6 @@
 # openlibx402-core (Python)
 
-Core Python implementation of OpenLibX402 protocol logic and utilities.
+Core Python implementation of OpenLibx402 protocol logic and utilities.
 
 ## Features
 

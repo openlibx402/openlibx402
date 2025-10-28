@@ -1,16 +1,16 @@
 /**
- * OpenLibX402 Client Package
+ * OpenLibx402 Client Package
  *
  * TypeScript HTTP client library for X402 payment protocol.
  */
 
-export const VERSION = '0.1.0';
+export const VERSION = "0.1.0";
 
 // Explicit client (manual payment control)
-export { X402Client } from './explicit-client';
+export { X402Client } from "./explicit-client";
 
 // Auto client (automatic payment handling)
-export { X402AutoClient } from './auto-client';
+export { X402AutoClient } from "./auto-client";
 
 // Re-export core types for convenience
 export type {
@@ -18,4 +18,4 @@ export type {
   PaymentAuthorization,
   PaymentRequestData,
   PaymentAuthorizationData,
-} from '@openlibx402/core';
+} from "@openlibx402/core";

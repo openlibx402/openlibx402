@@ -2,7 +2,7 @@
   "name": "openlibx402",
   "version": "0.1.0",
   "private": true,
-  "description": "OpenLibX402 - HTTP 402 Payment Protocol for AI Agents",
+  "description": "OpenLibx402 - HTTP 402 Payment Protocol for AI Agents",
   "workspaces": [
     "packages/typescript/*",
     "examples/typescript/*"

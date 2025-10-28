@@ -1,8 +1,9 @@
 """
-OpenLibX402 Payment Models
+OpenLibx402 Payment Models
 
 Defines core data structures for X402 payment protocol.
 """
+
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from typing import Optional
@@ -31,19 +32,19 @@ class PaymentRequest:
         """Convert to JSON-serializable dict"""
         data = asdict(self)
         # Convert datetime to ISO format string
-        data['expires_at'] = self.expires_at.isoformat()
+        data["expires_at"] = self.expires_at.isoformat()
         return data
 
     @classmethod
-    def from_dict(cls, data: dict) -> 'PaymentRequest':
+    def from_dict(cls, data: dict) -> "PaymentRequest":
         """Parse from 402 response JSON"""
         try:
             # Parse datetime from ISO format
-            if isinstance(data.get('expires_at'), str):
-                data['expires_at'] = datetime.fromisoformat(
-                    data['expires_at'].replace('Z', '+00:00')
+            if isinstance(data.get("expires_at"), str):
+                data["expires_at"] = datetime.fromisoformat(
+                    data["expires_at"].replace("Z", "+00:00")
                 )
-            elif isinstance(data.get('expires_at'), datetime):
+            elif isinstance(data.get("expires_at"), datetime):
                 pass  # Already a datetime object
             else:
                 raise ValueError("expires_at must be a datetime or ISO format string")
@@ -86,15 +87,15 @@ class PaymentAuthorization:
     def to_header_value(self) -> str:
         """Encode as X-Payment-Authorization header value"""
         data = {
-            'payment_id': self.payment_id,
-            'actual_amount': self.actual_amount,
-            'payment_address': self.payment_address,
-            'asset_address': self.asset_address,
-            'network': self.network,
-            'timestamp': self.timestamp.isoformat(),
-            'signature': self.signature,
-            'public_key': self.public_key,
-            'transaction_hash': self.transaction_hash,
+            "payment_id": self.payment_id,
+            "actual_amount": self.actual_amount,
+            "payment_address": self.payment_address,
+            "asset_address": self.asset_address,
+            "network": self.network,
+            "timestamp": self.timestamp.isoformat(),
+            "signature": self.signature,
+            "public_key": self.public_key,
+            "transaction_hash": self.transaction_hash,
         }
         # Encode as base64 JSON for header
         json_str = json.dumps(data)
@@ -102,7 +103,7 @@ class PaymentAuthorization:
         return encoded
 
     @classmethod
-    def from_header(cls, header_value: str) -> 'PaymentAuthorization':
+    def from_header(cls, header_value: str) -> "PaymentAuthorization":
         """Parse from request header"""
         try:
             # Decode base64
@@ -110,9 +111,9 @@ class PaymentAuthorization:
             data = json.loads(decoded)
 
             # Parse datetime
-            if isinstance(data.get('timestamp'), str):
-                data['timestamp'] = datetime.fromisoformat(
-                    data['timestamp'].replace('Z', '+00:00')
+            if isinstance(data.get("timestamp"), str):
+                data["timestamp"] = datetime.fromisoformat(
+                    data["timestamp"].replace("Z", "+00:00")
                 )
 
             return cls(**data)
@@ -124,7 +125,7 @@ class PaymentAuthorization:
     def to_dict(self) -> dict:
         """Convert to dict"""
         data = asdict(self)
-        data['timestamp'] = self.timestamp.isoformat()
+        data["timestamp"] = self.timestamp.isoformat()
         return data
 
     def to_json(self) -> str:

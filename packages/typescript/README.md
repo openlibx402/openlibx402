@@ -1,4 +1,4 @@
-# OpenLibX402 TypeScript Packages
+# OpenLibx402 TypeScript Packages
 
 TypeScript/JavaScript implementation of the X402 payment protocol for autonomous AI agent payments on Solana blockchain.
 

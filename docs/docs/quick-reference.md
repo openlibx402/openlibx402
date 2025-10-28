@@ -1,4 +1,4 @@
-# OpenLibX402 Quick Reference Guide
+# OpenLibx402 Quick Reference Guide
 
 ## Installation
 

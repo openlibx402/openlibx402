@@ -1,8 +1,9 @@
 """
-Testing Utilities for OpenLibX402
+Testing Utilities for OpenLibx402
 
 Mock implementations for testing without real blockchain transactions.
 """
+
 from typing import List, Optional
 from datetime import datetime, timedelta, timezone
 import secrets
@@ -16,8 +17,8 @@ class MockSolanaPaymentProcessor(SolanaPaymentProcessor):
 
     def __init__(self, *args, **kwargs):
         # Don't call super().__init__ to avoid requiring Solana libraries
-        self.rpc_url = kwargs.get('rpc_url', 'http://mock')
-        self.keypair = kwargs.get('keypair')
+        self.rpc_url = kwargs.get("rpc_url", "http://mock")
+        self.keypair = kwargs.get("keypair")
         self.transactions: List[str] = []
         self.balance = 100.0  # Mock balance in tokens
         self.should_fail = False  # For testing error scenarios
@@ -73,10 +74,7 @@ class MockPaymentServer:
     """Mock X402 payment server for testing"""
 
     def __init__(
-        self,
-        payment_address: str,
-        token_mint: str,
-        network: str = "solana-devnet"
+        self, payment_address: str, token_mint: str, network: str = "solana-devnet"
     ):
         self.payment_address = payment_address
         self.token_mint = token_mint
@@ -89,7 +87,7 @@ class MockPaymentServer:
         amount: str,
         resource: str,
         description: Optional[str] = None,
-        expires_in_seconds: int = 300
+        expires_in_seconds: int = 300,
     ) -> PaymentRequest:
         """Create a payment request"""
         request = PaymentRequest(
@@ -98,7 +96,8 @@ class MockPaymentServer:
             asset_address=self.token_mint,
             payment_address=self.payment_address,
             network=self.network,
-            expires_at=datetime.now(timezone.utc) + timedelta(seconds=expires_in_seconds),
+            expires_at=datetime.now(timezone.utc)
+            + timedelta(seconds=expires_in_seconds),
             nonce=secrets.token_urlsafe(32),
             payment_id=secrets.token_urlsafe(16),
             resource=resource,
@@ -125,7 +124,7 @@ class MockPaymentServer:
                 "X-Payment-Required": "true",
                 "X-Payment-Protocol": "x402",
             },
-            "body": request.to_dict()
+            "body": request.to_dict(),
         }
 
 
@@ -134,7 +133,7 @@ def create_mock_payment_request(
     payment_address: str = "mock_address",
     token_mint: str = "mock_usdc",
     resource: str = "/api/data",
-    expires_in_seconds: int = 300
+    expires_in_seconds: int = 300,
 ) -> PaymentRequest:
     """Helper to create mock payment request"""
     return PaymentRequest(

@@ -226,6 +226,6 @@ const response = await client.get('http://localhost:3000/premium-data');
 
 ## Learn More
 
-- [OpenLibX402 Documentation](../../packages/typescript/README.md)
+- [OpenLibx402 Documentation](../../packages/typescript/README.md)
 - [X402 Protocol Specification](https://github.com/openlibx402/spec)
 - [Solana Web3.js](https://solana-labs.github.io/solana-web3.js/)

@@ -1,4 +1,4 @@
-# OpenLibX402 LangChain
+# OpenLibx402 LangChain
 
 LangChain integration for X402 payment protocol.
 

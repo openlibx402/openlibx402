@@ -1,5 +1,5 @@
 """
-OpenLibX402 Core Package
+OpenLibx402 Core Package
 
 Core implementation of the X402 payment protocol for autonomous AI agent payments.
 """

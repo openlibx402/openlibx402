@@ -1,10 +1,10 @@
 # openlibx402-client (Python)
 
-This package provides the Python client for interacting with the OpenLibX402 protocol and services.
+This package provides the Python client for interacting with the OpenLibx402 protocol and services.
 
 ## Features
 
-- Easy integration with OpenLibX402 APIs
+- Easy integration with OpenLibx402 APIs
 - Authentication and wallet management
 - Request/response handling
 - Utilities for common protocol operations

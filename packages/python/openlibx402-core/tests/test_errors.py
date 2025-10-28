@@ -1,6 +1,7 @@
 """
-Tests for OpenLibX402 error classes
+Tests for OpenLibx402 error classes
 """
+
 import pytest
 from openlibx402_core.errors import (
     X402Error,

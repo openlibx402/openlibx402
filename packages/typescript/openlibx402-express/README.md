@@ -1,6 +1,6 @@
 # openlibx402-express
 
-Express.js server implementation for OpenLibX402 protocol in TypeScript.
+Express.js server implementation for OpenLibx402 protocol in TypeScript.
 
 ## Features
 

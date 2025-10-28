@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-OpenLibX402 Test Runner
+OpenLibx402 Test Runner
 
 Automatically runs all tests across packages and generates a report.
 """
+
 import re
 import subprocess
 import sys
@@ -15,15 +16,16 @@ from typing import Dict, List, Optional
 
 class Colors:
     """ANSI color codes for terminal output"""
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKCYAN = "\033[96m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91m"
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
 
 
 @dataclass
@@ -41,7 +43,7 @@ class PackageTestResult:
 
 
 class TestRunner:
-    """Test runner for OpenLibX402 packages"""
+    """Test runner for OpenLibx402 packages"""
 
     def __init__(self):
         self.root_dir = Path(__file__).parent
@@ -51,9 +53,9 @@ class TestRunner:
 
     def print_header(self, text: str):
         """Print a formatted header"""
-        print(f"\n{Colors.BOLD}{Colors.HEADER}{'='*70}{Colors.ENDC}")
+        print(f"\n{Colors.BOLD}{Colors.HEADER}{'=' * 70}{Colors.ENDC}")
         print(f"{Colors.BOLD}{Colors.HEADER}{text}{Colors.ENDC}")
-        print(f"{Colors.BOLD}{Colors.HEADER}{'='*70}{Colors.ENDC}\n")
+        print(f"{Colors.BOLD}{Colors.HEADER}{'=' * 70}{Colors.ENDC}\n")
 
     def print_success(self, text: str):
         """Print success message"""
@@ -141,16 +143,18 @@ class TestRunner:
                 pieces.append(f"{stats[key]} {key}")
 
         remaining = [
-            f"{count} {label}"
-            for label, count in stats.items()
-            if label not in ordered
+            f"{count} {label}" for label, count in stats.items() if label not in ordered
         ]
         pieces.extend(sorted(remaining))
 
         return ", ".join(pieces)
 
-    def run_package_tests(self, package_name: str, pytest_args: Optional[List[str]] = None,
-                          show_output: bool = False) -> PackageTestResult:
+    def run_package_tests(
+        self,
+        package_name: str,
+        pytest_args: Optional[List[str]] = None,
+        show_output: bool = False,
+    ) -> PackageTestResult:
         """
         Run tests for a specific package
 
@@ -162,23 +166,29 @@ class TestRunner:
 
         if not tests_dir.exists():
             self.print_warning(f"No tests directory found for {package_name}")
-            return PackageTestResult(package=package_name, success=True, summary="no tests directory")
+            return PackageTestResult(
+                package=package_name, success=True, summary="no tests directory"
+            )
 
         print(f"\n{Colors.BOLD}Testing: {package_name}{Colors.ENDC}")
         print(f"Location: {package_dir}")
 
         # Run pytest
         start_time = time.time()
-        pytest_cmd = [sys.executable, "-m", "pytest", str(tests_dir), "-v", "--tb=short"]
+        pytest_cmd = [
+            sys.executable,
+            "-m",
+            "pytest",
+            str(tests_dir),
+            "-v",
+            "--tb=short",
+        ]
         if pytest_args:
             pytest_cmd.extend(pytest_args)
 
         try:
             result = subprocess.run(
-                pytest_cmd,
-                cwd=package_dir,
-                capture_output=True,
-                text=True
+                pytest_cmd, cwd=package_dir, capture_output=True, text=True
             )
             duration = time.time() - start_time
             summary = self.parse_pytest_summary(result.stdout)
@@ -196,9 +206,7 @@ class TestRunner:
                 if show_output and summary.stderr:
                     sys.stderr.write(summary.stderr)
                 stats_text = self.format_stats(summary.stats)
-                self.print_success(
-                    f"{package_name}: {stats_text} in {duration:.2f}s"
-                )
+                self.print_success(f"{package_name}: {stats_text} in {duration:.2f}s")
             else:
                 self.print_error(f"{package_name}: Tests failed")
                 print(summary.stdout)
@@ -209,7 +217,9 @@ class TestRunner:
 
         except Exception as e:
             self.print_error(f"{package_name}: Error running tests - {e}")
-            return PackageTestResult(package=package_name, success=False, summary=str(e))
+            return PackageTestResult(
+                package=package_name, success=False, summary=str(e)
+            )
 
     def run_all_tests(
         self,
@@ -229,9 +239,7 @@ class TestRunner:
             self.print_warning("No packages available to test.")
             return 0
 
-        unknown = [
-            pkg for pkg in packages if pkg not in self.available_packages
-        ]
+        unknown = [pkg for pkg in packages if pkg not in self.available_packages]
         if unknown:
             self.print_warning(f"Skipping unknown package(s): {', '.join(unknown)}")
             packages = [pkg for pkg in packages if pkg not in unknown]
@@ -240,7 +248,7 @@ class TestRunner:
             self.print_warning("No valid packages selected for testing.")
             return 0
 
-        self.print_header("🧪 OpenLibX402 Test Runner")
+        self.print_header("🧪 OpenLibx402 Test Runner")
 
         self.results = []
         total_tests = 0
@@ -274,9 +282,7 @@ class TestRunner:
                 else f"{Colors.FAIL}FAIL{Colors.ENDC}"
             )
             summary_text = (
-                self.format_stats(result.stats)
-                if result.stats
-                else result.summary
+                self.format_stats(result.stats) if result.stats else result.summary
             )
             if not summary_text:
                 summary_text = "-"
@@ -313,7 +319,9 @@ class TestRunner:
                 self.print_error(f"{package} is NOT installed")
 
         if missing:
-            self.print_warning(f"Install missing packages: pip install {' '.join(missing)}")
+            self.print_warning(
+                f"Install missing packages: pip install {' '.join(missing)}"
+            )
             return False
 
         return True
@@ -331,8 +339,16 @@ class TestRunner:
                 print(f"\nInstalling {package}...")
                 try:
                     subprocess.run(
-                        [sys.executable, "-m", "pip", "install", "-e", str(package_dir), "-q"],
-                        check=True
+                        [
+                            sys.executable,
+                            "-m",
+                            "pip",
+                            "install",
+                            "-e",
+                            str(package_dir),
+                            "-q",
+                        ],
+                        check=True,
                     )
                     self.print_success(f"{package} installed")
                 except subprocess.CalledProcessError as e:
@@ -347,41 +363,35 @@ def main():
 
     # Parse command line arguments
     import argparse
-    parser = argparse.ArgumentParser(description="Run OpenLibX402 tests")
+
+    parser = argparse.ArgumentParser(description="Run OpenLibx402 tests")
     parser.add_argument(
         "--package",
         "-p",
         dest="packages",
         action="append",
         help="Limit test run to specific package(s). "
-             "Use multiple times or comma-separated values. Defaults to all.",
+        "Use multiple times or comma-separated values. Defaults to all.",
     )
     parser.add_argument(
-        "--install",
-        "-i",
-        help="Install packages before testing",
-        action="store_true"
+        "--install", "-i", help="Install packages before testing", action="store_true"
     )
     parser.add_argument(
-        "--check-deps",
-        help="Only check dependencies",
-        action="store_true"
+        "--check-deps", help="Only check dependencies", action="store_true"
     )
     parser.add_argument(
-        "--list-packages",
-        help="List discovered packages and exit",
-        action="store_true"
+        "--list-packages", help="List discovered packages and exit", action="store_true"
     )
     parser.add_argument(
         "--show-output",
         help="Display pytest output even when tests pass",
-        action="store_true"
+        action="store_true",
     )
     parser.add_argument(
         "--pytest-args",
         nargs=argparse.REMAINDER,
         help="Additional arguments passed to pytest. "
-             "Use '--pytest-args -- <args>' to forward options."
+        "Use '--pytest-args -- <args>' to forward options.",
     )
 
     args = parser.parse_args()
@@ -399,9 +409,7 @@ def main():
     if args.packages:
         collected: List[str] = []
         for entry in args.packages:
-            collected.extend(
-                part.strip() for part in entry.split(",") if part.strip()
-            )
+            collected.extend(part.strip() for part in entry.split(",") if part.strip())
 
         if collected:
             if any(name.lower() == "all" for name in collected):

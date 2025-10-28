@@ -1,4 +1,4 @@
-# OpenLibX402 FastAPI
+# OpenLibx402 FastAPI
 
 FastAPI middleware and decorators for X402 payment protocol.
 
