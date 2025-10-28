@@ -19,6 +19,7 @@ members = [
     "packages/python/openlibx402-fastapi",
     "packages/python/openlibx402-langchain",
     "packages/python/openlibx402-langgraph",
+    "docs",
 ]
 
 [tool.uv.sources]

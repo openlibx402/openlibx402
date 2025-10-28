@@ -10,7 +10,7 @@ You are building **OpenLibX402**, a library ecosystem that implements the X402 p
 3. Client retries request with payment authorization header
 4. Server verifies payment and returns requested data
 
-**Your Task:** Implement the complete OpenLibX402 library ecosystem as specified in the technical specification document (`openlibx402-technical-spec.md`).
+**Your Task:** Implement the complete OpenLibX402 library ecosystem as specified in the [Technical Specification](openlibx402-technical-spec.md).
 
 ---
 

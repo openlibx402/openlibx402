@@ -1,0 +1,81 @@
+site_name: OpenLibX402 Docs
+site_description: Documentation for the OpenLibX402 autonomous payments ecosystem
+repo_url: https://github.com/openlibx402/openlibx402
+site_dir: site
+use_directory_urls: true
+
+nav:
+  - Overview: index.md
+  - Implementation Guide: implementation-guide.md
+  - Technical Specification: openlibx402-technical-spec.md
+  - Quick Reference: quick-reference.md
+  - Packages:
+      - Python:
+          - Core Library: packages/python/openlibx402-core.md
+          - FastAPI Integration: packages/python/openlibx402-fastapi.md
+          - Client Library: packages/python/openlibx402-client.md
+          - LangChain Integration: packages/python/openlibx402-langchain.md
+          - LangGraph Integration: packages/python/openlibx402-langgraph.md
+      - TypeScript:
+          - Core Library: packages/typescript/openlibx402-core.md
+          - Client SDK: packages/typescript/openlibx402-client.md
+          - Express Middleware: packages/typescript/openlibx402-express.md
+          - LangChain Integration: packages/typescript/openlibx402-langchain.md
+          - LangGraph Integration: packages/typescript/openlibx402-langgraph.md
+  - Examples:
+      - Overview: examples/index.md
+      - Python:
+          - FastAPI Server: examples/python/fastapi-server.md
+          - LangChain Agent: examples/python/langchain-agent.md
+          - LangGraph Workflow: examples/python/langgraph-workflow.md
+      - TypeScript:
+          - Express Server: examples/typescript/express-server.md
+          - LangChain Agent: examples/typescript/langchain-agent.md
+          - LangGraph Workflow: examples/typescript/langgraph-workflow.md
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.top
+    - navigation.tabs
+    - content.code.copy
+    - content.action.edit
+  palette:
+    - scheme: default
+      primary: blue
+      accent: light blue
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            inherited_members: true
+            docstring_style: google
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - footnotes
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+      linenums: true
+      guess_lang: false
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.snippets
+  - pymdownx.details
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - tables
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/openlibx402
