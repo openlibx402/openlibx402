@@ -1,0 +1,62 @@
+name: Release and Publish
+
+on:
+    release:
+        types: [published]
+
+jobs:
+    publish-python:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.9"
+            - name: Install build tools
+              run: |
+                  python -m pip install --upgrade pip
+                  pip install build twine
+            - name: Build Python packages
+              run: |
+                  for pkg in openlibx402-client openlibx402-core openlibx402-fastapi openlibx402-langchain openlibx402-langgraph; do
+                    cd packages/python/$pkg
+                    python -m build
+                    cd ../../../
+                  done
+            - name: Publish Python packages to PyPI
+              env:
+                  TWINE_USERNAME: __token__
+                  TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+              run: |
+                  for pkg in openlibx402-client openlibx402-core openlibx402-fastapi openlibx402-langchain openlibx402-langgraph; do
+                    cd packages/python/$pkg
+                    twine upload dist/*
+                    cd ../../../
+                  done
+
+    publish-typescript:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: "18"
+                  cache: "pnpm"
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+            - name: Build TypeScript packages
+              run: pnpm build
+            - name: Publish TypeScript packages to NPM
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: |
+                  echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+                  for pkg in openlibx402-client openlibx402-core openlibx402-express openlibx402-langchain openlibx402-langgraph; do
+                    cd packages/typescript/$pkg
+                    npm publish --access public
+                    cd ../../../
+                  done
