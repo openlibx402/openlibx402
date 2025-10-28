@@ -4,7 +4,7 @@
  * Express.js middleware and utilities for X402 payment protocol.
  */
 
-export const VERSION = "0.1.0";
+export const VERSION = "0.1.1";
 
 // Configuration
 export { X402Config, initX402, getConfig, isInitialized } from "./config";

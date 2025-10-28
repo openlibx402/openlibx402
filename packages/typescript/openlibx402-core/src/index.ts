@@ -4,7 +4,7 @@
  * Core TypeScript implementation of the X402 payment protocol for autonomous AI agent payments.
  */
 
-export const VERSION = "0.1.0";
+export const VERSION = "0.1.1";
 
 // Models
 export { PaymentRequest, PaymentAuthorization } from "./models";

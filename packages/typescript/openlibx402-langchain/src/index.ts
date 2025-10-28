@@ -4,7 +4,7 @@
  * LangChain.js integration for X402 payment protocol.
  */
 
-export const VERSION = "0.1.0";
+export const VERSION = "0.1.1";
 
 // Payment tool
 export { X402PaymentTool, createX402PaymentTool } from "./payment-tool";

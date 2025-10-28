@@ -4,7 +4,7 @@
  * TypeScript HTTP client library for X402 payment protocol.
  */
 
-export const VERSION = "0.1.0";
+export const VERSION = "0.1.1";
 
 // Explicit client (manual payment control)
 export { X402Client } from "./explicit-client";
