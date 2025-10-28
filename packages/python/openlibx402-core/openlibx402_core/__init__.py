@@ -4,7 +4,7 @@ OpenLibx402 Core Package
 Core implementation of the X402 payment protocol for autonomous AI agent payments.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .models import PaymentRequest, PaymentAuthorization
 from .errors import (

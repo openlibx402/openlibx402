@@ -4,7 +4,7 @@ OpenLibx402 LangChain Package
 LangChain integration for X402 payment protocol.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .payment_tool import X402PaymentTool
 from .requests_wrapper import X402RequestsWrapper

@@ -4,7 +4,7 @@ OpenLibx402 LangGraph Package
 LangGraph integration for X402 payment protocol.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .nodes import (
     payment_node,
