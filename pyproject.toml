@@ -1,0 +1,29 @@
+[project]
+name = "openlibx402"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14.0"
+dependencies = [
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+]
+
+[tool.uv.workspace]
+members = [
+    "examples/python/fastapi-server",
+    "examples/python/langchain-agent",
+    "examples/python/langgraph-workflow",
+    "packages/python/openlibx402-client",
+    "packages/python/openlibx402-core",
+    "packages/python/openlibx402-fastapi",
+    "packages/python/openlibx402-langchain",
+    "packages/python/openlibx402-langgraph",
+]
+
+[tool.uv.sources]
+openlibx402-core = { workspace = true }
+openlibx402-client = { workspace = true }
+openlibx402-fastapi = { workspace = true }
+openlibx402-langchain = { workspace = true }
+openlibx402-langgraph = { workspace = true }

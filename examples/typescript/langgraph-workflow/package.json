@@ -1,0 +1,32 @@
+{
+  "name": "langgraph-workflow-example",
+  "version": "0.1.0",
+  "description": "LangGraph.js workflow example with X402 payment support",
+  "main": "dist/workflow.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/workflow.js",
+    "dev": "ts-node src/workflow.ts"
+  },
+  "keywords": [
+    "x402",
+    "langgraph",
+    "workflow",
+    "example"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@openlibx402/core": "workspace:*",
+    "@openlibx402/client": "workspace:*",
+    "@openlibx402/langgraph": "workspace:*",
+    "@solana/web3.js": "^1.87.6",
+    "@langchain/langgraph": "^1.0.1",
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

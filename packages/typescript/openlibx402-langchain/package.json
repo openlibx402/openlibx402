@@ -1,0 +1,33 @@
+{
+  "name": "@openlibx402/langchain",
+  "version": "0.1.0",
+  "description": "LangChain.js integration for X402 payment protocol",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": [
+    "x402",
+    "payment",
+    "langchain",
+    "ai-agents"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@openlibx402/core": "workspace:*",
+    "@openlibx402/client": "workspace:*",
+    "@solana/web3.js": "^1.87.6",
+    "@langchain/core": "^0.1.17",
+    "langchain": "^0.1.17",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3"
+  }
+}

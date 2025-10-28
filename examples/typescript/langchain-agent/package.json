@@ -1,0 +1,35 @@
+{
+  "name": "langchain-agent-example",
+  "version": "0.1.0",
+  "description": "LangChain.js agent example with X402 payment support",
+  "main": "dist/agent.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/agent.js",
+    "dev": "ts-node src/agent.ts"
+  },
+  "keywords": [
+    "x402",
+    "langchain",
+    "ai-agent",
+    "example"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@langchain/core": "^1.0.2",
+    "@langchain/langgraph": "^1.0.1",
+    "@langchain/openai": "^1.0.0",
+    "@openlibx402/client": "workspace:*",
+    "@openlibx402/core": "workspace:*",
+    "@openlibx402/langchain": "workspace:*",
+    "@solana/web3.js": "^1.87.6",
+    "dotenv": "^17.2.3",
+    "langchain": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

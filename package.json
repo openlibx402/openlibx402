@@ -1,0 +1,39 @@
+{
+  "name": "openlibx402",
+  "version": "0.1.0",
+  "private": true,
+  "description": "OpenLibX402 - HTTP 402 Payment Protocol for AI Agents",
+  "workspaces": [
+    "packages/typescript/*",
+    "examples/typescript/*"
+  ],
+  "scripts": {
+    "build": "pnpm --filter \"./packages/typescript/*\" run build",
+    "build:core": "pnpm --filter @openlibx402/core run build",
+    "build:client": "pnpm --filter @openlibx402/client run build",
+    "build:express": "pnpm --filter @openlibx402/express run build",
+    "build:langchain": "pnpm --filter @openlibx402/langchain run build",
+    "build:langgraph": "pnpm --filter @openlibx402/langgraph run build",
+    "build:examples": "pnpm --filter \"./examples/typescript/*\" run build",
+    "dev": "pnpm --filter \"./packages/typescript/*\" run dev",
+    "test": "pnpm --filter \"./packages/typescript/*\" run test",
+    "lint": "pnpm --filter \"./packages/typescript/*\" run lint",
+    "clean": "pnpm --filter \"./packages/typescript/*\" exec rm -rf dist node_modules",
+    "install:all": "pnpm install",
+    "example:express": "pnpm --filter express-server-example run start",
+    "example:express:dev": "pnpm --filter express-server-example run dev",
+    "example:langchain": "pnpm --filter langchain-agent-example run start",
+    "example:langgraph": "pnpm --filter langgraph-workflow-example run start"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3",
+    "prettier": "^3.1.1",
+    "eslint": "^9.38.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0"
+}

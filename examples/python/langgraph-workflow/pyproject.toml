@@ -1,0 +1,15 @@
+[project]
+name = "langgraph-workflow"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14.0"
+dependencies = [
+    "langchain>=1.0.0",
+    "langgraph>=1.0.1",
+    "python-dotenv>=1.0.0",
+    "solana>=0.30.0",
+    "solders>=0.18.0",
+    "openlibx402-client",
+    "openlibx402-langgraph",
+]

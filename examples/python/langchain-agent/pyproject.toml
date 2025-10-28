@@ -1,0 +1,14 @@
+[project]
+name = "langchain-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14.0"
+dependencies = [
+    "langchain[openai]>=1.0.2",
+    "openai>=2.6.1",
+    "python-dotenv>=1.0.0",
+    "solders>=0.18.0",
+    "solana>=0.30.0",
+    "openlibx402-langchain",
+]

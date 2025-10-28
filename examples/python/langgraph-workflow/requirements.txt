@@ -1,0 +1,8 @@
+openlibx402-core>=0.1.0
+openlibx402-client>=0.1.0
+openlibx402-langgraph>=0.1.0
+langgraph>=0.1.0
+langchain>=1.0.0
+python-dotenv>=1.0.0
+solders>=0.18.0
+solana>=0.30.0
