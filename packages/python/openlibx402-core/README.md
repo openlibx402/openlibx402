@@ -83,7 +83,7 @@ For most use cases, you'll want to use one of these higher-level packages rather
 ## Documentation
 
 For complete API reference and guides, see:
-- [Documentation](https://docs.openlibx402.org)
+- [Documentation](https://openlibx402.github.io/docs)
 - [GitHub Repository](https://github.com/openlibx402/openlibx402)
 
 ## Testing

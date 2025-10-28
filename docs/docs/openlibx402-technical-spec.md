@@ -1586,8 +1586,8 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/openlibx402/openlibx402"
-Documentation = "https://docs.openlibx402.org"
+Homepage = "https://openlib.xyz"
+Documentation = "https://openlibx402.github.io/docs"
 Repository = "https://github.com/openlibx402/openlibx402"
 ```
 
