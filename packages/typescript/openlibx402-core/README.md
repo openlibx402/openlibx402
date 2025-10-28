@@ -1,6 +1,6 @@
-# openlibx402-core (Python)
+# openlibx402-core (TypeScript)
 
-Core Python implementation of OpenLibX402 protocol logic and utilities.
+Core TypeScript implementation of OpenLibX402 protocol logic and utilities.
 
 ## Features
 
@@ -11,24 +11,24 @@ Core Python implementation of OpenLibX402 protocol logic and utilities.
 ## Installation
 
 ```bash
-pip install .
+pnpm add openlibx402-core
 ```
 
 ## Usage
 
-```python
-from openlibx402_core import Protocol
-protocol = Protocol()
+```typescript
+import { Protocol } from 'openlibx402-core';
+const protocol = new Protocol();
 ```
 
 ## Documentation
 
-See [docs](https://openlibx402.github.io/docs/packages/python/openlibx402-core/) for API reference and guides.
+See [docs](https://openlibx402.github.io/docs/packages/typescript/openlibx402-core/) for API reference and guides.
 
 ## Testing
 
 ```bash
-pytest tests/
+pnpm test
 ```
 
 ## Contributing

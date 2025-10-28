@@ -1,84 +1,47 @@
-# OpenLibX402 Client
+# openlibx402-client (Python)
 
-HTTP client library for making X402-enabled API calls with automatic payment handling.
+This package provides the Python client for interacting with the OpenLibX402 protocol and services.
+
+## Features
+
+- Easy integration with OpenLibX402 APIs
+- Authentication and wallet management
+- Request/response handling
+- Utilities for common protocol operations
 
 ## Installation
 
 ```bash
-pip install openlibx402-client
+pip install .
 ```
-
-## Features
-
-- **Explicit Client**: Manual control over payment flow
-- **Implicit Client**: Automatic payment handling
-- Support for all HTTP methods (GET, POST, PUT, DELETE)
-- Safety limits with `max_payment_amount`
-- Configurable retry behavior
+Or add to your requirements.txt:
+```
+openlibx402-client
+```
 
 ## Usage
 
-### Explicit Client (Manual Control)
-
 ```python
-from openlibx402_client import X402Client
-from solders.keypair import Keypair
-
-# Load wallet
-keypair = Keypair()
-
-# Create client
-client = X402Client(wallet_keypair=keypair)
-
-# Make request
-response = await client.get("https://api.example.com/data")
-
-# Check if payment required
-if client.payment_required(response):
-    payment_request = client.parse_payment_request(response)
-
-    # Create payment
-    authorization = await client.create_payment(payment_request)
-
-    # Retry with payment
-    response = await client.get(
-        "https://api.example.com/data",
-        payment=authorization
-    )
-
-data = response.json()
+from openlibx402_client import Client
+client = Client(api_key="YOUR_API_KEY")
+response = client.do_something()
+print(response)
 ```
 
-### Implicit Client (Auto-Payment)
+## Documentation
 
-```python
-from openlibx402_client import X402AutoClient
-from solders.keypair import Keypair
+See [docs](https://openlibx402.github.io/docs/packages/python/openlibx402-client/) for API reference and guides.
 
-# Create auto-client
-client = X402AutoClient(
-    wallet_keypair=keypair,
-    max_payment_amount="5.0"  # Safety limit
-)
+## Testing
 
-# Automatically handles 402 and pays
-response = await client.fetch("https://api.example.com/data")
-data = response.json()
+```bash
+pytest tests/
 ```
 
-### Disable Auto-Retry
+## Contributing
 
-```python
-# Disable auto-retry for specific request
-try:
-    response = await client.fetch(
-        "https://api.example.com/data",
-        auto_retry=False
-    )
-except PaymentRequiredError as e:
-    print(f"Payment required: {e.payment_request.max_amount_required}")
-```
+See [CONTRIBUTING.md](https://github.com/openlibx402/openlibx402/blob/main/CONTRIBUTING.md).
 
 ## License
 
-MIT
+See [LICENSE](https://github.com/openlibx402/openlibx402/blob/main/LICENSE).

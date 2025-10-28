@@ -1,6 +1,6 @@
 # openlibx402-langchain
 
-LangChain integration for OpenLibX402 protocol in Python.
+LangChain integration for OpenLibX402 protocol in TypeScript.
 
 ## Features
 
@@ -10,18 +10,18 @@ LangChain integration for OpenLibX402 protocol in Python.
 ## Installation
 
 ```bash
-pip install .
+pnpm add openlibx402-langchain
 ```
 
 ## Usage
 
-```python
-from openlibx402_langchain import OpenLibX402Tool
+```typescript
+import { OpenLibX402Tool } from 'openlibx402-langchain';
 ```
 
 ## Documentation
 
-See [docs](https://openlibx402.github.io/docs/packages/python/openlibx402-langchain/) for API reference and guides.
+See [docs](https://openlibx402.github.io/docs/packages/typescript/openlibx402-langchain/) for API reference and guides.
 
 ## Contributing
 

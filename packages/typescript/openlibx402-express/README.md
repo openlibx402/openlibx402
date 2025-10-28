@@ -1,6 +1,6 @@
-# openlibx402-fastapi
+# openlibx402-express
 
-FastAPI server implementation for OpenLibX402 protocol in Python.
+Express.js server implementation for OpenLibX402 protocol in TypeScript.
 
 ## Features
 
@@ -11,23 +11,24 @@ FastAPI server implementation for OpenLibX402 protocol in Python.
 ## Installation
 
 ```bash
-pip install .
+pnpm add openlibx402-express
 ```
 
 ## Usage
 
-```bash
-uvicorn openlibx402_fastapi.main:app --reload
+```typescript
+import { app } from 'openlibx402-express';
+app.listen(3000, () => console.log('Server running'));
 ```
 
 ## Documentation
 
-See [docs](https://openlibx402.github.io/docs/packages/python/openlibx402-fastapi/) for API reference and guides.
+See [docs](https://openlibx402.github.io/docs/packages/typescript/openlibx402-express/) for API reference and guides.
 
 ## Testing
 
 ```bash
-pytest tests/
+pnpm test
 ```
 
 ## Contributing

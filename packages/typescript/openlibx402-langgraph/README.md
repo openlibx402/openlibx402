@@ -1,6 +1,6 @@
 # openlibx402-langgraph
 
-LangGraph integration for OpenLibX402 protocol in Python.
+LangGraph integration for OpenLibX402 protocol in TypeScript.
 
 ## Features
 
@@ -10,18 +10,18 @@ LangGraph integration for OpenLibX402 protocol in Python.
 ## Installation
 
 ```bash
-pip install .
+pnpm add openlibx402-langgraph
 ```
 
 ## Usage
 
-```python
-from openlibx402_langgraph import OpenLibX402Graph
+```typescript
+import { OpenLibX402Graph } from 'openlibx402-langgraph';
 ```
 
 ## Documentation
 
-See [docs](https://openlibx402.github.io/docs/packages/python/openlibx402-langgraph/) for API reference and guides.
+See [docs](https://openlibx402.github.io/docs/packages/typescript/openlibx402-langgraph/) for API reference and guides.
 
 ## Contributing
 
