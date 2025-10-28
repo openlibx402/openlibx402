@@ -25,7 +25,7 @@ export class X402Client {
   /**
    * Explicit X402 client - developer controls payment flow
    *
-   * Usage:
+   * Usage (Production):
    *   const client = new X402Client(walletKeypair);
    *
    *   // Check if payment required
@@ -41,12 +41,30 @@ export class X402Client {
    *     response = await client.get("https://api.example.com/data", { payment: authorization });
    *   }
    *
+   *   // Always cleanup
+   *   await client.close();
+   *
+   * Usage (Local Development):
+   *   // Enable allowLocal for localhost URLs
+   *   const client = new X402Client(walletKeypair, undefined, undefined, true);
+   *
+   *   let response = await client.get("http://localhost:3000/api/data");
+   *
+   *   if (client.paymentRequired(response)) {
+   *     const paymentRequest = client.parsePaymentRequest(response);
+   *     const authorization = await client.createPayment(paymentRequest);
+   *     response = await client.get("http://localhost:3000/api/data", { payment: authorization });
+   *   }
+   *
+   *   await client.close();
+   *
    * Security Notes:
    *   - Always call close() when done to properly cleanup connections
    *   - Private keys are held in memory - ensure proper disposal
    *   - Only use URLs from trusted sources to prevent SSRF attacks
    *   - Default RPC URL is devnet - use mainnet URL for production
    *   - Set allowLocal=true for local development (localhost URLs)
+   *   - NEVER use allowLocal=true in production deployments
    */
   constructor(
     walletKeypair: Keypair,

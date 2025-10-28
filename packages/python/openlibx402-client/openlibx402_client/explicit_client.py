@@ -28,7 +28,7 @@ class X402Client:
     """
     Explicit X402 client - developer controls payment flow
 
-    Usage:
+    Usage (Production):
         client = X402Client(wallet_keypair)
 
         # Check if payment required
@@ -46,12 +46,32 @@ class X402Client:
                 payment=authorization
             )
 
+        # Always cleanup
+        await client.close()
+
+    Usage (Local Development):
+        # Enable allow_local for localhost URLs
+        client = X402Client(wallet_keypair, allow_local=True)
+
+        response = await client.get("http://localhost:3000/api/data")
+
+        if client.payment_required(response):
+            payment_request = client.parse_payment_request(response)
+            authorization = await client.create_payment(payment_request)
+            response = await client.get(
+                "http://localhost:3000/api/data",
+                payment=authorization
+            )
+
+        await client.close()
+
     Security Notes:
         - Always call close() when done to properly cleanup connections
         - Private keys are held in memory - ensure proper disposal
         - Only use URLs from trusted sources to prevent SSRF attacks
         - Default RPC URL is devnet - use mainnet URL for production
         - Set allow_local=True for local development (localhost URLs)
+        - NEVER use allow_local=True in production deployments
     """
 
     def __init__(
