@@ -6,7 +6,6 @@ use_directory_urls: true
 
 nav:
   - Overview: index.md
-  - Implementation Guide: implementation-guide.md
   - Technical Specification: openlibx402-technical-spec.md
   - Quick Reference: quick-reference.md
   - Packages:

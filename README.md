@@ -274,7 +274,7 @@ python main.py
 
 ## Development Status
 
-### ✅ Phase 1: Python MVP (Complete)
+### ✅ Phase 1: Python (Complete)
 - [x] Core package (Python)
 - [x] FastAPI integration
 - [x] Client library

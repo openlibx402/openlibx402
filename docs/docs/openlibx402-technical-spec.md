@@ -1661,7 +1661,7 @@ docs/
 
 ## 11. Development Roadmap
 
-### Phase 1: Core & FastAPI (MVP)
+### Phase 1: Core & FastAPI 
 - ✅ Core protocol implementation (Python + TypeScript)
 - ✅ Solana blockchain integration
 - ✅ FastAPI server middleware
