@@ -1,7 +1,8 @@
 site_name: OpenLibX402 Docs
 site_description: Documentation for the OpenLibX402 autonomous payments ecosystem
-repo_url: https://github.com/openlibx402/openlibx402
+repo_url: https://github.com/openlibx402/documentation
 site_dir: site
+site_url: https://openlibx402.github.io/documentation/
 use_directory_urls: true
 
 nav:
