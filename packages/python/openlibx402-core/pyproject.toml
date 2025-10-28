@@ -10,12 +10,36 @@ authors = [
     {name = "OpenLibx402 Contributors", email = "hello@openlibx402.org"},
 ]
 readme = "README.md"
-license = {text = "MIT"}
+license = {file = "LICENSE"}
 requires-python = ">=3.8"
 dependencies = [
     "httpx>=0.24.0",
     "solana>=0.30.0",
     "solders>=0.18.0",
+]
+keywords = [
+    "openlibx402",
+    "x402",
+    "payments",
+    "solana",
+    "agents",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Office/Business :: Financial :: Accounting",
 ]
 
 [project.optional-dependencies]
@@ -45,3 +69,17 @@ python_version = "3.8"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = false
+
+[tool.hatch.version]
+path = "openlibx402_core/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["openlibx402_core"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "openlibx402_core",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+]

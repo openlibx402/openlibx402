@@ -10,13 +10,36 @@ authors = [
     {name = "OpenLibx402 Contributors", email = "hello@openlibx402.org"},
 ]
 readme = "README.md"
-license = {text = "MIT"}
+license = {file = "LICENSE"}
 requires-python = ">=3.8"
 dependencies = [
-    "openlibx402-core",
-    "openlibx402-client",
+    "openlibx402-core>=0.1.0,<0.2.0",
+    "openlibx402-client>=0.1.0,<0.2.0",
     "langchain>=0.1.0",
     "solders>=0.18.0",
+]
+keywords = [
+    "openlibx402",
+    "x402",
+    "langchain",
+    "agents",
+    "payments",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries",
 ]
 
 [project.optional-dependencies]
@@ -32,3 +55,17 @@ dev = [
 Homepage = "https://github.com/openlibx402/openlibx402"
 Documentation = "https://docs.openlibx402.org"
 Repository = "https://github.com/openlibx402/openlibx402"
+
+[tool.hatch.version]
+path = "openlibx402_langchain/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["openlibx402_langchain"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "openlibx402_langchain",
+    "README.md",
+    "LICENSE",
+    "pyproject.toml",
+]

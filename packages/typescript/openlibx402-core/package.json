@@ -4,6 +4,11 @@
   "description": "Core TypeScript library for X402 payment protocol",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -17,8 +22,20 @@
     "blockchain",
     "http-402"
   ],
-  "author": "",
+  "author": "openlibx402",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openlibx402/openlibx402.git",
+    "directory": "packages/typescript/openlibx402-core"
+  },
+  "homepage": "https://github.com/openlibx402/openlibx402#readme",
+  "bugs": {
+    "url": "https://github.com/openlibx402/openlibx402/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@solana/web3.js": "^1.87.6",
     "@solana/spl-token": "^0.3.9"

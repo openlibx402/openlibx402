@@ -4,6 +4,11 @@
   "description": "Express.js middleware and decorators for X402 payment protocol",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -16,10 +21,22 @@
     "express",
     "middleware"
   ],
-  "author": "",
+  "author": "openlibx402",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openlibx402/openlibx402.git",
+    "directory": "packages/typescript/openlibx402-express"
+  },
+  "homepage": "https://github.com/openlibx402/openlibx402#readme",
+  "bugs": {
+    "url": "https://github.com/openlibx402/openlibx402/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@openlibx402/core": "workspace:*",
+    "@openlibx402/core": "^0.1.0",
     "express": "^4.18.2"
   },
   "devDependencies": {
