@@ -1,5 +1,10 @@
 # LangGraph Workflow Example
 
+```bash
+git clone https://github.com/openlibx402/openlibx402.git
+cd openlibx402
+```
+
 Example LangGraph workflows with X402 payment nodes.
 
 ## Setup

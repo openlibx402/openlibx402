@@ -1,5 +1,10 @@
 # LangGraph.js Workflow with X402 Payment Support
 
+```bash
+git clone https://github.com/openlibx402/openlibx402.git
+cd openlibx402
+```
+
 This example demonstrates how to build LangGraph.js workflows that include payment nodes for accessing paid APIs using the X402 payment protocol.
 
 ## Features

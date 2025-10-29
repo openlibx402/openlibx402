@@ -1,0 +1,49 @@
+{
+  "name": "@openlibx402/nextjs",
+  "version": "0.1.0",
+  "description": "Next.js middleware and utilities for X402 payment protocol",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": [
+    "x402",
+    "payment",
+    "nextjs",
+    "middleware"
+  ],
+  "author": "openlibx402",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openlibx402/openlibx402.git",
+    "directory": "packages/typescript/openlibx402-nextjs"
+  },
+  "homepage": "https://openlib.xyz",
+  "bugs": {
+    "url": "https://github.com/openlibx402/openlibx402/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@openlibx402/core": "^0.1.0",
+    "next": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "next": ">=13.0.0"
+  }
+}

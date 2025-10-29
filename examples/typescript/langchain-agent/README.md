@@ -1,5 +1,10 @@
 # LangChain.js Payment Tool Example
 
+```bash
+git clone https://github.com/openlibx402/openlibx402.git
+cd openlibx402
+```
+
 This example demonstrates the X402 payment tool for LangChain.js, which enables payment capabilities that can be integrated with AI agents.
 
 ## Features
