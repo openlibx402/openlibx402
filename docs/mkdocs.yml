@@ -20,6 +20,7 @@ nav:
           - Core Library: packages/typescript/openlibx402-core.md
           - Client SDK: packages/typescript/openlibx402-client.md
           - Express Middleware: packages/typescript/openlibx402-express.md
+          - Next.js Middleware: packages/typescript/openlibx402-nextjs.md
           - LangChain Integration: packages/typescript/openlibx402-langchain.md
           - LangGraph Integration: packages/typescript/openlibx402-langgraph.md
   - Examples:
@@ -30,6 +31,7 @@ nav:
           - LangGraph Workflow: examples/python/langgraph-workflow.md
       - TypeScript:
           - Express Server: examples/typescript/express-server.md
+          - Next.js App: examples/typescript/nextjs-app.md
           - LangChain Agent: examples/typescript/langchain-agent.md
           - LangGraph Workflow: examples/typescript/langgraph-workflow.md
 

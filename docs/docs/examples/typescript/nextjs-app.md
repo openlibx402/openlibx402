@@ -1,10 +1,5 @@
 # Next.js App Example with X402 Payment Support
 
-```bash
-git clone https://github.com/openlibx402/openlibx402.git
-cd openlibx402
-```
-
 This example demonstrates how to create a Next.js application with X402 payment requirements for API endpoints, including both server-side API routes and client-side payment handling.
 
 ## Features
@@ -63,32 +58,6 @@ npm start
 ```
 
 The app will start on `http://localhost:3000`.
-
-## Project Structure
-
-```
-nextjs-app/
-├── app/
-│   ├── api/                    # API Routes
-│   │   ├── config.ts          # X402 configuration
-│   │   ├── route.ts           # Root endpoint
-│   │   ├── free-data/         # Free endpoint
-│   │   ├── premium-data/      # Premium endpoint (0.10 USDC)
-│   │   ├── expensive-data/    # Expensive endpoint (1.00 USDC)
-│   │   ├── tiered-data/       # Tiered endpoint (0.05 USDC)
-│   │   └── process-data/      # POST endpoint (0.25 USDC)
-│   ├── components/            # React components
-│   │   ├── EndpointCard.tsx   # Endpoint demo card
-│   │   └── X402ClientProvider.tsx  # Client context provider
-│   ├── layout.tsx             # Root layout
-│   ├── page.tsx               # Home page
-│   └── globals.css            # Global styles
-├── package.json
-├── tsconfig.json
-├── next.config.js
-├── tailwind.config.ts
-└── README.md
-```
 
 ## API Endpoints
 
@@ -160,42 +129,6 @@ const response = await client.get("/api/premium-data");
 // Payment is handled automatically if required
 ```
 
-## Key Components
-
-### X402ClientProvider
-
-Context provider that manages the X402 client instance and wallet:
-
-- Creates and manages X402AutoClient
-- Provides wallet address
-- Handles client lifecycle
-
-### EndpointCard
-
-Reusable component for demonstrating API endpoints:
-
-- Displays endpoint information
-- Handles API calls
-- Shows responses and errors
-- Visual feedback for loading states
-
-## Usage Example
-
-The main page demonstrates all endpoints with interactive cards:
-
-```typescript
-<EndpointCard
-  title="Premium Data"
-  description="Access premium market data"
-  endpoint="/api/premium-data"
-  price="0.10"
-  onFetch={async () => {
-    const response = await client.get("/api/premium-data");
-    return response.data;
-  }}
-/>
-```
-
 ## Payment Flow
 
 1. **User clicks** "Try Endpoint" button
@@ -205,14 +138,6 @@ The main page demonstrates all endpoints with interactive cards:
 5. **Client retries** request with payment authorization
 6. **Server verifies** payment on-chain
 7. **Server returns** protected content
-
-## Notes
-
-- This example uses Solana Devnet for testing
-- Demo wallet has no funds (requests will show payment required)
-- In production, integrate with browser wallets (Phantom, Solflare)
-- Payment verification is done on-chain by default
-- Server-side configuration is shared across all API routes
 
 ## Browser Wallet Integration
 
@@ -241,26 +166,3 @@ const client = new X402Client(/* wallet adapter */, rpcUrl);
 - [X402 Protocol Specification](https://www.x402.org/x402-whitepaper.pdf)
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Solana Web3.js](https://solana.com/docs/clients/javascript)
-
-## Troubleshooting
-
-### Build Errors
-
-If you encounter module resolution errors:
-
-```bash
-# Clear Next.js cache
-rm -rf .next
-
-# Reinstall dependencies
-npm install
-
-# Rebuild
-npm run build
-```
-
-### Payment Verification Issues
-
-- Ensure RPC URL is correct in `.env.local`
-- Check wallet address is valid Solana address
-- Verify token mint address matches network (devnet/mainnet)

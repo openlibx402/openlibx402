@@ -1,5 +1,10 @@
 # OpenLibx402 Examples
 
+```bash
+git clone https://github.com/openlibx402/openlibx402.git
+cd openlibx402
+```
+
 This directory contains example applications demonstrating the X402 payment protocol in both Python and TypeScript.
 
 ## 📁 Structure

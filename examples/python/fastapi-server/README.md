@@ -1,5 +1,10 @@
 # FastAPI Server Example
 
+```bash
+git clone https://github.com/openlibx402/openlibx402.git
+cd openlibx402
+```
+
 Example FastAPI server with X402 payment requirements.
 
 ## Setup

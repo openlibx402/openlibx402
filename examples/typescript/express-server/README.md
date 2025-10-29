@@ -1,5 +1,10 @@
 # Express.js Server Example with X402 Payment Support
 
+```bash
+git clone https://github.com/openlibx402/openlibx402.git
+cd openlibx402
+```
+
 This example demonstrates how to create an Express.js API server with X402 payment requirements for specific endpoints.
 
 ## Features
