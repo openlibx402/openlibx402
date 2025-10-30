@@ -34,6 +34,8 @@ OpenLibx402 for Go provides a complete implementation of the X402 protocol, enab
 
 ## Installation
 
+The Go packages are published in a single repository: [github.com/openlibx402/go](https://github.com/openlibx402/go)
+
 ```bash
 # Install core package
 go get github.com/openlibx402/go/openlibx402-core
@@ -47,6 +49,8 @@ go get github.com/openlibx402/go/openlibx402-nethttp
 # Install Echo middleware
 go get github.com/openlibx402/go/openlibx402-echo
 ```
+
+All packages are managed in a single Git repository with separate Go modules for each package, enabling flexible import paths like `github.com/openlibx402/go/openlibx402-core`.
 
 ## Quick Start
 
