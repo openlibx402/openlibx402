@@ -1,6 +1,7 @@
 site_name: OpenLibx402 Docs
 site_description: Documentation for the OpenLibx402 autonomous payments ecosystem
 repo_url: https://github.com/openlibx402/docs/
+docs_dir: docs
 site_dir: site
 site_url: https://openlibx402.github.io/docs/
 use_directory_urls: true
@@ -23,6 +24,12 @@ nav:
           - Next.js Middleware: packages/typescript/openlibx402-nextjs.md
           - LangChain Integration: packages/typescript/openlibx402-langchain.md
           - LangGraph Integration: packages/typescript/openlibx402-langgraph.md
+      - Go:
+          - Overview: go/index.md
+          - Core Library: go/libraries/core.md
+          - Client Library: go/libraries/client.md
+          - net/http Middleware: go/middleware/nethttp.md
+          - Echo Middleware: go/middleware/echo.md
   - Examples:
       - Overview: examples/index.md
       - Python:
@@ -34,6 +41,17 @@ nav:
           - Next.js App: examples/typescript/nextjs-app.md
           - LangChain Agent: examples/typescript/langchain-agent.md
           - LangGraph Workflow: examples/typescript/langgraph-workflow.md
+      - Go:
+          - net/http Server: go/examples/nethttp-server.md
+          - Echo Server: go/examples/echo-server.md
+  - Getting Started:
+      - Installation: go/getting-started/installation.md
+      - Server Quickstart: go/getting-started/server-quickstart.md
+      - Client Quickstart: go/getting-started/client-quickstart.md
+  - Reference:
+      - API Reference: go/reference/api-reference.md
+      - Error Handling: go/reference/errors.md
+      - Configuration: go/reference/configuration.md
 
 theme:
   name: material
