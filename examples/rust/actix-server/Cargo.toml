@@ -1,0 +1,13 @@
+[package]
+name = "actix-server-example"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+openlibx402-core = { path = "../../../packages/rust/openlibx402-core" }
+openlibx402-actix = { path = "../../../packages/rust/openlibx402-actix" }
+actix-web = "4.4"
+actix-rt = "2.9"
+tokio = { version = "1.35", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"

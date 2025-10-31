@@ -1,0 +1,23 @@
+[package]
+name = "openlibx402-client"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "HTTP client library for the X402 payment protocol"
+keywords = ["x402", "payment", "http", "client", "solana"]
+categories = ["web-programming", "network-programming"]
+readme = "README.md"
+
+[dependencies]
+openlibx402-core = "0.0.3"
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+reqwest.workspace = true
+solana-sdk.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }

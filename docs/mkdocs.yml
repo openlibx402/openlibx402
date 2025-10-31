@@ -30,6 +30,12 @@ nav:
           - Client Library: go/libraries/client.md
           - net/http Middleware: go/middleware/nethttp.md
           - Echo Middleware: go/middleware/echo.md
+      - Rust:
+          - Overview: rust/index.md
+          - Core Library: rust/libraries/core.md
+          - Client Library: rust/libraries/client.md
+          - Rocket Middleware: rust/middleware/rocket.md
+          - Actix Web Middleware: rust/middleware/actix.md
   - Examples:
       - Overview: examples/index.md
       - Python:
@@ -44,14 +50,27 @@ nav:
       - Go:
           - net/http Server: go/examples/nethttp-server.md
           - Echo Server: go/examples/echo-server.md
+      - Rust:
+          - Rocket Server: rust/examples/rocket-server.md
+          - Actix Web Server: rust/examples/actix-server.md
   - Getting Started:
-      - Installation: go/getting-started/installation.md
-      - Server Quickstart: go/getting-started/server-quickstart.md
-      - Client Quickstart: go/getting-started/client-quickstart.md
+      - Go:
+          - Installation: go/getting-started/installation.md
+          - Server Quickstart: go/getting-started/server-quickstart.md
+          - Client Quickstart: go/getting-started/client-quickstart.md
+      - Rust:
+          - Installation: rust/getting-started/installation.md
+          - Server Quickstart: rust/getting-started/server-quickstart.md
+          - Client Quickstart: rust/getting-started/client-quickstart.md
   - Reference:
-      - API Reference: go/reference/api-reference.md
-      - Error Handling: go/reference/errors.md
-      - Configuration: go/reference/configuration.md
+      - Go:
+          - API Reference: go/reference/api-reference.md
+          - Error Handling: go/reference/errors.md
+          - Configuration: go/reference/configuration.md
+      - Rust:
+          - API Reference: rust/reference/api-reference.md
+          - Error Handling: rust/reference/errors.md
+          - Configuration: rust/reference/configuration.md
 
 theme:
   name: material
