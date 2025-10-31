@@ -9,9 +9,10 @@ homepage.workspace = true
 description = "Rocket web framework integration for X402 payment protocol"
 keywords = ["x402", "payment", "rocket", "web", "middleware"]
 categories = ["web-programming"]
+readme = "README.md"
 
 [dependencies]
-openlibx402-core = { path = "../openlibx402-core" }
+openlibx402-core = "0.0.2"
 rocket.workspace = true
 serde.workspace = true
 serde_json.workspace = true

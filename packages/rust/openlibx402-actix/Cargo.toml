@@ -9,9 +9,10 @@ homepage.workspace = true
 description = "Actix Web framework integration for X402 payment protocol"
 keywords = ["x402", "payment", "actix", "web", "middleware"]
 categories = ["web-programming"]
+readme = "README.md"
 
 [dependencies]
-openlibx402-core = { path = "../openlibx402-core" }
+openlibx402-core = "0.0.2"
 actix-web.workspace = true
 actix-rt.workspace = true
 serde.workspace = true

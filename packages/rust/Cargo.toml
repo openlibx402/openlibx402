@@ -8,12 +8,12 @@ members = [
 ]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.0.2"
 edition = "2021"
 authors = ["OpenLibx402 Contributors"]
 license = "MIT"
-repository = "https://github.com/DamianX/openlibx402"
-homepage = "https://x402.org"
+repository = "https://github.com/openlibx402/openlibx402"
+homepage = "https://openlib.xyz"
 
 [workspace.dependencies]
 # Core dependencies

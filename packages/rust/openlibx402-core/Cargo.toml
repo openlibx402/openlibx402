@@ -9,6 +9,7 @@ homepage.workspace = true
 description = "Core library for the X402 payment protocol with Solana blockchain integration"
 keywords = ["x402", "payment", "solana", "blockchain", "micropayments"]
 categories = ["web-programming", "cryptography"]
+readme = "README.md"
 
 [dependencies]
 serde.workspace = true
