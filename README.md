@@ -6,6 +6,8 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js 18+](https://img.shields.io/badge/node-18+-green.svg)](https://nodejs.org/)
+[![Go 1.21+](https://img.shields.io/badge/go-1.21+-00ADD8.svg)](https://go.dev/)
+[![Rust 1.70+](https://img.shields.io/badge/rust-1.70+-orange.svg)](https://www.rust-lang.org/)
 
 ## What is OpenLibx402?
 
@@ -21,14 +23,16 @@ OpenLibx402 is a library ecosystem that implements the [X402 protocol](https://w
 🌐 **Chain-Agnostic Design** - Solana first, architected for multi-chain
 🛠️ **Framework Integrations** - FastAPI, LangChain, LangGraph, and more
 
-## Available in Python & TypeScript
+## Available in Multiple Languages
 
-OpenLibx402 is available in both **Python** and **TypeScript/Node.js**, with full feature parity:
+OpenLibx402 is available in **Python**, **TypeScript/Node.js**, **Go**, and **Rust**, with full feature parity:
 
 - 🐍 **Python**: FastAPI, LangChain, LangGraph
-- 📦 **TypeScript**: Express.js, LangChain.js, LangGraph.js
+- 📦 **TypeScript**: Express.js, Next.js, LangChain.js, LangGraph.js
+- 🐹 **Go**: net/http, Echo framework
+- 🦀 **Rust**: Rocket, Actix Web
 
-Both implementations use **pnpm/uv monorepo** setup for easy development.
+All implementations provide both server and client libraries with comprehensive examples.
 
 ## Quick Start
 
@@ -162,18 +166,38 @@ openlibx402/
 │   │   ├── openlibx402-langchain/     # LangChain integration
 │   │   └── openlibx402-langgraph/     # LangGraph integration
 │   │
-│   └── typescript/                 # TypeScript packages (pnpm monorepo)
-│       ├── openlibx402-core/          # Core protocol (TS)
-│       ├── openlibx402-express/       # Express.js middleware
-│       ├── openlibx402-client/        # HTTP client (TS)
-│       ├── openlibx402-langchain/     # LangChain.js integration
-│       └── openlibx402-langgraph/     # LangGraph.js integration
+│   ├── typescript/                 # TypeScript packages (pnpm monorepo)
+│   │   ├── openlibx402-core/          # Core protocol (TS)
+│   │   ├── openlibx402-express/       # Express.js middleware
+│   │   ├── openlibx402-client/        # HTTP client (TS)
+│   │   ├── openlibx402-langchain/     # LangChain.js integration
+│   │   └── openlibx402-langgraph/     # LangGraph.js integration
+│   │
+│   ├── go/                         # Go packages
+│   │   ├── openlibx402-core/          # Core protocol (Go)
+│   │   ├── openlibx402-client/        # HTTP client (Go)
+│   │   ├── openlibx402-nethttp/       # net/http middleware
+│   │   └── openlibx402-echo/          # Echo framework integration
+│   │
+│   └── rust/                       # Rust packages (Cargo workspace)
+│       ├── openlibx402-core/          # Core protocol (Rust)
+│       ├── openlibx402-client/        # HTTP client (Rust)
+│       ├── openlibx402-rocket/        # Rocket framework integration
+│       └── openlibx402-actix/         # Actix Web integration
 │
 ├── examples/
-│   ├── fastapi-server/             # Python FastAPI demo
-│   ├── express-server/             # TypeScript Express.js demo
-│   ├── langchain-agent/            # Python LangChain agent
-│   └── langgraph-workflow/         # Python LangGraph workflow
+│   ├── python/
+│   │   ├── fastapi-server/         # Python FastAPI demo
+│   │   ├── langchain-agent/        # Python LangChain agent
+│   │   └── langgraph-workflow/     # Python LangGraph workflow
+│   ├── typescript/
+│   │   └── express-server/         # TypeScript Express.js demo
+│   ├── go/
+│   │   ├── nethttp-server/         # Go net/http demo
+│   │   └── echo-server/            # Go Echo demo
+│   └── rust/
+│       ├── rocket-server/          # Rust Rocket demo
+│       └── actix-server/           # Rust Actix Web demo
 │
 ├── pnpm-workspace.yaml             # TypeScript monorepo config
 ├── pyproject.toml                  # Python monorepo config
@@ -245,11 +269,14 @@ python main.py
 
 ## Documentation
 
-📚 **[Setup Guide](SETUP.md)** - Complete setup for Python and TypeScript
+📚 **[Setup Guide](SETUP.md)** - Complete setup for all languages
 🚀 **[Technical Specification](docs/openlibx402-technical-spec.md)** - Complete architecture
-📦 **[TypeScript Monorepo](packages/typescript/MONOREPO.md)** - pnpm workspace guide
-🐍 **[Python Packages](packages/python/README.md)** - Python package guide
+
+### Language-Specific Documentation
+🐍 **[Python README](packages/python/README.md)** - Python implementation guide
 📖 **[TypeScript README](README_TYPESCRIPT.md)** - TypeScript implementation guide
+🐹 **[Go README](README_GO.md)** - Go implementation guide
+🦀 **[Rust README](README_RUST.md)** - Rust implementation guide
 
 ## Use Cases
 
@@ -292,14 +319,29 @@ python main.py
 - [x] pnpm monorepo setup
 - [x] Example server & clients
 
-### 🔲 Phase 3: Ecosystem
+### ✅ Phase 3: Go (Complete)
+- [x] Core package (Go)
+- [x] Client library (Go)
+- [x] net/http middleware
+- [x] Echo framework integration
+- [x] Example servers
+
+### ✅ Phase 4: Rust (Complete)
+- [x] Core package (Rust)
+- [x] Client library (Rust)
+- [x] Rocket framework integration
+- [x] Actix Web framework integration
+- [x] Cargo workspace setup
+- [x] Example servers
+
+### 🔲 Phase 5: Ecosystem
 - [ ] Flask middleware
 - [ ] Django middleware
 - [ ] Next.js integration
 - [ ] Additional agent frameworks
 - [ ] CLI tools
 
-### 🔲 Phase 4: Advanced
+### 🔲 Phase 6: Advanced
 - [ ] Multi-chain support (Ethereum, Base)
 - [ ] Payment batching
 - [ ] Admin dashboard

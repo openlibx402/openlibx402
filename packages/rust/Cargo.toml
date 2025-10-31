@@ -1,0 +1,40 @@
+[workspace]
+resolver = "2"
+members = [
+    "openlibx402-core",
+    "openlibx402-client",
+    "openlibx402-rocket",
+    "openlibx402-actix",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["OpenLibx402 Contributors"]
+license = "MIT"
+repository = "https://github.com/DamianX/openlibx402"
+homepage = "https://x402.org"
+
+[workspace.dependencies]
+# Core dependencies
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+thiserror = "1.0"
+base64 = "0.22"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# Solana SDK
+solana-sdk = "2.0"
+solana-client = "2.0"
+solana-transaction-status = "2.0"
+
+# HTTP client
+reqwest = { version = "0.12", features = ["json"] }
+
+# Web frameworks
+rocket = { version = "0.5", features = ["json"] }
+actix-web = "4.4"
+actix-rt = "2.9"

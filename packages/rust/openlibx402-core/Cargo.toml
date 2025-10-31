@@ -1,0 +1,27 @@
+[package]
+name = "openlibx402-core"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Core library for the X402 payment protocol with Solana blockchain integration"
+keywords = ["x402", "payment", "solana", "blockchain", "micropayments"]
+categories = ["web-programming", "cryptography"]
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+thiserror.workspace = true
+base64.workspace = true
+tokio.workspace = true
+solana-sdk.workspace = true
+solana-client.workspace = true
+solana-transaction-status.workspace = true
+spl-token = "6.0"
+spl-associated-token-account = "5.0"
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
