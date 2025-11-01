@@ -45,6 +45,8 @@ nav:
       - TypeScript:
           - Express Server: examples/typescript/express-server.md
           - Next.js App: examples/typescript/nextjs-app.md
+          - Nuxt.js App: examples/typescript/nuxtjs-app.md
+          - Vue.js App: examples/typescript/vue-app.md
           - LangChain Agent: examples/typescript/langchain-agent.md
           - LangGraph Workflow: examples/typescript/langgraph-workflow.md
       - Go:
