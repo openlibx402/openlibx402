@@ -1,0 +1,85 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  endpoint: string;
+  method?: string;
+  price: string;
+}
+
+const { title, description, endpoint, method = "GET", price } = Astro.props;
+const componentId = `free-endpoint-${Math.random().toString(36).substring(7)}`;
+---
+
+<div class="border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+  <div class="flex items-start justify-between mb-4">
+    <div>
+      <h3 class="text-xl font-semibold mb-2">{title}</h3>
+      <p class="text-gray-600 mb-2">{description}</p>
+      <code class="text-sm bg-gray-100 px-2 py-1 rounded">
+        {method} {endpoint}
+      </code>
+    </div>
+    <div class="text-right">
+      <div class="text-sm text-gray-500">Price</div>
+      <div class="text-lg font-bold">
+        {price === "0" ? "FREE" : `${price} USDC`}
+      </div>
+    </div>
+  </div>
+
+  <!-- Button -->
+  <button
+    class={`w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors ${componentId}-fetch-btn`}
+    data-endpoint={endpoint}
+    data-method={method}
+  >
+    Try Endpoint
+  </button>
+
+  <!-- Result Section -->
+  <div id={`${componentId}-result-section`} class="hidden mt-4 p-4 bg-green-50 border border-green-200 rounded">
+    <div class="text-sm font-semibold text-green-800 mb-2">
+      ✅ Response:
+    </div>
+    <pre id={`${componentId}-result`} class="text-xs overflow-auto max-h-48"></pre>
+  </div>
+
+  <!-- Error Section -->
+  <div id={`${componentId}-error-section`} class="hidden mt-4 p-4 bg-red-50 border border-red-200 rounded">
+    <div class="text-sm font-semibold text-red-800 mb-2">❌ Error:</div>
+    <pre id={`${componentId}-error`} class="text-xs text-red-700 whitespace-pre-wrap overflow-auto max-h-48"></pre>
+  </div>
+</div>
+
+<script define:vars={{ componentId, endpoint, method }}>
+  const baseUrl = typeof window !== 'undefined' ? `${window.location.protocol}//${window.location.host}` : '';
+  const fetchBtn = document.querySelector(`.${componentId}-fetch-btn`);
+
+  fetchBtn?.addEventListener('click', async () => {
+    const resultSection = document.getElementById(`${componentId}-result-section`);
+    const errorSection = document.getElementById(`${componentId}-error-section`);
+    const resultEl = document.getElementById(`${componentId}-result`);
+    const errorEl = document.getElementById(`${componentId}-error`);
+
+    // Hide sections
+    resultSection.classList.add('hidden');
+    errorSection.classList.add('hidden');
+
+    try {
+      const response = await fetch(baseUrl + endpoint);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      resultEl.textContent = JSON.stringify(data, null, 2);
+      resultSection.classList.remove('hidden');
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      errorEl.textContent = errorMsg;
+      errorSection.classList.remove('hidden');
+    }
+  });
+</script>

@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EndpointCard from '../components/EndpointCard.astro';
+import X402EndpointCard from '../components/X402EndpointCard';
+import WalletButton from '../components/WalletButton';
+---
+
+<Layout title="X402 Astro Demo">
+  <main class="min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+      {/* Header */}
+      <div class="mb-12">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h1 class="text-4xl font-bold mb-2">X402 Astro Demo</h1>
+            <p class="text-gray-600">
+              Demonstration of X402 payment protocol with Solana wallet
+            </p>
+          </div>
+          <WalletButton client:load />
+        </div>
+
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          <div class="text-blue-800">
+            <h2 class="text-xl font-semibold mb-2">Welcome to X402 Payment Demo</h2>
+            <p class="text-sm mb-4">
+              This is a demonstration of the X402 HTTP 402 Payment Required protocol.
+              Try accessing the endpoints below to see how payment flows work.
+            </p>
+            <div class="bg-blue-100 rounded p-3 text-xs text-blue-900">
+              <p class="font-semibold mb-2">🔧 How it works:</p>
+              <ul class="list-disc list-inside space-y-1">
+                <li>Connect your Phantom wallet using the button above</li>
+                <li>Try the free endpoint to see how public access works</li>
+                <li>Click "Try Endpoint" on paid endpoints to see the payment flow</li>
+                <li>Use "Simulate Payment & Retry" to complete the demo payment</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+          <div class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+            </svg>
+            <div class="text-sm text-yellow-800">
+              <p class="font-semibold">Demo Mode:</p>
+              <p class="mt-1">This demo simulates payments for testing. Connect a Phantom wallet above, or use "Simulate Payment & Retry" to bypass actual transactions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Endpoints Grid */}
+      <div class="space-y-6">
+        <h2 class="text-2xl font-bold mb-4">API Endpoints</h2>
+
+        {/* Free Endpoint */}
+        <EndpointCard
+          title="Free Data"
+          description="Public endpoint accessible to everyone without payment"
+          endpoint="/api/free-data"
+          method="GET"
+          price="0"
+        />
+
+        {/* Premium Endpoint */}
+        <X402EndpointCard
+          client:load
+          title="Premium Data"
+          description="Access to premium market data with payment"
+          endpoint="/api/premium-data"
+          method="GET"
+          price="0.10"
+        />
+
+        {/* Expensive Endpoint */}
+        <X402EndpointCard
+          client:load
+          title="Expensive AI Inference"
+          description="AI model inference with high payment requirement"
+          endpoint="/api/expensive-data"
+          method="GET"
+          price="1.00"
+        />
+
+        {/* Tiered Endpoint */}
+        <X402EndpointCard
+          client:load
+          title="Tiered Content"
+          description="Access tiered content with different quality levels"
+          endpoint="/api/tiered-data/premium"
+          method="GET"
+          price="0.05"
+        />
+
+        {/* Process Data Endpoint */}
+        <X402EndpointCard
+          client:load
+          title="Data Processing"
+          description="Process data with payment requirement (POST request)"
+          endpoint="/api/process-data"
+          method="POST"
+          price="0.25"
+        />
+      </div>
+
+      {/* Footer */}
+      <div class="mt-12 pt-8 border-t border-gray-200">
+        <p class="text-center text-gray-600 text-sm">
+          Learn more about{" "}
+          <a
+            href="https://openlib.xyz"
+            class="text-blue-600 hover:underline"
+          >
+            X402 Protocol
+          </a>
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>
