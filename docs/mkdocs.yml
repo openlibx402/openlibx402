@@ -78,6 +78,7 @@ nav:
 theme:
   name: material
   language: en
+  custom_dir: overrides
   features:
     - navigation.top
     - navigation.tabs
@@ -121,3 +122,5 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/openlibx402
+  # Chatbot API URL - Points to local backend for development
+  chatbot_api_url: http://localhost:8080

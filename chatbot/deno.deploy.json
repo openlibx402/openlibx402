@@ -1,0 +1,18 @@
+{
+  "name": "openlibx402-ragbot",
+  "description": "RAG chatbot for OpenLibx402 documentation with rate limiting and payment support",
+  "project": "openlibx402-ragbot",
+  "entrypoint": "main.ts",
+  "include": [
+    "main.ts",
+    "src/**/*.ts",
+    "deno.json"
+  ],
+  "exclude": [
+    "scripts/**",
+    "*.md",
+    ".env*",
+    "node_modules",
+    ".git"
+  ]
+}

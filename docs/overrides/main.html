@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  <!-- Chatbot Widget Styles -->
+  <link rel="stylesheet" href="{{ 'assets/stylesheets/chatbot.css' | url }}">
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <!-- Chatbot Widget Script -->
+  <script>
+    // Configure chatbot API URL
+    window.CHATBOT_API_URL = '{{ config.extra.chatbot_api_url or "https://your-deno-deploy-url.deno.dev" }}';
+  </script>
+  <script src="{{ 'assets/javascripts/chatbot.js' | url }}"></script>
+{% endblock %}
