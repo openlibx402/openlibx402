@@ -7,9 +7,15 @@
   'use strict';
 
   // Configuration
-  const API_URL = window.CHATBOT_API_URL || 'http://localhost:8000';
+  const API_URL = window.CHATBOT_API_URL || 'http://localhost:3000';
   const STORAGE_KEY = 'openlibx402_chat_history';
   const MAX_HISTORY = 10;
+
+  // Get the base URL for documentation links
+  const getDocsBaseUrl = () => {
+    const url = new URL(window.location.href);
+    return `${url.protocol}//${url.host}/docs/`;
+  };
 
   // State
   let conversationHistory = [];
@@ -89,13 +95,18 @@
     const messageEl = document.createElement('div');
     messageEl.className = `chatbot-message chatbot-message-${role}`;
 
-    let html = `<div class="chatbot-message-content">${escapeHtml(content)}</div>`;
+    // Render markdown for assistant messages
+    const renderedContent = role === 'assistant' ? renderMarkdown(content) : `<p>${escapeHtml(content)}</p>`;
+    let html = `<div class="chatbot-message-content">${renderedContent}</div>`;
 
     if (sources && sources.length > 0) {
       html += '<div class="chatbot-sources"><strong>Sources:</strong><ul>';
       sources.forEach(source => {
         const relevance = Math.round(source.relevance * 100);
-        html += `<li>${escapeHtml(source.file)}${source.section ? ` (${escapeHtml(source.section)})` : ''} - ${relevance}% relevant</li>`;
+        const url = sourceToUrl(source.file);
+        const displayName = source.file;
+        const section = source.section ? ` (${escapeHtml(source.section)})` : '';
+        html += `<li><a href="${url}" target="_blank" rel="noopener">${escapeHtml(displayName)}</a>${section} - ${relevance}% relevant</li>`;
       });
       html += '</ul></div>';
     }
@@ -112,6 +123,52 @@
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  /**
+   * Simple markdown renderer
+   * Converts markdown to HTML with support for:
+   * - Code blocks (```language)
+   * - Inline code (`code`)
+   * - Bold (**text**)
+   * - Italic (*text*)
+   * - Links ([text](url))
+   */
+  function renderMarkdown(text) {
+    let html = escapeHtml(text);
+
+    // Code blocks (```language\ncode\n```)
+    html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
+      return `<pre><code class="language-${lang || 'plaintext'}">${code.trim()}</code></pre>`;
+    });
+
+    // Inline code (`code`)
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    // Bold (**text**)
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+    // Italic (*text* but not inside **)
+    html = html.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+
+    // Links ([text](url))
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+    // Line breaks
+    html = html.replace(/\n\n/g, '</p><p>');
+    html = html.replace(/\n/g, '<br>');
+
+    return `<p>${html}</p>`;
+  }
+
+  /**
+   * Convert source file path to full documentation URL
+   */
+  function sourceToUrl(sourceFile) {
+    const baseUrl = getDocsBaseUrl();
+    // Remove .md extension and create URL
+    const path = sourceFile.replace(/\.md$/, '/');
+    return `${baseUrl}${path}`;
   }
 
   /**
@@ -200,7 +257,9 @@
                 document.getElementById('chatbot-messages').appendChild(currentMessageEl);
               }
 
-              currentMessageEl.querySelector('.chatbot-message-content').textContent = assistantMessage;
+              // Render markdown while streaming
+              const contentEl = currentMessageEl.querySelector('.chatbot-message-content');
+              contentEl.innerHTML = renderMarkdown(assistantMessage);
               document.getElementById('chatbot-messages').scrollTop =
                 document.getElementById('chatbot-messages').scrollHeight;
             }
@@ -210,7 +269,10 @@
               let sourcesHtml = '<div class="chatbot-sources"><strong>Sources:</strong><ul>';
               sources.forEach(source => {
                 const relevance = Math.round(source.relevance * 100);
-                sourcesHtml += `<li>${escapeHtml(source.file)}${source.section ? ` (${escapeHtml(source.section)})` : ''} - ${relevance}% relevant</li>`;
+                const url = sourceToUrl(source.file);
+                const displayName = source.file;
+                const section = source.section ? ` (${escapeHtml(source.section)})` : '';
+                sourcesHtml += `<li><a href="${url}" target="_blank" rel="noopener">${escapeHtml(displayName)}</a>${section} - ${relevance}% relevant</li>`;
               });
               sourcesHtml += '</ul></div>';
               currentMessageEl.innerHTML += sourcesHtml;
