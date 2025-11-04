@@ -1,0 +1,40 @@
+{
+  "name": "@openlibx402/ragbot",
+  "version": "0.1.0",
+  "description": "RAG (Retrieval-Augmented Generation) bot utilities for OpenLibx402",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "keywords": [
+    "rag",
+    "chatbot",
+    "ai",
+    "llm",
+    "vector-database",
+    "openlibx402"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@pinecone-database/pinecone": "^3.0.3",
+    "openai": "^4.77.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

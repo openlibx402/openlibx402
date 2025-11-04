@@ -10,6 +10,16 @@ nav:
   - Overview: index.md
   - Technical Specification: openlibx402-technical-spec.md
   - Quick Reference: quick-reference.md
+  - Chatbot:
+      - Overview: chatbot/index.md
+      - Quick Start: chatbot/quickstart.md
+      - Features: chatbot/overview.md
+      - Configuration: chatbot/configuration.md
+      - API Reference: chatbot/api.md
+      - Payment System: chatbot/payments.md
+      - Architecture: chatbot/architecture.md
+      - Deployment: chatbot/deployment.md
+      - Documentation Map: chatbot/TABLE_OF_CONTENTS.md
   - Packages:
       - Python:
           - Core Library: packages/python/openlibx402-core.md
@@ -78,6 +88,7 @@ nav:
 theme:
   name: material
   language: en
+  custom_dir: overrides
   features:
     - navigation.top
     - navigation.tabs
@@ -121,3 +132,15 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/openlibx402
+  # Chatbot Configuration
+  # - Set api_url to your backend deployment URL
+  # - Development: http://localhost:8000 (for Deno) or http://localhost:3000 (for Node.js)
+  # - Production: https://your-deno-deploy-url.deno.dev or your custom domain
+  chatbot:
+    enabled: true
+    api_url: http://localhost:3000
+    api_url_production: https://api.chatbot.openlib.xyz
+    free_queries_per_day: 3
+    min_payment_usdc: 0.01
+    max_payment_usdc: 1.0
+    usdc_per_query: 0.001
