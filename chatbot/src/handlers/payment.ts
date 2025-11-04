@@ -49,10 +49,19 @@ export async function handlePayment(c: Context, rateLimiter: RateLimiter) {
       );
     }
 
-    logger.info('Payment verification requested', { signature, amount, token });
+    // Validate amount
+    const paymentAmount = parseFloat(amount || '0.01');
+    const minAmount = 0.01;
+    const maxAmount = 1.0;
 
-    // Get expected payment amount
-    const paymentAmount = parseFloat(Deno.env.get('X402_PAYMENT_AMOUNT') || '0.01');
+    if (isNaN(paymentAmount) || paymentAmount < minAmount || paymentAmount > maxAmount) {
+      return c.json(
+        { error: `Invalid payment amount. Must be between ${minAmount} and ${maxAmount} USDC` },
+        400
+      );
+    }
+
+    logger.info('Payment verification requested', { signature, amount: paymentAmount, token });
 
     // Get services
     const kvStore = await getKv();
@@ -76,8 +85,8 @@ export async function handlePayment(c: Context, rateLimiter: RateLimiter) {
       logger.warn(`Invalid payment signature: ${signature}`);
       return c.json(
         {
-          error: 'Invalid or unconfirmed transaction. Please ensure you sent 0.01 USDC (not SOL) to the recipient address.',
-          details: 'Transaction verification failed. Check that: 1) You sent USDC tokens (not SOL), 2) Amount is exactly 0.01 USDC, 3) Sent to the correct recipient address'
+          error: `Invalid or unconfirmed transaction. Please ensure you sent ${paymentAmount} USDC (not SOL) to the recipient address.`,
+          details: `Transaction verification failed. Check that: 1) You sent USDC tokens (not SOL), 2) Amount is ${paymentAmount} USDC, 3) Sent to the correct recipient address, 4) Transaction has been confirmed on the blockchain (wait 30-60 seconds)`
         },
         400
       );
@@ -87,25 +96,32 @@ export async function handlePayment(c: Context, rateLimiter: RateLimiter) {
     await solana.markTransactionUsed(signature, kvStore);
 
     // Grant additional queries
+    // Calculate queries: 0.01 USDC = 10 queries, 1 USDC = 1000 queries
+    const queriesGranted = Math.floor(paymentAmount * 1000);
+
     // Get user ID same way as rate limiter does (using IP address)
     const ip = c.req.header('x-forwarded-for') || c.req.header('x-real-ip') || 'unknown';
     const userId = `user:${ip}`;
 
-    logger.info(`Granting queries to user ${userId} (IP: ${ip})`);
-    await rateLimiter.grantQueries(userId, 1);
+    logger.info(`Granting ${queriesGranted} queries to user ${userId} (IP: ${ip}) for ${paymentAmount} USDC payment`);
+    await rateLimiter.grantQueries(userId, queriesGranted);
 
     // Verify the grant was successful by checking the updated limit
     const updatedLimit = await rateLimiter.checkLimit(userId);
     logger.info(`Payment accepted for user ${userId} (IP: ${ip})`, {
       signature,
+      amount: paymentAmount,
+      queriesGranted,
       remaining: updatedLimit.remaining,
       requiresPayment: updatedLimit.requiresPayment
     });
 
+    const queryText = queriesGranted === 1 ? 'query' : 'queries';
     return c.json({
       success: true,
-      message: 'Payment accepted. You have been granted 1 additional query.',
+      message: `Payment accepted. You have been granted ${queriesGranted} additional ${queryText}.`,
       signature,
+      queriesGranted,
       rateLimit: {
         remaining: updatedLimit.remaining,
         resetAt: updatedLimit.resetAt,

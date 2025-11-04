@@ -404,17 +404,28 @@
       // Get payment info from backend
       const paymentInfo = await fetch(`${API_URL}/api/payment/info`).then(r => r.json());
 
-      statusEl.textContent = `Sending ${paymentInfo.amount} USDC...`;
+      // Get selected amount from input
+      const amountInput = document.getElementById('payment-amount-input');
+      const selectedAmount = amountInput ? parseFloat(amountInput.value) : 0.01;
+      const finalAmount = Math.max(0.01, Math.min(1, selectedAmount)); // Clamp between min and max
+
+      statusEl.textContent = `Sending ${finalAmount} USDC...`;
       payBtn.textContent = 'Confirm in Phantom...';
 
-      // Send payment with payment info
+      // Send payment with selected amount
       const signature = await sendUSDCPayment(
         walletAddress,
         paymentInfo.recipient,
-        paymentInfo.amount,
+        finalAmount,
         paymentInfo.usdcMint,
         paymentInfo.network
       );
+
+      statusEl.textContent = 'Waiting for blockchain confirmation (30-60s)...';
+      payBtn.textContent = 'Confirming...';
+
+      // Wait a bit for blockchain confirmation before verifying
+      await new Promise(resolve => setTimeout(resolve, 5000));
 
       statusEl.textContent = 'Verifying payment...';
       payBtn.textContent = 'Verifying...';
@@ -427,7 +438,7 @@
         },
         body: JSON.stringify({
           signature,
-          amount: paymentInfo.amount,
+          amount: finalAmount,
           token: 'USDC',
         }),
       });
@@ -456,8 +467,12 @@
       const networkParam = paymentInfo.network === 'mainnet-beta' ? '' : '?cluster=devnet';
       const solscanUrl = `https://solscan.io/tx/${signature}${networkParam}`;
 
+      const queriesGranted = result.queriesGranted || Math.floor(finalAmount * 1000);
+      const queryText = queriesGranted === 1 ? 'query' : 'queries';
+
       statusEl.innerHTML = `
-        ✅ Payment successful! You have ${result.rateLimit?.remaining || 1} additional ${result.rateLimit?.remaining === 1 ? 'query' : 'queries'}.<br>
+        ✅ Payment successful! Granted ${queriesGranted} ${queryText}.<br>
+        <small>You now have ${result.rateLimit?.remaining || queriesGranted} ${result.rateLimit?.remaining === 1 ? 'query' : 'queries'} available.</small><br>
         <a href="${solscanUrl}" target="_blank" rel="noopener" style="color: #667eea; text-decoration: underline; font-weight: 600;">
           View on Solscan →
         </a>
@@ -668,6 +683,38 @@
       <button id="chatbot-fab" class="chatbot-fab" title="Open Chat">💬</button>
 
       <!-- Payment Modal -->
+      <style>
+        /* Custom Range Slider Styling */
+        #payment-amount-input::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #2196F3;
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(33, 150, 243, 0.4);
+          transition: all 0.15s ease;
+        }
+        #payment-amount-input::-webkit-slider-thumb:hover {
+          transform: scale(1.2);
+          box-shadow: 0 3px 8px rgba(33, 150, 243, 0.6);
+        }
+        #payment-amount-input::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #2196F3;
+          cursor: pointer;
+          border: none;
+          box-shadow: 0 2px 6px rgba(33, 150, 243, 0.4);
+          transition: all 0.15s ease;
+        }
+        #payment-amount-input::-moz-range-thumb:hover {
+          transform: scale(1.2);
+          box-shadow: 0 3px 8px rgba(33, 150, 243, 0.6);
+        }
+      </style>
       <div id="chatbot-payment-modal" class="payment-modal">
         <div class="payment-modal-content">
           <div class="payment-modal-header">
@@ -677,33 +724,46 @@
           <div class="payment-modal-body">
             <div class="payment-info">
               <p>You've reached your daily query limit.</p>
-              <p>Pay <strong>0.01 USDC</strong> to continue using the chatbot.</p>
+              <p>Choose how many queries you'd like to purchase:</p>
+            </div>
+            <div class="payment-amount-selector" style="margin: 20px 0;">
+              <label for="payment-amount-input" style="display: block; margin-bottom: 12px; font-weight: 500; font-size: 0.95em;">
+                Payment Amount: <span id="payment-amount-display" style="color: #2196F3; font-size: 1.1em;">0.01 USDC</span>
+              </label>
+              <input
+                type="range"
+                id="payment-amount-input"
+                min="0.01"
+                max="1"
+                step="0.01"
+                value="0.01"
+                style="width: 100%; height: 6px; cursor: pointer; -webkit-appearance: none; appearance: none; background: linear-gradient(to right, #2196F3 0%, #2196F3 1%, #ddd 1%, #ddd 100%); border-radius: 5px; outline: none;"
+              />
+              <div style="display: flex; justify-content: space-between; font-size: 0.75em; color: #999; margin-top: 6px;">
+                <span>0.01 USDC<br/>(10 queries)</span>
+                <span style="text-align: right;">1.00 USDC<br/>(1000 queries)</span>
+              </div>
+              <div style="font-size: 0.95em; color: #333; margin-top: 16px; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 6px; text-align: center; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);">
+                You will receive: <strong id="queries-display" style="font-size: 1.2em;">10 queries</strong>
+              </div>
             </div>
             <div class="payment-details">
               <div class="payment-detail-row">
-                <span>Amount:</span>
-                <span><strong>0.01 USDC</strong></span>
-              </div>
-              <div class="payment-detail-row">
                 <span>Network:</span>
                 <span>Solana Devnet</span>
-              </div>
-              <div class="payment-detail-row">
-                <span>Grants:</span>
-                <span>1 additional query</span>
               </div>
             </div>
             <div class="payment-instructions" style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 0.85em;">
               <strong style="display: block; margin-bottom: 8px;">📝 Important:</strong>
               <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
                 <li>You must send <strong>USDC tokens</strong> (not SOL)</li>
-                <li>Amount must be exactly <strong>0.01 USDC</strong></li>
+                <li>Use the slider to select your desired amount</li>
                 <li>Need devnet USDC? Get free tokens at <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">spl-token-faucet.com</a></li>
               </ul>
             </div>
             <div id="chatbot-payment-status" class="payment-status"></div>
             <button id="chatbot-pay-btn" class="payment-button" onclick="makePayment()">
-              Connect Phantom & Pay 0.01 USDC
+              Connect Phantom & Pay <span id="payment-button-amount">0.01</span> USDC
             </button>
             <p class="payment-note">
               <small>🔒 Secure payment via Phantom wallet</small>
@@ -767,6 +827,42 @@
         sendMessage(message);
       }
     });
+
+    // Payment amount selector event listener
+    const amountInput = document.getElementById('payment-amount-input');
+    if (amountInput) {
+      amountInput.addEventListener('input', updatePaymentDisplay);
+      // Initialize display
+      updatePaymentDisplay();
+    }
+  }
+
+  /**
+   * Update payment display based on selected amount
+   */
+  function updatePaymentDisplay() {
+    const amountInput = document.getElementById('payment-amount-input');
+    const amountDisplay = document.getElementById('payment-amount-display');
+    const queriesDisplay = document.getElementById('queries-display');
+    const buttonAmount = document.getElementById('payment-button-amount');
+
+    if (!amountInput) return;
+
+    let amount = parseFloat(amountInput.value) || 0.01;
+    // Clamp between min and max
+    amount = Math.max(0.01, Math.min(1, amount));
+    amountInput.value = amount.toFixed(2);
+
+    // Update slider gradient to show progress
+    const percentage = ((amount - 0.01) / (1 - 0.01)) * 100;
+    amountInput.style.background = `linear-gradient(to right, #2196F3 0%, #2196F3 ${percentage}%, #ddd ${percentage}%, #ddd 100%)`;
+
+    const queries = Math.floor(amount * 1000);
+    const queryText = queries === 1 ? 'query' : 'queries';
+
+    if (amountDisplay) amountDisplay.textContent = `${amount.toFixed(2)} USDC`;
+    if (queriesDisplay) queriesDisplay.textContent = `${queries} ${queryText}`;
+    if (buttonAmount) buttonAmount.textContent = amount.toFixed(2);
   }
 
   // Initialize when DOM is ready
