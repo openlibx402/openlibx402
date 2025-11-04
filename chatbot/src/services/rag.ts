@@ -60,8 +60,8 @@ export class RAGService {
         section?: string;
       };
 
-      // Filter by relevance score
-      if (match.score && match.score >= 0.7) {
+      // Filter by relevance score (lowered from 0.7 to 0.5 for better recall)
+      if (match.score && match.score >= 0.5) {
         results.push({
           content: metadata.text,
           source: metadata.source,
