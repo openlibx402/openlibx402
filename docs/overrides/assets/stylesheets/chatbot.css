@@ -337,6 +337,191 @@
   }
 }
 
+/* Payment Modal */
+.payment-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.payment-modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.payment-modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.payment-modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.payment-modal-close {
+  background: #f8f9fa;
+  border: none;
+  color: #6c757d;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.2s;
+}
+
+.payment-modal-close:hover {
+  background: #e9ecef;
+}
+
+.payment-modal-body {
+  padding: 24px;
+}
+
+.payment-info {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.payment-info p {
+  margin: 8px 0;
+  color: #495057;
+  font-size: 15px;
+}
+
+.payment-info strong {
+  color: #667eea;
+  font-size: 18px;
+}
+
+.payment-details {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.payment-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.payment-detail-row:not(:last-child) {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.payment-detail-row span:first-child {
+  color: #6c757d;
+}
+
+.payment-detail-row span:last-child {
+  color: #333;
+  font-weight: 500;
+}
+
+.payment-status {
+  min-height: 24px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.payment-status-info {
+  background: #e7f3ff;
+  color: #0066cc;
+}
+
+.payment-status-success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.payment-status-success a {
+  color: #667eea;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.payment-status-success a:hover {
+  color: #5568d3;
+}
+
+.payment-status-error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.payment-button {
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.payment-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.payment-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.payment-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.payment-note {
+  margin-top: 16px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.payment-note small {
+  font-size: 12px;
+}
+
 /* Dark Mode Support (optional) */
 @media (prefers-color-scheme: dark) {
   .chatbot-widget {
@@ -399,5 +584,58 @@
   .chatbot-rate-limit {
     background: #2d2d2d;
     border-bottom-color: #3a3a3a;
+  }
+
+  .payment-modal-content {
+    background: #1e1e1e;
+  }
+
+  .payment-modal-header {
+    border-bottom-color: #3a3a3a;
+  }
+
+  .payment-modal-header h3 {
+    color: #e0e0e0;
+  }
+
+  .payment-modal-close {
+    background: #2d2d2d;
+    color: #b0b0b0;
+  }
+
+  .payment-modal-close:hover {
+    background: #3a3a3a;
+  }
+
+  .payment-info p {
+    color: #b0b0b0;
+  }
+
+  .payment-details {
+    background: #2d2d2d;
+  }
+
+  .payment-detail-row {
+    border-bottom-color: #3a3a3a;
+  }
+
+  .payment-detail-row span:first-child {
+    color: #888;
+  }
+
+  .payment-detail-row span:last-child {
+    color: #e0e0e0;
+  }
+
+  .payment-status-success a {
+    color: #8a9bea;
+  }
+
+  .payment-status-success a:hover {
+    color: #9fb0f0;
+  }
+
+  .payment-note {
+    color: #888;
   }
 }

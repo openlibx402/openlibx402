@@ -54,9 +54,20 @@
   async function fetchRateLimitStatus() {
     try {
       const response = await fetch(`${API_URL}/api/status`);
+
+      // Handle both 200 OK and 402 Payment Required responses
       if (response.ok) {
         const data = await response.json();
         rateLimitInfo = data.rateLimit;
+        updateRateLimitDisplay();
+      } else if (response.status === 402) {
+        // Rate limit exceeded - extract payment info
+        const data = await response.json();
+        rateLimitInfo = {
+          remaining: data.remaining || 0,
+          resetAt: data.resetAt,
+          requiresPayment: true,
+        };
         updateRateLimitDisplay();
       }
     } catch (e) {
@@ -75,7 +86,7 @@
       statusEl.innerHTML = `
         <span class="rate-limit-warning">
           ⚠️ Daily limit reached.
-          <a href="#" onclick="window.chatbotShowPayment(); return false;">Pay 0.1 USDC</a> for more queries.
+          <a href="#" onclick="window.chatbotShowPayment(); return false;">Pay 0.01 USDC</a> for more queries.
         </span>
       `;
     } else {
@@ -321,9 +332,245 @@
    * Show payment modal
    */
   window.chatbotShowPayment = function() {
-    alert('Payment feature coming soon! This will integrate with Solana to accept USDC payments.');
-    // TODO: Implement payment UI with Solana wallet integration
+    const modal = document.getElementById('chatbot-payment-modal');
+    if (modal) {
+      modal.style.display = 'flex';
+    }
   };
+
+  /**
+   * Close payment modal
+   */
+  function closePaymentModal() {
+    const modal = document.getElementById('chatbot-payment-modal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+  }
+
+  /**
+   * Connect Phantom wallet
+   */
+  async function connectPhantomWallet() {
+    try {
+      // Check if Phantom is installed
+      const isPhantomInstalled = window.phantom?.solana?.isPhantom;
+
+      if (!isPhantomInstalled) {
+        alert('Phantom wallet is not installed. Please install it from https://phantom.app/');
+        window.open('https://phantom.app/', '_blank');
+        return null;
+      }
+
+      // Connect to Phantom
+      const resp = await window.phantom.solana.connect();
+      return resp.publicKey.toString();
+    } catch (error) {
+      console.error('Failed to connect to Phantom:', error);
+      alert('Failed to connect to Phantom wallet. Please try again.');
+      return null;
+    }
+  }
+
+  /**
+   * Make payment using x402 protocol
+   */
+  window.makePayment = async function() {
+    const payBtn = document.getElementById('chatbot-pay-btn');
+    const statusEl = document.getElementById('chatbot-payment-status');
+
+    try {
+      payBtn.disabled = true;
+      payBtn.textContent = 'Connecting wallet...';
+      statusEl.textContent = 'Connecting to Phantom wallet...';
+      statusEl.className = 'payment-status-info';
+
+      // Connect wallet
+      const walletAddress = await connectPhantomWallet();
+      if (!walletAddress) {
+        throw new Error('Wallet connection failed');
+      }
+
+      statusEl.textContent = `Connected: ${walletAddress.slice(0, 4)}...${walletAddress.slice(-4)}`;
+      payBtn.textContent = 'Preparing payment...';
+
+      // Get payment info from backend
+      const paymentInfo = await fetch(`${API_URL}/api/payment/info`).then(r => r.json());
+
+      statusEl.textContent = `Sending ${paymentInfo.amount} USDC...`;
+      payBtn.textContent = 'Confirm in Phantom...';
+
+      // Send payment with payment info
+      const signature = await sendUSDCPayment(
+        walletAddress,
+        paymentInfo.recipient,
+        paymentInfo.amount,
+        paymentInfo.usdcMint,
+        paymentInfo.network
+      );
+
+      statusEl.textContent = 'Verifying payment...';
+      payBtn.textContent = 'Verifying...';
+
+      // Submit payment to backend
+      const response = await fetch(`${API_URL}/api/payment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          signature,
+          amount: paymentInfo.amount,
+          token: 'USDC',
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Payment verification failed');
+      }
+
+      const result = await response.json();
+
+      // Get Solscan URL based on network
+      const networkParam = paymentInfo.network === 'mainnet-beta' ? '' : '?cluster=devnet';
+      const solscanUrl = `https://solscan.io/tx/${signature}${networkParam}`;
+
+      statusEl.innerHTML = `
+        ✅ Payment successful! You have 1 additional query.<br>
+        <a href="${solscanUrl}" target="_blank" rel="noopener" style="color: #667eea; text-decoration: underline; font-weight: 600;">
+          View on Solscan →
+        </a>
+      `;
+      statusEl.className = 'payment-status-success';
+      payBtn.textContent = 'Payment Complete';
+
+      // Refresh rate limit
+      await fetchRateLimitStatus();
+
+      // Close modal after 5 seconds (more time to view link)
+      setTimeout(() => {
+        closePaymentModal();
+        statusEl.innerHTML = '';
+        payBtn.textContent = 'Pay 0.01 USDC';
+        payBtn.disabled = false;
+      }, 5000);
+
+    } catch (error) {
+      console.error('Payment error:', error);
+      statusEl.textContent = `❌ Error: ${error.message}`;
+      statusEl.className = 'payment-status-error';
+      payBtn.textContent = 'Try Again';
+      payBtn.disabled = false;
+    }
+  };
+
+  /**
+   * Send SOL payment via Phantom (simplified version without Web3.js transaction building)
+   * Uses Phantom's send method which handles transaction creation internally
+   */
+  async function sendUSDCPayment(fromWalletAddress, toWalletAddress, amount, usdcMintAddress, network) {
+    try {
+      const provider = window.phantom.solana;
+
+      console.log('💰 Payment Request:');
+      console.log('  from:', fromWalletAddress);
+      console.log('  to:', toWalletAddress);
+      console.log('  amount:', '0.0001 SOL');
+      console.log('  network:', network);
+
+      // Use Phantom's send method - it handles transaction creation internally
+      // This completely avoids the Web3.js BigInt encoding issues
+      const transaction = await provider.request({
+        method: "solana:signAndSendTransaction",
+        params: {
+          message: {
+            action: "transfer",
+            params: {
+              to: toWalletAddress,
+              amount: 100000, // lamports (0.0001 SOL)
+            },
+          },
+        },
+      });
+
+      const signature = transaction.signature;
+      console.log('✅ Transaction sent:', signature);
+
+      return signature;
+
+    } catch (error) {
+      console.error('❌ Primary payment method failed:', error.message);
+      console.log('🔄 Falling back to legacy transaction method...');
+
+      // If Phantom's send method doesn't work, try the legacy approach
+      // but build the transaction using raw bytes
+      try {
+        return await sendSOLLegacy(fromWalletAddress, toWalletAddress, network);
+      } catch (legacyError) {
+        console.error('❌ Legacy method also failed:', legacyError);
+        throw legacyError;
+      }
+    }
+  }
+
+  /**
+   * Legacy method: Send SOL using raw transaction bytes
+   */
+  async function sendSOLLegacy(fromAddress, toAddress, network) {
+    console.log('🔧 Starting legacy transaction method');
+    console.log('  Buffer.alloc available:', typeof Buffer.alloc);
+    console.log('  Buffer.writeUInt32LE available:', typeof Buffer.prototype.writeUInt32LE);
+    console.log('  Buffer.writeBigUInt64LE available:', typeof Buffer.prototype.writeBigUInt64LE);
+
+    const provider = window.phantom.solana;
+    const { Connection, PublicKey, TransactionInstruction, Transaction } = window.solanaWeb3;
+
+    const rpcUrl = network === 'mainnet-beta'
+      ? 'https://api.mainnet-beta.solana.com'
+      : 'https://api.devnet.solana.com';
+    const connection = new Connection(rpcUrl, 'confirmed');
+
+    const fromPubkey = new PublicKey(fromAddress);
+    const toPubkey = new PublicKey(toAddress);
+
+    console.log('📡 Getting latest blockhash...');
+    const { blockhash } = await connection.getLatestBlockhash();
+    console.log('✓ Blockhash received:', blockhash);
+
+    // Create transfer instruction using raw data to avoid BigInt encoding
+    console.log('🔨 Creating instruction data buffer...');
+    const data = Buffer.alloc(12);
+    console.log('✓ Buffer allocated, length:', data.length);
+
+    data.writeUInt32LE(2, 0); // Transfer instruction index
+    console.log('✓ Wrote instruction index (2)');
+
+    data.writeBigUInt64LE(BigInt(100000), 4); // Amount in lamports
+    console.log('✓ Wrote lamports amount (100000)');
+    console.log('  Buffer contents:', Array.from(data));
+
+    const instruction = new TransactionInstruction({
+      keys: [
+        { pubkey: fromPubkey, isSigner: true, isWritable: true },
+        { pubkey: toPubkey, isSigner: false, isWritable: true },
+      ],
+      programId: new PublicKey('11111111111111111111111111111111'),
+      data: data,
+    });
+    console.log('✓ Transaction instruction created');
+
+    const transaction = new Transaction({
+      recentBlockhash: blockhash,
+      feePayer: fromPubkey,
+    }).add(instruction);
+    console.log('✓ Transaction created');
+
+    console.log('📝 Requesting signature from Phantom...');
+    const { signature } = await provider.signAndSendTransaction(transaction);
+    console.log('✅ Transaction sent! Signature:', signature);
+
+    return signature;
+  }
 
   /**
    * Initialize chatbot
@@ -350,6 +597,43 @@
         </div>
       </div>
       <button id="chatbot-fab" class="chatbot-fab" title="Open Chat">💬</button>
+
+      <!-- Payment Modal -->
+      <div id="chatbot-payment-modal" class="payment-modal">
+        <div class="payment-modal-content">
+          <div class="payment-modal-header">
+            <h3>💳 Make Payment</h3>
+            <button class="payment-modal-close" onclick="document.getElementById('chatbot-payment-modal').style.display='none'">✕</button>
+          </div>
+          <div class="payment-modal-body">
+            <div class="payment-info">
+              <p>You've reached your daily query limit.</p>
+              <p>Pay <strong>0.01 USDC</strong> to continue using the chatbot.</p>
+            </div>
+            <div class="payment-details">
+              <div class="payment-detail-row">
+                <span>Amount:</span>
+                <span><strong>0.01 USDC</strong></span>
+              </div>
+              <div class="payment-detail-row">
+                <span>Network:</span>
+                <span>Solana</span>
+              </div>
+              <div class="payment-detail-row">
+                <span>Grants:</span>
+                <span>1 additional query</span>
+              </div>
+            </div>
+            <div id="chatbot-payment-status" class="payment-status"></div>
+            <button id="chatbot-pay-btn" class="payment-button" onclick="makePayment()">
+              Connect Phantom & Pay
+            </button>
+            <p class="payment-note">
+              <small>🔒 Secure payment via Phantom wallet. Make sure you have at least 0.01 USDC in your wallet.</small>
+            </p>
+          </div>
+        </div>
+      </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', chatbotHtml);

@@ -28,6 +28,8 @@ export async function handleStatus(c: Context) {
     }, 500);
   }
 
+  const paymentAmount = parseFloat(Deno.env.get('X402_PAYMENT_AMOUNT') || '0.01');
+
   return c.json({
     rateLimit: {
       remaining: rateLimitInfo.remaining,
@@ -35,7 +37,7 @@ export async function handleStatus(c: Context) {
       requiresPayment: rateLimitInfo.requiresPayment,
     },
     payment: rateLimitInfo.requiresPayment ? {
-      amount: 0.1,
+      amount: paymentAmount,
       token: 'USDC',
       network: 'solana',
     } : undefined,

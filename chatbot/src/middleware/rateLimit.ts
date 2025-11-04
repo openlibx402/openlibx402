@@ -142,6 +142,7 @@ export class RateLimiter {
       c.header('X-RateLimit-Reset', String(limitInfo.resetAt));
 
       if (!limitInfo.allowed) {
+        const paymentAmount = parseFloat(Deno.env.get('X402_PAYMENT_AMOUNT') || '0.01');
         return c.json(
           {
             error: 'Rate limit exceeded',
@@ -150,7 +151,7 @@ export class RateLimiter {
             resetAt: limitInfo.resetAt,
             payment: {
               required: true,
-              amount: 0.1,
+              amount: paymentAmount,
               token: 'USDC',
             },
           },

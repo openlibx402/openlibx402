@@ -6,28 +6,31 @@
 import type { Context } from 'hono';
 import type { RateLimiter } from '../middleware/rateLimit.ts';
 import { logger } from '../utils/logger.ts';
+import { SolanaVerificationService } from '../services/solana.ts';
 
-/**
- * Payment verification (placeholder for OpenLibx402 integration)
- * TODO: Integrate with @openlibx402/core for actual payment verification
- */
-async function verifyPayment(
-  signature: string,
-  amount: number,
-  token: string
-): Promise<boolean> {
-  // This is a placeholder implementation
-  // In production, this would:
-  // 1. Verify the Solana transaction signature
-  // 2. Check the amount matches expected payment
-  // 3. Verify the token is USDC
-  // 4. Ensure the payment is to the correct wallet
+// Deno KV for tracking used transactions
+let kv: Deno.Kv | null = null;
+let solanaService: SolanaVerificationService | null = null;
 
-  logger.info('Payment verification requested', { signature, amount, token });
+// Initialize KV
+async function getKv(): Promise<Deno.Kv> {
+  if (!kv) {
+    kv = await Deno.openKv();
+  }
+  return kv;
+}
 
-  // For now, we'll accept any signature as valid
-  // TODO: Implement actual Solana transaction verification
-  return signature && signature.length > 0;
+// Get Solana verification service (lazy initialization)
+function getSolanaService(): SolanaVerificationService {
+  if (!solanaService) {
+    const recipientAddress = Deno.env.get('X402_WALLET_ADDRESS');
+    if (!recipientAddress) {
+      throw new Error('X402_WALLET_ADDRESS not configured');
+    }
+    const network = Deno.env.get('SOLANA_NETWORK') as 'devnet' | 'mainnet-beta' || 'devnet';
+    solanaService = new SolanaVerificationService(recipientAddress, network);
+  }
+  return solanaService;
 }
 
 /**
@@ -46,15 +49,39 @@ export async function handlePayment(c: Context, rateLimiter: RateLimiter) {
       );
     }
 
-    // Verify payment
-    const isValid = await verifyPayment(signature, amount || 0.1, token || 'USDC');
+    logger.info('Payment verification requested', { signature, amount, token });
 
-    if (!isValid) {
+    // Get expected payment amount
+    const paymentAmount = parseFloat(Deno.env.get('X402_PAYMENT_AMOUNT') || '0.01');
+
+    // Get services
+    const kvStore = await getKv();
+    const solana = getSolanaService();
+
+    // Check if transaction was already used
+    const alreadyUsed = await solana.isTransactionUsed(signature, kvStore);
+
+    if (alreadyUsed) {
+      logger.warn(`Transaction already used: ${signature}`);
       return c.json(
-        { error: 'Invalid payment signature' },
+        { error: 'Transaction already used' },
         400
       );
     }
+
+    // Verify the Solana transaction
+    const isValid = await solana.verifyTransaction(signature, paymentAmount);
+
+    if (!isValid) {
+      logger.warn(`Invalid payment signature: ${signature}`);
+      return c.json(
+        { error: 'Invalid or unconfirmed transaction' },
+        400
+      );
+    }
+
+    // Mark transaction as used
+    await solana.markTransactionUsed(signature, kvStore);
 
     // Grant additional queries
     const userId = c.get('userId') || 'unknown';
@@ -80,12 +107,17 @@ export async function handlePayment(c: Context, rateLimiter: RateLimiter) {
  * Get payment information
  */
 export async function getPaymentInfo(c: Context) {
-  // This would typically come from config
+  // Get payment amount from config
+  const paymentAmount = parseFloat(Deno.env.get('X402_PAYMENT_AMOUNT') || '0.01');
+  const network = Deno.env.get('SOLANA_NETWORK') || 'devnet';
+  const usdcMint = Deno.env.get('USDC_MINT_ADDRESS') || '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU';
+
   const paymentInfo = {
-    amount: 0.1,
+    amount: paymentAmount,
     token: 'USDC',
-    network: 'solana',
+    network: network,
     recipient: Deno.env.get('X402_WALLET_ADDRESS') || 'Configure wallet address',
+    usdcMint: usdcMint,
     instructions: [
       'Send the specified amount of USDC to the recipient address',
       'Submit the transaction signature to the /api/payment endpoint',
