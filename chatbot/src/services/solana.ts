@@ -3,12 +3,13 @@
  * Verifies transaction signatures on Solana blockchain
  */
 
-import { Connection, PublicKey, LAMPORTS_PER_SOL } from 'npm:@solana/web3.js@^1.87.6';
+import { Connection, PublicKey } from 'npm:@solana/web3.js@^1.87.6';
 import { logger } from '../utils/logger.ts';
 
 export class SolanaVerificationService {
   private connection: Connection;
   private recipientAddress: PublicKey;
+  private usdcMintAddress: PublicKey;
 
   constructor(recipientAddress: string, network: 'devnet' | 'mainnet-beta' = 'devnet') {
     const rpcUrl = network === 'mainnet-beta'
@@ -17,17 +18,21 @@ export class SolanaVerificationService {
 
     this.connection = new Connection(rpcUrl, 'confirmed');
     this.recipientAddress = new PublicKey(recipientAddress);
+
+    // USDC mint address (devnet by default, use mainnet address for production)
+    const usdcMint = Deno.env.get('USDC_MINT_ADDRESS') || '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU';
+    this.usdcMintAddress = new PublicKey(usdcMint);
   }
 
   /**
    * Verify a Solana transaction signature
    * @param signature - Transaction signature to verify
-   * @param expectedAmount - Expected payment amount in USDC/SOL
+   * @param expectedAmount - Expected payment amount in USDC (e.g., 0.01)
    * @returns true if transaction is valid and confirmed
    */
   async verifyTransaction(signature: string, expectedAmount: number): Promise<boolean> {
     try {
-      logger.info(`Verifying transaction: ${signature}`);
+      logger.info(`Verifying USDC transaction: ${signature}, expected amount: ${expectedAmount} USDC`);
 
       // Get transaction details
       const transaction = await this.connection.getTransaction(signature, {
@@ -46,39 +51,65 @@ export class SolanaVerificationService {
         return false;
       }
 
-      // Verify recipient
-      const postBalances = transaction.meta?.postBalances || [];
-      const preBalances = transaction.meta?.preBalances || [];
+      // For USDC transfers, we need to check token balance changes
+      // USDC has 6 decimals, so 0.01 USDC = 10000 base units
+      const expectedTokenAmount = Math.floor(expectedAmount * 1_000_000); // USDC has 6 decimals
+
+      // Check pre and post token balances
+      const preTokenBalances = transaction.meta?.preTokenBalances || [];
+      const postTokenBalances = transaction.meta?.postTokenBalances || [];
+
+      logger.info(`Pre-token balances: ${JSON.stringify(preTokenBalances)}`);
+      logger.info(`Post-token balances: ${JSON.stringify(postTokenBalances)}`);
+
+      // Get account keys to map indices to addresses
       const accountKeys = transaction.transaction.message.getAccountKeys();
 
-      // Find our recipient address in the transaction
-      let recipientIndex = -1;
-      for (let i = 0; i < accountKeys.length; i++) {
-        if (accountKeys.get(i)?.equals(this.recipientAddress)) {
-          recipientIndex = i;
-          break;
+      // Find token balance changes for our recipient address
+      // Note: For SPL tokens, the recipient address owns a token account, not the tokens directly
+      let recipientReceived = 0;
+      let foundRecipientAccount = false;
+
+      for (const postBalance of postTokenBalances) {
+        // Check if this is USDC
+        if (postBalance.mint === this.usdcMintAddress.toBase58()) {
+          const preBalance = preTokenBalances.find(
+            (pre: any) => pre.accountIndex === postBalance.accountIndex
+          );
+
+          const postAmount = parseFloat(postBalance.uiTokenAmount.amount);
+          const preAmount = preBalance ? parseFloat(preBalance.uiTokenAmount.amount) : 0;
+          const received = postAmount - preAmount;
+
+          // Get the actual token account address
+          const tokenAccountAddress = accountKeys.get(postBalance.accountIndex);
+
+          logger.info(`Token account ${postBalance.accountIndex} (${tokenAccountAddress?.toBase58()}): owner=${postBalance.owner}, received=${received}`);
+
+          // Check if this account belongs to our recipient (owner field contains the wallet address)
+          if (received > 0 && postBalance.owner === this.recipientAddress.toBase58()) {
+            recipientReceived += received;
+            foundRecipientAccount = true;
+            logger.info(`✓ Found recipient account with ${received} tokens received (${received / 1_000_000} USDC)`);
+          }
         }
       }
 
-      if (recipientIndex === -1) {
-        logger.warn(`Recipient address not found in transaction: ${signature}`);
+      if (!foundRecipientAccount) {
+        logger.warn(`❌ No token account found for recipient ${this.recipientAddress.toBase58()}`);
+        logger.info(`Transaction may be sending to a different address or using a different token`);
+      }
+
+      logger.info(`USDC amount received: ${recipientReceived}, expected: ${expectedTokenAmount}`);
+
+      // Allow 1% tolerance for rounding
+      const minAmount = expectedTokenAmount * 0.99;
+      if (recipientReceived < minAmount) {
+        logger.warn(`Insufficient USDC payment: ${recipientReceived} < ${minAmount} (${recipientReceived / 1_000_000} USDC)`);
         return false;
       }
 
-      // Calculate amount received (in lamports)
-      const amountReceived = postBalances[recipientIndex] - preBalances[recipientIndex];
-      const expectedLamports = Math.floor(expectedAmount * LAMPORTS_PER_SOL / 100);
-
-      logger.info(`Amount received: ${amountReceived} lamports, expected: ${expectedLamports} lamports`);
-
-      // Allow 10% tolerance for fees
-      const minAmount = expectedLamports * 0.9;
-      if (amountReceived < minAmount) {
-        logger.warn(`Insufficient payment amount: ${amountReceived} < ${minAmount}`);
-        return false;
-      }
-
-      logger.info(`Transaction verified successfully: ${signature}`);
+      logger.info(`USDC transaction verified successfully: ${signature} (${recipientReceived / 1_000_000} USDC received)`);
       return true;
 
     } catch (error) {

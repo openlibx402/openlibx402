@@ -70,12 +70,15 @@ export async function handlePayment(c: Context, rateLimiter: RateLimiter) {
     }
 
     // Verify the Solana transaction
-    const isValid = await solana.verifyTransaction(signature, paymentAmount);
+    const verificationResult = await solana.verifyTransaction(signature, paymentAmount);
 
-    if (!isValid) {
+    if (!verificationResult) {
       logger.warn(`Invalid payment signature: ${signature}`);
       return c.json(
-        { error: 'Invalid or unconfirmed transaction' },
+        {
+          error: 'Invalid or unconfirmed transaction. Please ensure you sent 0.01 USDC (not SOL) to the recipient address.',
+          details: 'Transaction verification failed. Check that: 1) You sent USDC tokens (not SOL), 2) Amount is exactly 0.01 USDC, 3) Sent to the correct recipient address'
+        },
         400
       );
     }

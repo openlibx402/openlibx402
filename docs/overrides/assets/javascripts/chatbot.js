@@ -426,7 +426,21 @@
       });
 
       if (!response.ok) {
-        throw new Error('Payment verification failed');
+        const errorData = await response.json().catch(() => ({}));
+        const errorMsg = errorData.error || 'Payment verification failed';
+
+        // Provide more helpful error messages
+        if (errorMsg.includes('Transaction already used')) {
+          throw new Error('This transaction has already been used. Please make a new payment.');
+        } else if (errorMsg.includes('Invalid or unconfirmed transaction')) {
+          throw new Error('Transaction not found or not confirmed yet. Please wait a moment and try again.');
+        } else if (errorMsg.includes('Insufficient')) {
+          throw new Error('Incorrect payment amount. Please send exactly 0.01 USDC to the recipient address.');
+        } else if (response.status === 400) {
+          throw new Error(`Payment verification failed: ${errorMsg}. Please ensure you sent 0.01 USDC (not SOL) to the correct address.`);
+        } else {
+          throw new Error(`Payment verification failed: ${errorMsg}`);
+        }
       }
 
       const result = await response.json();
@@ -457,7 +471,24 @@
 
     } catch (error) {
       console.error('Payment error:', error);
-      statusEl.textContent = `❌ Error: ${error.message}`;
+
+      // Provide helpful error messages with links
+      let errorMessage = error.message;
+
+      // Check if it's a wallet/token account issue
+      if (error.message.includes('token account') || error.message.includes('insufficient funds')) {
+        errorMessage = `❌ ${error.message}<br><br>
+          <span style="font-size: 0.9em;">
+            💡 Need devnet USDC? Get free tokens from:<br>
+            <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">
+              spl-token-faucet.com
+            </a>
+          </span>`;
+        statusEl.innerHTML = errorMessage;
+      } else {
+        statusEl.textContent = `❌ ${errorMessage}`;
+      }
+
       statusEl.className = 'payment-status-error';
       payBtn.textContent = 'Try Again';
       payBtn.disabled = false;
@@ -465,65 +496,46 @@
   };
 
   /**
-   * Send SOL payment via Phantom (simplified version without Web3.js transaction building)
-   * Uses Phantom's send method which handles transaction creation internally
+   * Send USDC payment via Phantom wallet
+   * Creates an SPL Token transfer transaction
    */
   async function sendUSDCPayment(fromWalletAddress, toWalletAddress, amount, usdcMintAddress, network) {
     try {
       const provider = window.phantom.solana;
 
-      console.log('💰 Payment Request:');
+      console.log('💰 USDC Payment Request:');
       console.log('  from:', fromWalletAddress);
       console.log('  to:', toWalletAddress);
-      console.log('  amount:', '0.0001 SOL');
+      console.log('  amount:', amount, 'USDC');
+      console.log('  mint:', usdcMintAddress);
       console.log('  network:', network);
 
-      // Use Phantom's send method - it handles transaction creation internally
-      // This completely avoids the Web3.js BigInt encoding issues
-      const transaction = await provider.request({
-        method: "solana:signAndSendTransaction",
-        params: {
-          message: {
-            action: "transfer",
-            params: {
-              to: toWalletAddress,
-              amount: 100000, // lamports (0.0001 SOL)
-            },
-          },
-        },
-      });
-
-      const signature = transaction.signature;
-      console.log('✅ Transaction sent:', signature);
-
-      return signature;
+      // Use the legacy method directly for USDC token transfers
+      // Phantom's simplified send method doesn't support SPL tokens
+      return await sendUSDCLegacy(fromWalletAddress, toWalletAddress, amount, usdcMintAddress, network);
 
     } catch (error) {
-      console.error('❌ Primary payment method failed:', error.message);
-      console.log('🔄 Falling back to legacy transaction method...');
-
-      // If Phantom's send method doesn't work, try the legacy approach
-      // but build the transaction using raw bytes
-      try {
-        return await sendSOLLegacy(fromWalletAddress, toWalletAddress, network);
-      } catch (legacyError) {
-        console.error('❌ Legacy method also failed:', legacyError);
-        throw legacyError;
-      }
+      console.error('❌ USDC payment failed:', error.message);
+      throw error;
     }
   }
 
   /**
-   * Legacy method: Send SOL using raw transaction bytes
+   * Send USDC tokens using SPL Token transfer (manual implementation)
+   * Since @solana/spl-token doesn't have an IIFE bundle, we create the instruction manually
    */
-  async function sendSOLLegacy(fromAddress, toAddress, network) {
-    console.log('🔧 Starting legacy transaction method');
-    console.log('  Buffer.alloc available:', typeof Buffer.alloc);
-    console.log('  Buffer.writeUInt32LE available:', typeof Buffer.prototype.writeUInt32LE);
-    console.log('  Buffer.writeBigUInt64LE available:', typeof Buffer.prototype.writeBigUInt64LE);
+  async function sendUSDCLegacy(fromAddress, toAddress, amount, usdcMintAddress, network) {
+    console.log('🔧 Starting USDC token transfer');
+
+    // Check if required libraries are available
+    if (!window.solanaWeb3) {
+      throw new Error('Solana Web3.js library not loaded. Please refresh the page.');
+    }
 
     const provider = window.phantom.solana;
-    const { Connection, PublicKey, TransactionInstruction, Transaction } = window.solanaWeb3;
+    const { Connection, PublicKey, Transaction, TransactionInstruction } = window.solanaWeb3;
+
+    console.log('✅ Solana Web3 library loaded');
 
     const rpcUrl = network === 'mainnet-beta'
       ? 'https://api.mainnet-beta.solana.com'
@@ -532,44 +544,83 @@
 
     const fromPubkey = new PublicKey(fromAddress);
     const toPubkey = new PublicKey(toAddress);
+    const mintPubkey = new PublicKey(usdcMintAddress);
+
+    // SPL Token Program ID
+    const TOKEN_PROGRAM_ID = new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
 
     console.log('📡 Getting latest blockhash...');
     const { blockhash } = await connection.getLatestBlockhash();
     console.log('✓ Blockhash received:', blockhash);
 
-    // Create transfer instruction using raw data to avoid BigInt encoding
-    console.log('🔨 Creating instruction data buffer...');
-    const data = Buffer.alloc(12);
-    console.log('✓ Buffer allocated, length:', data.length);
+    // Calculate Associated Token Accounts
+    console.log('🔍 Calculating token accounts...');
+    const fromTokenAccount = await findAssociatedTokenAddress(fromPubkey, mintPubkey, TOKEN_PROGRAM_ID);
+    const toTokenAccount = await findAssociatedTokenAddress(toPubkey, mintPubkey, TOKEN_PROGRAM_ID);
 
-    data.writeUInt32LE(2, 0); // Transfer instruction index
-    console.log('✓ Wrote instruction index (2)');
+    console.log('✓ From token account:', fromTokenAccount.toBase58());
+    console.log('✓ To token account:', toTokenAccount.toBase58());
 
-    data.writeBigUInt64LE(BigInt(100000), 4); // Amount in lamports
-    console.log('✓ Wrote lamports amount (100000)');
-    console.log('  Buffer contents:', Array.from(data));
+    // USDC has 6 decimals, so 0.01 USDC = 10,000 base units
+    const tokenAmount = Math.floor(amount * 1_000_000);
+    console.log('💵 Token amount:', tokenAmount, 'base units (', amount, 'USDC)');
 
-    const instruction = new TransactionInstruction({
+    // Create TransferChecked instruction manually
+    // Instruction layout: [12, amount (u64), decimals (u8)]
+    console.log('🔨 Creating USDC transfer instruction...');
+
+    // Use Uint8Array and DataView for proper byte manipulation in browser
+    const dataLayout = new Uint8Array(10);
+    const dataView = new DataView(dataLayout.buffer);
+
+    dataView.setUint8(0, 12); // TransferChecked instruction discriminator
+    dataView.setBigUint64(1, BigInt(tokenAmount), true); // amount as u64 (little-endian)
+    dataView.setUint8(9, 6); // decimals
+
+    console.log('✓ Instruction data:', Array.from(dataLayout));
+
+    const transferInstruction = new TransactionInstruction({
       keys: [
-        { pubkey: fromPubkey, isSigner: true, isWritable: true },
-        { pubkey: toPubkey, isSigner: false, isWritable: true },
+        { pubkey: fromTokenAccount, isSigner: false, isWritable: true },  // source
+        { pubkey: mintPubkey, isSigner: false, isWritable: false },       // mint
+        { pubkey: toTokenAccount, isSigner: false, isWritable: true },    // destination
+        { pubkey: fromPubkey, isSigner: true, isWritable: false },        // owner
       ],
-      programId: new PublicKey('11111111111111111111111111111111'),
-      data: data,
+      programId: TOKEN_PROGRAM_ID,
+      data: dataLayout,
     });
-    console.log('✓ Transaction instruction created');
+    console.log('✓ Transfer instruction created');
 
     const transaction = new Transaction({
       recentBlockhash: blockhash,
       feePayer: fromPubkey,
-    }).add(instruction);
+    }).add(transferInstruction);
     console.log('✓ Transaction created');
 
     console.log('📝 Requesting signature from Phantom...');
     const { signature } = await provider.signAndSendTransaction(transaction);
-    console.log('✅ Transaction sent! Signature:', signature);
+    console.log('✅ USDC Transaction sent! Signature:', signature);
 
     return signature;
+  }
+
+  /**
+   * Find Associated Token Address (manual implementation)
+   */
+  async function findAssociatedTokenAddress(walletAddress, tokenMintAddress, tokenProgramId) {
+    const { PublicKey } = window.solanaWeb3;
+    const ASSOCIATED_TOKEN_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
+
+    const [address] = await PublicKey.findProgramAddress(
+      [
+        walletAddress.toBuffer(),
+        tokenProgramId.toBuffer(),
+        tokenMintAddress.toBuffer(),
+      ],
+      ASSOCIATED_TOKEN_PROGRAM_ID
+    );
+
+    return address;
   }
 
   /**
@@ -617,19 +668,27 @@
               </div>
               <div class="payment-detail-row">
                 <span>Network:</span>
-                <span>Solana</span>
+                <span>Solana Devnet</span>
               </div>
               <div class="payment-detail-row">
                 <span>Grants:</span>
                 <span>1 additional query</span>
               </div>
             </div>
+            <div class="payment-instructions" style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 0.85em;">
+              <strong style="display: block; margin-bottom: 8px;">📝 Important:</strong>
+              <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+                <li>You must send <strong>USDC tokens</strong> (not SOL)</li>
+                <li>Amount must be exactly <strong>0.01 USDC</strong></li>
+                <li>Need devnet USDC? Get free tokens at <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">spl-token-faucet.com</a></li>
+              </ul>
+            </div>
             <div id="chatbot-payment-status" class="payment-status"></div>
             <button id="chatbot-pay-btn" class="payment-button" onclick="makePayment()">
-              Connect Phantom & Pay
+              Connect Phantom & Pay 0.01 USDC
             </button>
             <p class="payment-note">
-              <small>🔒 Secure payment via Phantom wallet. Make sure you have at least 0.01 USDC in your wallet.</small>
+              <small>🔒 Secure payment via Phantom wallet</small>
             </p>
           </div>
         </div>
