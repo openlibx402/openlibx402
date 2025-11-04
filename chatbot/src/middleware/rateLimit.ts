@@ -74,6 +74,8 @@ export class RateLimiter {
     const currentCount = entry.value || 0;
     const remaining = Math.max(0, this.freeQueries - currentCount);
 
+    logger.info(`Check limit: userId=${userId}, dayKey=${dayKey}, currentCount=${currentCount}, freeQueries=${this.freeQueries}, remaining=${remaining}`);
+
     return {
       allowed: remaining > 0,
       remaining,
@@ -116,12 +118,29 @@ export class RateLimiter {
     const entry = await this.kv.get<number>(key);
     const currentCount = entry.value || 0;
 
-    // Decrease count (grant queries by reducing usage)
-    await this.kv.set(key, Math.max(0, currentCount - count), {
+    // Calculate new count - ensure user gets queries even if they've exceeded the free limit
+    // If currentCount > freeQueries, set to (freeQueries - count) to give them exactly `count` queries
+    let newCount: number;
+    if (currentCount >= this.freeQueries) {
+      // User has used all or exceeded free queries
+      // Set count so they have exactly `count` queries available
+      newCount = this.freeQueries - count;
+    } else {
+      // User hasn't exceeded free queries yet, just reduce by count
+      newCount = Math.max(0, currentCount - count);
+    }
+
+    logger.info(`Granting queries: userId=${userId}, dayKey=${dayKey}, currentCount=${currentCount}, freeQueries=${this.freeQueries}, newCount=${newCount}, granting=${count}`);
+
+    // Update count (grant queries by reducing usage)
+    await this.kv.set(key, newCount, {
       expireIn: 25 * 60 * 60 * 1000,
     });
 
-    logger.info(`Granted ${count} queries to ${userId}`);
+    // Verify the write
+    const verification = await this.kv.get<number>(key);
+    const remaining = Math.max(0, this.freeQueries - (verification.value || 0));
+    logger.info(`Grant verified: stored=${verification.value}, remaining=${remaining}, granted ${count} queries to ${userId}`);
   }
 
   /**

@@ -82,17 +82,24 @@
     const statusEl = document.getElementById('chatbot-rate-limit');
     if (!statusEl || !rateLimitInfo) return;
 
-    if (rateLimitInfo.requiresPayment) {
+    if (rateLimitInfo.requiresPayment && rateLimitInfo.remaining === 0) {
       statusEl.innerHTML = `
         <span class="rate-limit-warning">
           ⚠️ Daily limit reached.
           <a href="#" onclick="window.chatbotShowPayment(); return false;">Pay 0.01 USDC</a> for more queries.
         </span>
       `;
-    } else {
+    } else if (rateLimitInfo.remaining > 0) {
       statusEl.innerHTML = `
         <span class="rate-limit-info">
-          ${rateLimitInfo.remaining} free queries remaining today
+          ✅ ${rateLimitInfo.remaining} ${rateLimitInfo.remaining === 1 ? 'query' : 'queries'} remaining today
+        </span>
+      `;
+    } else {
+      // Show nothing or a neutral message
+      statusEl.innerHTML = `
+        <span class="rate-limit-info">
+          Ready to chat
         </span>
       `;
     }
@@ -450,7 +457,7 @@
       const solscanUrl = `https://solscan.io/tx/${signature}${networkParam}`;
 
       statusEl.innerHTML = `
-        ✅ Payment successful! You have 1 additional query.<br>
+        ✅ Payment successful! You have ${result.rateLimit?.remaining || 1} additional ${result.rateLimit?.remaining === 1 ? 'query' : 'queries'}.<br>
         <a href="${solscanUrl}" target="_blank" rel="noopener" style="color: #667eea; text-decoration: underline; font-weight: 600;">
           View on Solscan →
         </a>
@@ -458,8 +465,19 @@
       statusEl.className = 'payment-status-success';
       payBtn.textContent = 'Payment Complete';
 
-      // Refresh rate limit
-      await fetchRateLimitStatus();
+      // Update rate limit info from server response (already updated in DB)
+      if (result.rateLimit) {
+        rateLimitInfo = result.rateLimit;
+        console.log('✅ Rate limit updated from payment response:', rateLimitInfo);
+      } else {
+        // Fallback if server doesn't return rate limit info
+        rateLimitInfo = {
+          remaining: 1,
+          resetAt: rateLimitInfo?.resetAt || Date.now() + 86400000,
+          requiresPayment: false,
+        };
+      }
+      updateRateLimitDisplay();
 
       // Close modal after 5 seconds (more time to view link)
       setTimeout(() => {

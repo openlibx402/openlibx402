@@ -87,15 +87,30 @@ export async function handlePayment(c: Context, rateLimiter: RateLimiter) {
     await solana.markTransactionUsed(signature, kvStore);
 
     // Grant additional queries
-    const userId = c.get('userId') || 'unknown';
+    // Get user ID same way as rate limiter does (using IP address)
+    const ip = c.req.header('x-forwarded-for') || c.req.header('x-real-ip') || 'unknown';
+    const userId = `user:${ip}`;
+
+    logger.info(`Granting queries to user ${userId} (IP: ${ip})`);
     await rateLimiter.grantQueries(userId, 1);
 
-    logger.info(`Payment accepted for user ${userId}`, { signature });
+    // Verify the grant was successful by checking the updated limit
+    const updatedLimit = await rateLimiter.checkLimit(userId);
+    logger.info(`Payment accepted for user ${userId} (IP: ${ip})`, {
+      signature,
+      remaining: updatedLimit.remaining,
+      requiresPayment: updatedLimit.requiresPayment
+    });
 
     return c.json({
       success: true,
       message: 'Payment accepted. You have been granted 1 additional query.',
       signature,
+      rateLimit: {
+        remaining: updatedLimit.remaining,
+        resetAt: updatedLimit.resetAt,
+        requiresPayment: updatedLimit.requiresPayment,
+      },
     });
   } catch (error) {
     logger.error('Payment handler error', error);
