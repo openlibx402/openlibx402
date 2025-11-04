@@ -4,8 +4,10 @@ Complete API documentation for the OpenLibx402 RAG Chatbot backend server.
 
 ## Base URL
 
-- **Development**: `http://localhost:3000`
-- **Production**: `https://api.chatbot.openlibx402.com` (example)
+- **Development**: `http://localhost:8000` (Deno) or `http://localhost:3000` (Node.js)
+- **Production**: `https://your-project.deno.dev` or `https://api.chatbot.openlibx402.com`
+
+> **Note**: The base URL is configured in `docs/mkdocs.yml` under `extra.chatbot.api_url`. See [Backend API Configuration](../BACKEND_API_CONFIGURATION.md) for setup details.
 
 ## Authentication
 
@@ -61,19 +63,25 @@ Content-Type: application/json
 ```
 
 **Response (402 Payment Required)**:
+
+The response uses the standardized OpenLibx402 PaymentRequest format:
+
 ```json
 {
-  "error": "Rate limit exceeded",
-  "message": "You have used all 3 free queries for today. Please make a payment to continue.",
-  "remaining": 0,
-  "resetAt": 1730851200000,
-  "payment": {
-    "required": true,
-    "amount": 0.01,
-    "token": "USDC"
-  }
+  "max_amount_required": "0.01",
+  "asset_type": "SPL",
+  "asset_address": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+  "payment_address": "HMYDGuLTCL6r5pGL8yUbj27i4pyafpomfhZLq3psxm7L",
+  "network": "solana-devnet",
+  "expires_at": "2025-11-05T12:05:00Z",
+  "nonce": "base64-encoded-nonce",
+  "payment_id": "uuid-payment-id",
+  "resource": "/api/chat",
+  "description": "Access to /api/chat endpoint - 3 free queries/day used"
 }
 ```
+
+> **X402 Standard**: This follows the OpenLibx402 HTTP 402 Payment Required protocol for standardized payment requests. See [Payment System Documentation](payments.md) for details.
 
 **Response (500 Internal Server Error)**:
 ```json
@@ -169,22 +177,36 @@ curl http://localhost:3000/api/status
 
 ### 3. Payment Info
 
-Get payment configuration information.
+Get payment configuration information in standardized X402 format.
 
 **Endpoint**: `GET /api/payment/info`
 
 **Response (200 OK)**:
 ```json
 {
+  "x402_format": "v1",
+  "asset_type": "SPL",
+  "asset_address": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+  "payment_address": "HMYDGuLTCL6r5pGL8yUbj27i4pyafpomfhZLq3psxm7L",
+  "network": "solana-devnet",
   "amount": 0.01,
   "token": "USDC",
-  "network": "devnet",
   "recipient": "HMYDGuLTCL6r5pGL8yUbj27i4pyafpomfhZLq3psxm7L",
-  "usdcMint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+  "payment_methods": [
+    {
+      "method": "x-payment-authorization-header",
+      "description": "Submit as X-Payment-Authorization header in base64-encoded JSON"
+    },
+    {
+      "method": "post-body-legacy",
+      "description": "Submit as JSON POST body (backward compatible)"
+    }
+  ],
   "instructions": [
-    "Send the specified amount of USDC to the recipient address",
-    "Submit the transaction signature to the /api/payment endpoint",
-    "You will receive additional queries after successful verification"
+    "1. Send the specified amount of USDC to the payment address",
+    "2. Get the transaction signature",
+    "3. Submit via X-Payment-Authorization header OR POST body to /api/payment",
+    "4. Receive query credits (1 USDC = 1000 queries)"
   ]
 }
 ```
@@ -192,7 +214,7 @@ Get payment configuration information.
 **Example Usage**:
 
 ```bash
-curl http://localhost:3000/api/payment/info
+curl http://localhost:8000/api/payment/info
 ```
 
 ---
@@ -208,12 +230,34 @@ Submit a Solana transaction signature to verify USDC payment and grant queries.
 Content-Type: application/json
 ```
 
+The endpoint supports **two submission methods**:
+
+#### Method 1: X-Payment-Authorization Header (Recommended)
+
+```
+POST /api/payment
+X-Payment-Authorization: base64-encoded-json
+```
+
+Header value (base64-encoded):
+```json
+{
+  "payment_id": "uuid",
+  "actual_amount": "0.01",
+  "signature": "3xMqyz4fTVaVPpZxbMCuKgf2PQ2hLzpvgLFAkf6fV5zR3FVFBsG9U8k3VzZgPRbmm6U3K3uKZT2",
+  "payment_address": "HMYDGuLTCL6r5pGL8yUbj27i4pyafpomfhZLq3psxm7L"
+}
+```
+
+#### Method 2: POST Body (Legacy, Backward Compatible)
+
 **Request Body**:
 ```json
 {
   "signature": "3xMqyz4fTVaVPpZxbMCuKgf2PQ2hLzpvgLFAkf6fV5zR3FVFBsG9U8k3VzZgPRbmm6U3K3uKZT2",
   "amount": 0.01,
-  "token": "USDC"
+  "token": "USDC",
+  "payment_id": "optional-uuid"
 }
 ```
 
@@ -223,7 +267,8 @@ Content-Type: application/json
 |-------|------|----------|-------------|
 | `signature` | string | Yes | Solana transaction signature |
 | `amount` | number | Yes | Amount sent (0.01 - 1.00 USDC) |
-| `token` | string | Yes | Token symbol ("USDC") |
+| `token` | string | Optional | Token symbol ("USDC") |
+| `payment_id` | string | Optional | Payment ID for tracking |
 
 **Response (200 OK)**:
 ```json
@@ -250,8 +295,19 @@ Content-Type: application/json
 
 **Example Usage**:
 
+Method 1 - Using X-Payment-Authorization header:
 ```bash
-curl -X POST http://localhost:3000/api/payment \
+AUTH_JSON='{"payment_id":"uuid","actual_amount":"0.01","signature":"3xMqyz4fTVaVPpZxbMCuKgf2PQ2hLzpvgLFAkf6fV5zR3FVFBsG9U8k3VzZgPRbmm6U3K3uKZT2","payment_address":"HMYDGuLTCL6r5pGL8yUbj27i4pyafpomfhZLq3psxm7L"}'
+AUTH_HEADER=$(echo -n "$AUTH_JSON" | base64)
+
+curl -X POST http://localhost:8000/api/payment \
+  -H "Content-Type: application/json" \
+  -H "X-Payment-Authorization: $AUTH_HEADER"
+```
+
+Method 2 - Using POST body (legacy):
+```bash
+curl -X POST http://localhost:8000/api/payment \
   -H "Content-Type: application/json" \
   -d '{
     "signature": "3xMqyz4fTVaVPpZxbMCuKgf2PQ2hLzpvgLFAkf6fV5zR3FVFBsG9U8k3VzZgPRbmm6U3K3uKZT2",

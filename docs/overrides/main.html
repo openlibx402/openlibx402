@@ -165,8 +165,13 @@
   <!-- Note: @solana/spl-token doesn't have an IIFE bundle, we'll create token transfers manually -->
   <!-- Chatbot Widget Script -->
   <script>
-    // Configure chatbot API URL
-    window.CHATBOT_API_URL = '{{ config.extra.chatbot_api_url or "https://your-deno-deploy-url.deno.dev" }}';
+    // Configure chatbot API URL from mkdocs.yml config
+    // Supports environment-based configuration:
+    // - Development: http://localhost:3000 (or http://localhost:8000 for Deno)
+    // - Production: https://api.chatbot.openlibx402.com
+    window.CHATBOT_API_URL = '{{ config.extra.chatbot.api_url or "http://localhost:3000" }}';
+    console.log('✅ Chatbot API URL configured:', window.CHATBOT_API_URL);
+
     // Force cache bust
     const chatbotScript = document.createElement('script');
     chatbotScript.src = '{{ 'assets/javascripts/chatbot.js' | url }}?t=' + Date.now();

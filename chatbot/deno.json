@@ -5,7 +5,8 @@
     "hono/cors": "jsr:@hono/hono@^4.10.4/cors",
     "openai": "npm:openai@^4.77.0",
     "pinecone": "npm:@pinecone-database/pinecone@^3.0.3",
-    "dotenv": "jsr:@std/dotenv@^0.225.0"
+    "dotenv": "jsr:@std/dotenv@^0.225.0",
+    "@openlibx402/core": "npm:@openlibx402/core@^0.1.2"
   },
   "tasks": {
     "start": "deno run --unstable-kv --allow-net --allow-env --allow-read main.ts",

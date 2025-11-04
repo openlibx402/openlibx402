@@ -1,9 +1,11 @@
 /**
  * Solana Payment Verification Service
  * Verifies transaction signatures on Solana blockchain
+ * Integrates with openlibx402 for standardized error handling
  */
 
 import { Connection, PublicKey } from 'npm:@solana/web3.js@^1.87.6';
+import { PaymentVerificationError } from '@openlibx402/core';
 import { logger } from '../utils/logger.ts';
 
 export class SolanaVerificationService {
@@ -42,13 +44,13 @@ export class SolanaVerificationService {
 
       if (!transaction) {
         logger.warn(`Transaction not found: ${signature}`);
-        return false;
+        throw new PaymentVerificationError(`Transaction ${signature} not found on blockchain`);
       }
 
       // Check transaction status
       if (transaction.meta?.err) {
         logger.warn(`Transaction failed: ${signature}`, transaction.meta.err);
-        return false;
+        throw new PaymentVerificationError(`Transaction ${signature} failed on blockchain: ${JSON.stringify(transaction.meta.err)}`);
       }
 
       // For USDC transfers, we need to check token balance changes
@@ -113,8 +115,11 @@ export class SolanaVerificationService {
       return true;
 
     } catch (error) {
+      if (error instanceof PaymentVerificationError) {
+        throw error; // Re-throw openlibx402 errors
+      }
       logger.error(`Error verifying transaction: ${signature}`, error);
-      return false;
+      throw new PaymentVerificationError(`Failed to verify transaction ${signature}: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 

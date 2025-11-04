@@ -2,6 +2,18 @@
 
 The chatbot uses Solana blockchain and USDC tokens to handle payments for additional queries. This document explains how the payment system works and how to use it.
 
+## X402 Integration
+
+The payment system is built on the **OpenLibx402 HTTP 402 Payment Protocol**, which provides:
+
+- ✅ **Standardized 402 Payment Required responses** with structured payment details
+- ✅ **X-Payment-Authorization header support** for protocol compliance
+- ✅ **Payment expiration and nonce validation** for security
+- ✅ **Standardized error classes** for better error handling
+- ✅ **Query credit system** converting USDC payments into query credits
+
+See [OpenLibx402 Integration](../../OPENLIBX402_INTEGRATION.md) for implementation details.
+
 ## Payment Flow
 
 ### User Perspective

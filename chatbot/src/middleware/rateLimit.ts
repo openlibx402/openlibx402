@@ -1,11 +1,13 @@
 /**
  * Rate Limiting Middleware
  * Uses Deno KV to track query limits per user
+ * Integrates with openlibx402 for standardized 402 responses
  */
 
 import type { Context, Next } from 'hono';
 import type { Config } from '../utils/config.ts';
 import { logger } from '../utils/logger.ts';
+import { PaymentRequest } from '@openlibx402/core';
 
 export interface RateLimitInfo {
   allowed: boolean;
@@ -162,20 +164,39 @@ export class RateLimiter {
 
       if (!limitInfo.allowed) {
         const paymentAmount = parseFloat(Deno.env.get('X402_PAYMENT_AMOUNT') || '0.01');
-        return c.json(
-          {
-            error: 'Rate limit exceeded',
-            message: `You have used all ${this.freeQueries} free queries for today. Please make a payment to continue.`,
-            remaining: 0,
-            resetAt: limitInfo.resetAt,
-            payment: {
-              required: true,
-              amount: paymentAmount,
-              token: 'USDC',
-            },
-          },
-          402 // Payment Required
-        );
+        const usdcMint = Deno.env.get('USDC_MINT_ADDRESS') ||
+          '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU';
+        const recipientAddress = Deno.env.get('X402_WALLET_ADDRESS');
+        const solanaNetwork = Deno.env.get('SOLANA_NETWORK') || 'devnet';
+
+        if (!recipientAddress) {
+          logger.error('X402_WALLET_ADDRESS not configured');
+          return c.json(
+            { error: 'Payment service not configured' },
+            500
+          );
+        }
+
+        // Use openlibx402 PaymentRequest for standardized format
+        const paymentRequest = new PaymentRequest({
+          max_amount_required: paymentAmount.toString(),
+          asset_type: 'SPL',
+          asset_address: usdcMint,
+          payment_address: recipientAddress,
+          network: solanaNetwork === 'mainnet-beta' ? 'solana-mainnet' : 'solana-devnet',
+          expires_at: new Date(Date.now() + 300000), // 5 minutes
+          nonce: crypto.getRandomValues(new Uint8Array(32)).toString(),
+          payment_id: crypto.randomUUID(),
+          resource: c.req.path,
+          description: `Access to ${c.req.path} endpoint - ${this.freeQueries} free queries/day used`,
+        });
+
+        logger.info(`Rate limit exceeded for ${userId}, returning 402 with PaymentRequest`, {
+          payment_id: paymentRequest.payment_id,
+          amount: paymentAmount,
+        });
+
+        return c.json(paymentRequest.toDict(), 402);
       }
 
       await next();
