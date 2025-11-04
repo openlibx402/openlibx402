@@ -34,12 +34,13 @@ logger.info('Services initialized');
 // Create Hono app
 const app = new Hono();
 
-// CORS middleware
+// CORS middleware - Allow requests from MkDocs and other origins
 app.use('/*', cors({
   origin: config.cors.allowedOrigins,
   allowMethods: ['GET', 'POST', 'OPTIONS'],
-  allowHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
+  allowHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposeHeaders: ['Content-Type'],
+  maxAge: 86400,
 }));
 
 // Health check (no rate limiting)

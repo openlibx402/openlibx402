@@ -123,4 +123,4 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/openlibx402
   # Chatbot API URL - Points to local backend for development
-  chatbot_api_url: http://localhost:8080
+  chatbot_api_url: http://localhost:3000
