@@ -59,7 +59,7 @@ class X402Client(
     private val allowLocal: Boolean = false
 ) : Closeable {
 
-    private val processor = SolanaPaymentProcessor(rpcUrl ?: "https://api.devnet.solana.com")
+    internal val processor = SolanaPaymentProcessor(rpcUrl ?: "https://api.devnet.solana.com")
     private var closed = false
 
     /**
