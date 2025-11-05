@@ -46,6 +46,14 @@ nav:
           - Client Library: rust/libraries/client.md
           - Rocket Middleware: rust/middleware/rocket.md
           - Actix Web Middleware: rust/middleware/actix.md
+      - Java:
+          - Overview: java/index.md
+          - Core Library: java/libraries/core.md
+          - Client Library: java/libraries/client.md
+      - Kotlin:
+          - Overview: kotlin/index.md
+          - Core Library: kotlin/libraries/core.md
+          - Client Library: kotlin/libraries/client.md
   - Examples:
       - Overview: examples/index.md
       - Python:
@@ -66,6 +74,10 @@ nav:
       - Rust:
           - Rocket Server: rust/examples/rocket-server.md
           - Actix Web Server: rust/examples/actix-server.md
+      - Java:
+          - Basic Usage: java/examples/basic-usage.md
+      - Kotlin:
+          - Basic Usage: kotlin/examples/basic-usage.md
   - Getting Started:
       - Go:
           - Installation: go/getting-started/installation.md
@@ -75,6 +87,12 @@ nav:
           - Installation: rust/getting-started/installation.md
           - Server Quickstart: rust/getting-started/server-quickstart.md
           - Client Quickstart: rust/getting-started/client-quickstart.md
+      - Java:
+          - Installation: java/getting-started/installation.md
+          - Client Quickstart: java/getting-started/client-quickstart.md
+      - Kotlin:
+          - Installation: kotlin/getting-started/installation.md
+          - Client Quickstart: kotlin/getting-started/client-quickstart.md
   - Reference:
       - Go:
           - API Reference: go/reference/api-reference.md
@@ -84,6 +102,12 @@ nav:
           - API Reference: rust/reference/api-reference.md
           - Error Handling: rust/reference/errors.md
           - Configuration: rust/reference/configuration.md
+      - Java:
+          - API Reference: java/reference/api-reference.md
+          - Error Handling: java/reference/errors.md
+      - Kotlin:
+          - API Reference: kotlin/reference/api-reference.md
+          - Error Handling: kotlin/reference/errors.md
 
 theme:
   name: material
