@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.openlibx402</groupId>
+    <groupId>io.github.openlibx402</groupId>
     <artifactId>openlibx402-core</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
@@ -51,7 +51,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <solana.version>1.18.0</solana.version>
+        <solana.version>1.17.7</solana.version>
         <okhttp.version>4.12.0</okhttp.version>
         <jackson.version>2.15.2</jackson.version>
         <junit.version>5.10.0</junit.version>
@@ -60,7 +60,7 @@
     <dependencies>
         <!-- Solana SDK -->
         <dependency>
-            <groupId>org.p2p.solanaj</groupId>
+            <groupId>com.mmorrell</groupId>
             <artifactId>solanaj</artifactId>
             <version>${solana.version}</version>
         </dependency>
@@ -180,16 +180,15 @@
                 </executions>
             </plugin>
 
-            <!-- Nexus Staging Plugin -->
+            <!-- Central Publishing Plugin for new Maven Central Portal -->
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.5.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>false</autoPublish>
                 </configuration>
             </plugin>
         </plugins>

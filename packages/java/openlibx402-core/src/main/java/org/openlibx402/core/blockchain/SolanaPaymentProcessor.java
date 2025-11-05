@@ -11,6 +11,7 @@ import org.p2p.solanaj.programs.SystemProgram;
 import org.p2p.solanaj.rpc.RpcClient;
 import org.p2p.solanaj.rpc.RpcException;
 import org.p2p.solanaj.rpc.types.config.Commitment;
+import org.p2p.solanaj.rpc.types.SignatureStatuses;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -146,7 +147,8 @@ public class SolanaPaymentProcessor implements AutoCloseable {
         // Get recent blockhash
         String recentBlockhash = rpcClient.getApi().getRecentBlockhash();
         transaction.setRecentBlockHash(recentBlockhash);
-        transaction.setFeePayer(payerAccount.getPublicKey());
+        // Note: feePayer is automatically set to the first signer in newer versions
+        // transaction.setFeePayer(payerAccount.getPublicKey());
 
         return transaction;
     }
@@ -198,8 +200,8 @@ public class SolanaPaymentProcessor implements AutoCloseable {
         while (System.currentTimeMillis() - startTime < timeout) {
             try {
                 // Check transaction status
-                List<Object> result = rpcClient.getApi().getSignatureStatuses(List.of(signature), true);
-                if (result != null && !result.isEmpty()) {
+                SignatureStatuses result = rpcClient.getApi().getSignatureStatuses(List.of(signature), true);
+                if (result != null && result.getValue() != null && !result.getValue().isEmpty()) {
                     // Transaction confirmed
                     return true;
                 }
@@ -276,8 +278,8 @@ public class SolanaPaymentProcessor implements AutoCloseable {
             // Query transaction details
             // This is simplified - full implementation would parse transaction
             // and verify all details match expectations
-            List<Object> result = rpcClient.getApi().getSignatureStatuses(List.of(txHash), true);
-            return result != null && !result.isEmpty();
+            SignatureStatuses result = rpcClient.getApi().getSignatureStatuses(List.of(txHash), true);
+            return result != null && result.getValue() != null && !result.getValue().isEmpty();
 
         } catch (Exception e) {
             return false;

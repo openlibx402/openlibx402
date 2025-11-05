@@ -137,8 +137,9 @@ class SolanaPaymentProcessor(
 
         // Get recent blockhash
         val recentBlockhash = rpcClient.api.getRecentBlockhash()
-        transaction.recentBlockHash = recentBlockhash
-        transaction.feePayer = payerAccount.publicKey
+        transaction.setRecentBlockHash(recentBlockhash)
+        // Note: feePayer is automatically set to the first signer in newer versions
+        // transaction.setFeePayer(payerAccount.publicKey)
 
         transaction
     }
@@ -201,7 +202,7 @@ class SolanaPaymentProcessor(
             try {
                 // Check transaction status
                 val result = rpcClient.api.getSignatureStatuses(listOf(signature), true)
-                if (result != null && result.isNotEmpty()) {
+                if (result != null && result.value != null && result.value.isNotEmpty()) {
                     // Transaction confirmed
                     return@withContext true
                 }
@@ -278,7 +279,7 @@ class SolanaPaymentProcessor(
             // This is simplified - full implementation would parse transaction
             // and verify all details match expectations
             val result = rpcClient.api.getSignatureStatuses(listOf(txHash), true)
-            result != null && result.isNotEmpty()
+            result != null && result.value != null && result.value.isNotEmpty()
         } catch (e: Exception) {
             false
         }

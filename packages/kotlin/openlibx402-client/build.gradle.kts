@@ -1,12 +1,12 @@
 plugins {
-    kotlin("jvm") version "1.9.20"
-    kotlin("plugin.serialization") version "1.9.20"
+    kotlin("jvm") version "2.0.21"
+    kotlin("plugin.serialization") version "2.0.21"
     `maven-publish`
     signing
-    id("org.jetbrains.dokka") version "1.9.10"
+    id("org.jetbrains.dokka") version "1.9.20"
 }
 
-group = "org.openlibx402"
+group = "io.github.openlibx402"
 version = "0.1.0"
 
 repositories {
@@ -31,8 +31,10 @@ dependencies {
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 }
 
-kotlin {
-    jvmToolchain(11)
+// Configure Java compatibility
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 tasks.test {
@@ -66,7 +68,7 @@ publishing {
             from(components["java"])
             artifact(javadocJar)
 
-            groupId = "org.openlibx402"
+            groupId = "io.github.openlibx402"
             artifactId = "openlibx402-client"
             version = "0.1.0"
 

@@ -264,8 +264,9 @@ public class X402Client implements AutoCloseable {
      * @param response 402 HTTP response
      * @return Parsed PaymentRequest
      * @throws InvalidPaymentRequestError if response body is invalid
+     * @throws PaymentExpiredError if payment request has expired
      */
-    public PaymentRequest parsePaymentRequest(Response response) throws InvalidPaymentRequestError {
+    public PaymentRequest parsePaymentRequest(Response response) throws InvalidPaymentRequestError, PaymentExpiredError {
         try {
             ResponseBody responseBody = response.body();
             if (responseBody == null) {

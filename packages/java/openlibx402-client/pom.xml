@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.openlibx402</groupId>
+    <groupId>io.github.openlibx402</groupId>
     <artifactId>openlibx402-client</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
@@ -57,7 +57,7 @@
     <dependencies>
         <!-- Core dependency -->
         <dependency>
-            <groupId>org.openlibx402</groupId>
+            <groupId>io.github.openlibx402</groupId>
             <artifactId>openlibx402-core</artifactId>
             <version>0.1.0</version>
         </dependency>
@@ -164,16 +164,15 @@
                 </executions>
             </plugin>
 
-            <!-- Nexus Staging Plugin -->
+            <!-- Central Publishing Plugin for new Maven Central Portal -->
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.5.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>false</autoPublish>
                 </configuration>
             </plugin>
         </plugins>
