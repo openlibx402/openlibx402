@@ -25,12 +25,14 @@ OpenLibx402 is a library ecosystem that implements the [X402 protocol](https://w
 
 ## Available in Multiple Languages
 
-OpenLibx402 is available in **Python**, **TypeScript/Node.js**, **Go**, and **Rust**, with full feature parity:
+OpenLibx402 is available in **Python**, **TypeScript/Node.js**, **Go**, **Rust**, **Java**, and **Kotlin**, with full feature parity:
 
 - 🐍 **Python**: FastAPI, LangChain, LangGraph
 - 📦 **TypeScript**: Express.js, Next.js, LangChain.js, LangGraph.js
 - 🐹 **Go**: net/http, Echo framework
 - 🦀 **Rust**: Rocket, Actix Web
+- ☕ **Java**: HTTP client with AutoCloseable resources
+- 🎯 **Kotlin**: Coroutine-first API with suspend functions
 
 All implementations provide both server and client libraries with comprehensive examples.
 
@@ -179,11 +181,19 @@ openlibx402/
 │   │   ├── openlibx402-nethttp/       # net/http middleware
 │   │   └── openlibx402-echo/          # Echo framework integration
 │   │
-│   └── rust/                       # Rust packages (Cargo workspace)
-│       ├── openlibx402-core/          # Core protocol (Rust)
-│       ├── openlibx402-client/        # HTTP client (Rust)
-│       ├── openlibx402-rocket/        # Rocket framework integration
-│       └── openlibx402-actix/         # Actix Web integration
+│   ├── rust/                       # Rust packages (Cargo workspace)
+│   │   ├── openlibx402-core/          # Core protocol (Rust)
+│   │   ├── openlibx402-client/        # HTTP client (Rust)
+│   │   ├── openlibx402-rocket/        # Rocket framework integration
+│   │   └── openlibx402-actix/         # Actix Web integration
+│   │
+│   ├── java/                       # Java packages (Maven)
+│   │   ├── openlibx402-core/          # Core protocol (Java)
+│   │   └── openlibx402-client/        # HTTP client (Java)
+│   │
+│   └── kotlin/                     # Kotlin packages (Gradle)
+│       ├── openlibx402-core/          # Core protocol (Kotlin)
+│       └── openlibx402-client/        # HTTP client (Kotlin)
 │
 ├── examples/
 │   ├── python/
@@ -277,6 +287,8 @@ python main.py
 📖 **[TypeScript README](README_TYPESCRIPT.md)** - TypeScript implementation guide
 🐹 **[Go README](README_GO.md)** - Go implementation guide
 🦀 **[Rust README](README_RUST.md)** - Rust implementation guide
+☕ **[Java README](packages/java/README.md)** - Java implementation guide
+🎯 **[Kotlin README](packages/kotlin/README.md)** - Kotlin implementation guide
 
 ## Use Cases
 
@@ -334,7 +346,17 @@ python main.py
 - [x] Cargo workspace setup
 - [x] Example servers
 
-### 🔲 Phase 5: Ecosystem
+### ✅ Phase 5: Java & Kotlin (Complete)
+- [x] Core package (Java)
+- [x] Client library (Java)
+- [x] Maven project setup
+- [x] Core package (Kotlin)
+- [x] Client library (Kotlin)
+- [x] Gradle project setup
+- [x] Coroutine support (Kotlin)
+- [x] Documentation & examples
+
+### 🔲 Phase 6: Ecosystem
 - [ ] Flask middleware
 - [ ] Django middleware
 - [ ] Next.js integration
