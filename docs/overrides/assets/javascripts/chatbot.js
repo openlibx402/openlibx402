@@ -8,8 +8,16 @@
 
   // Configuration
   const API_URL = window.CHATBOT_API_URL || 'http://localhost:3000';
+  const SOLANA_NETWORK = window.CHATBOT_SOLANA_NETWORK || 'devnet';
+  const SOLANA_RPC_URL = window.CHATBOT_SOLANA_RPC || 'https://api.devnet.solana.com';
   const STORAGE_KEY = 'openlibx402_chat_history';
   const MAX_HISTORY = 10;
+
+  // Network display names
+  const NETWORK_DISPLAY = {
+    'devnet': 'Solana Devnet',
+    'mainnet-beta': 'Solana Mainnet'
+  };
 
   // Get the base URL for documentation links
   const getDocsBaseUrl = () => {
@@ -510,13 +518,15 @@
 
       // Check if it's a wallet/token account issue
       if (error.message.includes('token account') || error.message.includes('insufficient funds')) {
-        errorMessage = `❌ ${error.message}<br><br>
-          <span style="font-size: 0.9em;">
-            💡 Need devnet USDC? Get free tokens from:<br>
-            <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">
-              spl-token-faucet.com
-            </a>
-          </span>`;
+        const faucetLink = SOLANA_NETWORK === 'devnet'
+          ? `<br><br><span style="font-size: 0.9em;">
+               💡 Need devnet USDC? Get free tokens from:<br>
+               <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">
+                 spl-token-faucet.com
+               </a>
+             </span>`
+          : '';
+        errorMessage = `❌ ${error.message}${faucetLink}`;
         statusEl.innerHTML = errorMessage;
       } else {
         statusEl.textContent = `❌ ${errorMessage}`;
@@ -570,9 +580,10 @@
 
     console.log('✅ Solana Web3 library loaded');
 
-    const rpcUrl = network === 'mainnet-beta'
+    // Use the configured RPC URL from window config, with fallback to network-based selection
+    const rpcUrl = SOLANA_RPC_URL || (network === 'mainnet-beta'
       ? 'https://api.mainnet-beta.solana.com'
-      : 'https://api.devnet.solana.com';
+      : 'https://api.devnet.solana.com');
     const connection = new Connection(rpcUrl, 'confirmed');
 
     const fromPubkey = new PublicKey(fromAddress);
@@ -750,7 +761,7 @@
             <div class="payment-details">
               <div class="payment-detail-row">
                 <span>Network:</span>
-                <span>Solana Devnet</span>
+                <span id="payment-network-display">${NETWORK_DISPLAY[SOLANA_NETWORK] || 'Solana'}</span>
               </div>
             </div>
             <div class="payment-instructions" style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 0.85em;">
@@ -758,7 +769,7 @@
               <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
                 <li>You must send <strong>USDC tokens</strong> (not SOL)</li>
                 <li>Use the slider to select your desired amount</li>
-                <li>Need devnet USDC? Get free tokens at <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">spl-token-faucet.com</a></li>
+                ${SOLANA_NETWORK === 'devnet' ? '<li>Need devnet USDC? Get free tokens at <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">spl-token-faucet.com</a></li>' : ''}
               </ul>
             </div>
             <div id="chatbot-payment-status" class="payment-status"></div>

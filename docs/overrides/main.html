@@ -169,8 +169,31 @@
     // Supports environment-based configuration:
     // - Development: http://localhost:3000 (or http://localhost:8000 for Deno)
     // - Production: https://api.chatbot.openlibx402.com
-    window.CHATBOT_API_URL = '{{ config.extra.chatbot.api_url or "http://localhost:3000" }}';
-    console.log('✅ Chatbot API URL configured:', window.CHATBOT_API_URL);
+
+    // Detect if we're in production based on hostname
+    const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+
+    // Set API URL based on environment
+    window.CHATBOT_API_URL = isProduction
+      ? '{{ config.extra.chatbot.api_url_production or "https://api.chatbot.openlib.xyz" }}'
+      : '{{ config.extra.chatbot.api_url or "http://localhost:3000" }}';
+
+    // Set Solana network based on environment
+    window.CHATBOT_SOLANA_NETWORK = isProduction
+      ? '{{ config.extra.chatbot.solana_network_prod or "mainnet-beta" }}'
+      : '{{ config.extra.chatbot.solana_network_dev or "devnet" }}';
+
+    // Set Solana RPC URL based on environment
+    window.CHATBOT_SOLANA_RPC = isProduction
+      ? '{{ config.extra.chatbot.solana_rpc_prod or "https://api.mainnet-beta.solana.com" }}'
+      : '{{ config.extra.chatbot.solana_rpc_dev or "https://api.devnet.solana.com" }}';
+
+    console.log('✅ Chatbot configured:', {
+      environment: isProduction ? 'production' : 'development',
+      apiUrl: window.CHATBOT_API_URL,
+      network: window.CHATBOT_SOLANA_NETWORK,
+      rpcUrl: window.CHATBOT_SOLANA_RPC
+    });
 
     // Force cache bust
     const chatbotScript = document.createElement('script');

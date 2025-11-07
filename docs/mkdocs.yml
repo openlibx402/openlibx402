@@ -168,3 +168,9 @@ extra:
     min_payment_usdc: 0.01
     max_payment_usdc: 1.0
     usdc_per_query: 0.001
+    # Solana Network Configuration
+    # Development uses devnet, production uses mainnet-beta
+    solana_network_dev: devnet
+    solana_network_prod: mainnet-beta
+    solana_rpc_dev: https://api.devnet.solana.com
+    solana_rpc_prod: https://api.mainnet-beta.solana.com
