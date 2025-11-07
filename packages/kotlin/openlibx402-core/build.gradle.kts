@@ -17,19 +17,13 @@ dependencies {
     // Kotlin stdlib
     implementation(kotlin("stdlib"))
 
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    // Public API dependencies - exposed to consumers
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    api("com.mmorrell:solanaj:1.17.7")
+    api("com.squareup.okhttp3:okhttp:4.12.0")
 
-    // Serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-
-    // Solana SDK
-    implementation("com.mmorrell:solanaj:1.17.7")
-
-    // HTTP Client
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-
-    // Date/Time
+    // Internal dependencies
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.1")
 
     // Testing
@@ -127,5 +121,7 @@ publishing {
 }
 
 signing {
+    // Use GPG agent to sign artifacts
+    useGpgCmd()
     sign(publishing.publications["maven"])
 }

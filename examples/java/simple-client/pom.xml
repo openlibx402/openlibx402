@@ -21,13 +21,13 @@
     <dependencies>
         <!-- OpenLibX402 Dependencies -->
         <dependency>
-            <groupId>org.openlibx402</groupId>
+            <groupId>io.github.openlibx402</groupId>
             <artifactId>openlibx402-core</artifactId>
             <version>0.1.0</version>
         </dependency>
 
         <dependency>
-            <groupId>org.openlibx402</groupId>
+            <groupId>io.github.openlibx402</groupId>
             <artifactId>openlibx402-client</artifactId>
             <version>0.1.0</version>
         </dependency>

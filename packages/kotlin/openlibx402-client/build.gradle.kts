@@ -119,5 +119,7 @@ publishing {
 }
 
 signing {
+    // Use GPG agent to sign artifacts
+    useGpgCmd()
     sign(publishing.publications["maven"])
 }

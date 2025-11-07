@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.9.20"
+    kotlin("jvm") version "2.0.21"
     application
 }
 
@@ -13,8 +13,8 @@ repositories {
 
 dependencies {
     // OpenLibX402 Dependencies
-    implementation("org.openlibx402:openlibx402-core:0.1.0")
-    implementation("org.openlibx402:openlibx402-client:0.1.0")
+    implementation("io.github.openlibx402:openlibx402-core:0.1.0")
+    implementation("io.github.openlibx402:openlibx402-client:0.1.0")
 
     // Kotlin stdlib
     implementation(kotlin("stdlib"))
@@ -26,8 +26,10 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.9")
 }
 
-kotlin {
-    jvmToolchain(11)
+// Configure Java compatibility
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 application {
