@@ -1,7 +1,7 @@
 {
-  "name": "openlibx402-ragbot",
+  "name": "sama",
   "description": "RAG chatbot for OpenLibx402 documentation with rate limiting and payment support",
-  "project": "openlibx402-ragbot",
+  "project": "sama",
   "entrypoint": "main.ts",
   "include": [
     "main.ts",

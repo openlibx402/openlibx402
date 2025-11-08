@@ -20,7 +20,7 @@ if [ -z "$DENO_DEPLOY_TOKEN" ]; then
 fi
 
 # Project name
-PROJECT_NAME="${DENO_PROJECT_NAME:-openlibx402-ragbot}"
+PROJECT_NAME="${DENO_PROJECT_NAME:-sama}"
 
 echo "📦 Project: $PROJECT_NAME"
 echo "📄 Entry point: main.ts"
