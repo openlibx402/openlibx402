@@ -22,11 +22,6 @@
     ]
   },
   "deploy": {
-    "project": "f373bcd6-8eae-41a6-b5ac-8d10e4cb1fd0",
-    "exclude": [
-      "**/node_modules"
-    ],
-    "include": [],
-    "entrypoint": "main.ts"
+    "app": "f373bcd6-8eae-41a6-b5ac-8d10e4cb1fd0"
   }
 }
