@@ -539,6 +539,71 @@
   };
 
   /**
+   * Open settings modal
+   */
+  window.openSettings = function() {
+    const modal = document.getElementById('chatbot-settings-modal');
+    const input = document.getElementById('custom-rpc-url');
+
+    // Load saved RPC URL
+    const savedRpcUrl = localStorage.getItem('chatbot_custom_rpc_url') || '';
+    input.value = savedRpcUrl;
+
+    // Clear any previous status
+    const statusEl = document.getElementById('settings-status');
+    statusEl.style.display = 'none';
+
+    modal.style.display = 'flex';
+  };
+
+  /**
+   * Save RPC settings to localStorage
+   */
+  window.saveRpcSettings = function() {
+    const input = document.getElementById('custom-rpc-url');
+    const statusEl = document.getElementById('settings-status');
+    const rpcUrl = input.value.trim();
+
+    // Validate URL if provided
+    if (rpcUrl) {
+      try {
+        new URL(rpcUrl);
+      } catch (error) {
+        statusEl.textContent = '❌ Invalid URL format';
+        statusEl.style.display = 'block';
+        statusEl.style.background = '#fee';
+        statusEl.style.color = '#c33';
+        return;
+      }
+    }
+
+    // Save to localStorage
+    if (rpcUrl) {
+      localStorage.setItem('chatbot_custom_rpc_url', rpcUrl);
+    } else {
+      localStorage.removeItem('chatbot_custom_rpc_url');
+    }
+
+    // Show success message
+    statusEl.textContent = '✅ Settings saved! Changes will take effect on the next payment.';
+    statusEl.style.display = 'block';
+    statusEl.style.background = '#efe';
+    statusEl.style.color = '#383';
+
+    // Close modal after 2 seconds
+    setTimeout(() => {
+      document.getElementById('chatbot-settings-modal').style.display = 'none';
+    }, 2000);
+  };
+
+  /**
+   * Get custom RPC URL from localStorage
+   */
+  function getCustomRpcUrl() {
+    return localStorage.getItem('chatbot_custom_rpc_url') || null;
+  }
+
+  /**
    * Send USDC payment via Phantom wallet
    * Creates an SPL Token transfer transaction
    */
@@ -580,10 +645,12 @@
 
     console.log('✅ Solana Web3 library loaded');
 
-    // Use the configured RPC URL from window config, with fallback to network-based selection
-    const rpcUrl = SOLANA_RPC_URL || (network === 'mainnet-beta'
+    // Use custom RPC URL from settings, then window config, then fallback to network-based selection
+    const customRpc = getCustomRpcUrl();
+    const rpcUrl = customRpc || SOLANA_RPC_URL || (network === 'mainnet-beta'
       ? 'https://api.mainnet-beta.solana.com'
       : 'https://api.devnet.solana.com');
+    console.log('🌐 Using RPC:', customRpc ? 'Custom RPC' : 'Default RPC');
     const connection = new Connection(rpcUrl, 'confirmed');
 
     const fromPubkey = new PublicKey(fromAddress);
@@ -676,6 +743,7 @@
       <div id="chatbot-widget" class="chatbot-widget">
         <div class="chatbot-header">
           <h3>OpenLibx402 Assistant</h3>
+          <button id="chatbot-settings" title="Settings">⚙️</button>
           <button id="chatbot-clear" title="Clear conversation">🗑️</button>
           <button id="chatbot-toggle" title="Close">✕</button>
         </div>
@@ -782,6 +850,53 @@
           </div>
         </div>
       </div>
+      <div id="chatbot-settings-modal" class="payment-modal">
+        <div class="payment-modal-content">
+          <div class="payment-modal-header">
+            <h3>⚙️ Settings</h3>
+            <button class="payment-modal-close" onclick="document.getElementById('chatbot-settings-modal').style.display='none'">✕</button>
+          </div>
+          <div class="payment-modal-body">
+            <div class="settings-section">
+              <h4 style="margin-top: 0; margin-bottom: 12px; font-size: 1em; color: #333;">Solana RPC Endpoint</h4>
+              <p style="font-size: 0.85em; color: #666; margin-bottom: 12px;">
+                Configure a custom RPC endpoint for Solana transactions. The default public RPC may be rate-limited.
+              </p>
+              <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 6px; font-size: 0.9em; color: #555;">
+                  Custom RPC URL (optional):
+                </label>
+                <input
+                  type="text"
+                  id="custom-rpc-url"
+                  placeholder="https://mainnet.helius-rpc.com/?api-key=YOUR_KEY"
+                  style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9em; box-sizing: border-box;"
+                />
+                <small style="display: block; margin-top: 6px; color: #999; font-size: 0.8em;">
+                  Leave empty to use default public RPC
+                </small>
+              </div>
+              <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-size: 0.85em;">
+                <strong style="display: block; margin-bottom: 8px;">💡 Free RPC Providers:</strong>
+                <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+                  <li><a href="https://www.helius.dev/" target="_blank" style="color: #667eea;">Helius</a> - Free tier with 100k requests/day</li>
+                  <li><a href="https://www.alchemy.com/solana" target="_blank" style="color: #667eea;">Alchemy</a> - Free tier available</li>
+                  <li><a href="https://www.quicknode.com/" target="_blank" style="color: #667eea;">QuickNode</a> - Free trial available</li>
+                </ul>
+              </div>
+              <div style="margin-top: 16px;">
+                <button
+                  onclick="saveRpcSettings()"
+                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; font-size: 0.95em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);"
+                >
+                  Save Settings
+                </button>
+              </div>
+              <div id="settings-status" style="margin-top: 12px; padding: 10px; border-radius: 6px; font-size: 0.85em; display: none;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     `;
 
     document.body.insertAdjacentHTML('beforeend', chatbotHtml);
@@ -807,6 +922,7 @@
     const input = document.getElementById('chatbot-input');
     const sendBtn = document.getElementById('chatbot-send');
     const clearBtn = document.getElementById('chatbot-clear');
+    const settingsBtn = document.getElementById('chatbot-settings');
 
     fab.addEventListener('click', () => {
       widget.classList.add('chatbot-widget-open');
@@ -823,6 +939,10 @@
       if (confirm('Clear conversation history?')) {
         clearConversation();
       }
+    });
+
+    settingsBtn.addEventListener('click', () => {
+      openSettings();
     });
 
     sendBtn.addEventListener('click', () => {
