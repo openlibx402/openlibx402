@@ -1,0 +1,5539 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for the OpenLibx402 autonomous payments ecosystem">
+      
+      
+      
+        <link rel="canonical" href="https://openlibx402.github.io/docs/chatbot/architecture/">
+      
+      
+        <link rel="prev" href="../payments/">
+      
+      
+        <link rel="next" href="../deployment/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>Architecture - OpenLibx402 Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  <!-- Chatbot Widget Styles -->
+  <link rel="stylesheet" href="../../assets/stylesheets/chatbot.css?v=2">
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#architecture-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="OpenLibx402 Docs" class="md-header__button md-logo" aria-label="OpenLibx402 Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenLibx402 Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/openlibx402/docs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../openlibx402-technical-spec/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Technical Specification
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quick-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Chatbot
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../packages/python/openlibx402-core/" class="md-tabs__link">
+          
+  
+  
+  Packages
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../examples/" class="md-tabs__link">
+          
+  
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../go/getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../go/reference/api-reference/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OpenLibx402 Docs" class="md-nav__button md-logo" aria-label="OpenLibx402 Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenLibx402 Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/openlibx402/docs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../openlibx402-technical-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Technical Specification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Chatbot
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chatbot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../payments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Payment System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#system-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Diagram
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chat-message-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chat Message Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#payment-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Payment Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-service-oriented-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Service-Oriented Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-middleware-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Middleware Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-error-handling-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Error Handling Strategy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deno-kv-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deno KV Schema
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Organization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technology-choices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technology Choices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technology Choices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deno-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deno Runtime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hono-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hono Framework
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pinecone-for-vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pinecone for Vectors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openai-for-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenAI for Generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solana-for-payments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solana for Payments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deno-kv-for-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deno KV for Storage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-response-time-target-2-seconds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Response Time Target: &lt; 2 seconds
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optimization Strategies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cost-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cost Optimization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Validation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authorization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Privacy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scalability-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scalability Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scalability Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#horizontal-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Horizontal Scaling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vertical-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vertical Scaling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rate Limiting Strategy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Observability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring and Observability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Metrics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alerting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e2e-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      E2E Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Load Testing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disaster-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disaster Recovery
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Disaster Recovery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backup-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup Strategy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failover-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failover Plan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtorpo" class="md-nav__link">
+    <span class="md-ellipsis">
+      RTO/RPO
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Enhancements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TABLE_OF_CONTENTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentation Map
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Packages
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Packages
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/python/openlibx402-core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/python/openlibx402-fastapi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FastAPI Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/python/openlibx402-client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/python/openlibx402-langchain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/python/openlibx402-langgraph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    TypeScript
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            TypeScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/typescript/openlibx402-core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/typescript/openlibx402-client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client SDK
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/typescript/openlibx402-express/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Express Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/typescript/openlibx402-nextjs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Next.js Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/typescript/openlibx402-langchain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../packages/typescript/openlibx402-langgraph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/middleware/nethttp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    net/http Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/middleware/echo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Echo Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/middleware/rocket/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rocket Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/middleware/actix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Actix Web Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kotlin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kotlin/libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kotlin/libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/python/fastapi-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FastAPI Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/python/langchain-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/python/langgraph-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    TypeScript
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            TypeScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/typescript/express-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Express Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/typescript/nextjs-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Next.js App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/typescript/nuxtjs-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nuxt.js App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/typescript/astro-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Astro App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/typescript/vue-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vue.js App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/typescript/langchain-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/typescript/langgraph-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/examples/nethttp-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    net/http Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/examples/echo-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Echo Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/examples/rocket-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rocket Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/examples/actix-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Actix Web Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/examples/basic-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_7" id="__nav_6_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_7">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kotlin/examples/basic-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/getting-started/server-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/getting-started/server-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kotlin/getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kotlin/getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1" id="__nav_8_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../go/reference/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rust/reference/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_3" id="__nav_8_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../java/reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_4" id="__nav_8_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kotlin/reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kotlin/reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#system-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      System Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#component-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Diagram
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chat-message-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chat Message Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#payment-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Payment Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-service-oriented-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Service-Oriented Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-middleware-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Middleware Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-error-handling-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Error Handling Strategy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      State Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="State Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deno-kv-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deno KV Schema
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Organization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technology-choices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technology Choices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technology Choices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deno-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deno Runtime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hono-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hono Framework
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pinecone-for-vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pinecone for Vectors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openai-for-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      OpenAI for Generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solana-for-payments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solana for Payments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deno-kv-for-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deno KV for Storage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-response-time-target-2-seconds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Response Time Target: &lt; 2 seconds
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optimization Strategies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cost-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cost Optimization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Validation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authorization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Privacy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scalability-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scalability Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scalability Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#horizontal-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Horizontal Scaling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vertical-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vertical Scaling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rate Limiting Strategy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Observability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring and Observability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Metrics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alerting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alerting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e2e-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      E2E Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Load Testing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disaster-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Disaster Recovery
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Disaster Recovery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backup-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backup Strategy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failover-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Failover Plan
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rtorpo" class="md-nav__link">
+    <span class="md-ellipsis">
+      RTO/RPO
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Enhancements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/openlibx402/docs/edit/master/docs/chatbot/architecture.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="architecture-documentation">Architecture Documentation<a class="headerlink" href="#architecture-documentation" title="Permanent link">&para;</a></h1>
+<p>Technical deep-dive into the OpenLibx402 RAG Chatbot architecture and design decisions.</p>
+<h2 id="system-overview">System Overview<a class="headerlink" href="#system-overview" title="Permanent link">&para;</a></h2>
+<p>The chatbot is a Retrieval-Augmented Generation (RAG) system that combines:</p>
+<ol>
+<li><strong>Document Retrieval</strong>: Pinecone vector database for semantic search</li>
+<li><strong>Response Generation</strong>: OpenAI GPT models for intelligent answers</li>
+<li><strong>Rate Limiting</strong>: Deno KV for per-user query tracking</li>
+<li><strong>Payment Processing</strong>: Solana blockchain for USDC transactions</li>
+</ol>
+<h2 id="component-diagram">Component Diagram<a class="headerlink" href="#component-diagram" title="Permanent link">&para;</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#__codelineno-0-55">55</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>┌────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>│                      Client (Browser)                           │
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>│  ┌──────────────────────────────────────────────────────────┐  │
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>│  │  Chatbot Widget (chatbot.js)                             │  │
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>│  │  - Chat interface (React-like pattern)                   │  │
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>│  │  - LocalStorage for conversation history                │  │
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>│  │  - Phantom wallet integration                           │  │
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>│  │  - Real-time payment UI updates                         │  │
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>│  └──────────────────────────────────────────────────────────┘  │
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>└────────────────────────────────────────────────────────────────┘
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>                           ↓ HTTP (REST)
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>┌────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>│                    Deno Backend Server                          │
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>│                   (Hono Framework)                              │
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>│                                                                 │
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>│  ┌─────────────────────────────────────────────────────────┐  │
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>│  │  HTTP Handlers                                          │  │
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>│  │  ├─ POST /api/chat              → ChatHandler          │  │
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>│  │  ├─ GET /api/status             → RateLimitCheck       │  │
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>│  │  ├─ GET /api/payment/info       → PaymentInfo          │  │
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>│  │  └─ POST /api/payment           → PaymentHandler       │  │
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>│  └─────────────────────────────────────────────────────────┘  │
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>│                                                                 │
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>│  ┌─────────────────────────────────────────────────────────┐  │
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>│  │  Middleware                                             │  │
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>│  │  ├─ CORS Middleware                                    │  │
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>│  │  ├─ RateLimiter Middleware                            │  │
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>│  │  └─ Logging Middleware                                │  │
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>│  └─────────────────────────────────────────────────────────┘  │
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>│                                                                 │
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>│  ┌─────────────────────────────────────────────────────────┐  │
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>│  │  Services                                               │  │
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>│  │  ├─ OpenAIService                                       │  │
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>│  │  │  └─ Text generation (GPT-5 nano)                     │  │
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>│  │  ├─ PineconeService                                     │  │
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>│  │  │  └─ Semantic search &amp; retrieval                      │  │
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>│  │  ├─ SolanaVerificationService                           │  │
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a>│  │  │  └─ USDC payment verification                        │  │
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>│  │  └─ RateLimiter                                         │  │
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>│  │     └─ Query counting &amp; limits                          │  │
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>│  └─────────────────────────────────────────────────────────┘  │
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>│                                                                 │
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>│  ┌─────────────────────────────────────────────────────────┐  │
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>│  │  Storage                                                │  │
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a>│  │  └─ Deno KV (Distributed key-value store)              │  │
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a>│  │     ├─ rate_limit: userId → queryCount                 │  │
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>│  │     └─ used_transactions: txSignature → true           │  │
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>│  └─────────────────────────────────────────────────────────┘  │
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>└────────────────────────────────────────────────────────────────┘
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>     ↓ HTTP API          ↓ REST API       ↓ RPC JSON-RPC
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>  ┌────────────┐    ┌──────────────┐   ┌──────────────┐
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>  │ OpenAI     │    │ Pinecone     │   │ Solana RPC   │
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a>  │ API        │    │ Vector DB    │   │ Mainnet/     │
+<a id="__codelineno-0-54" name="__codelineno-0-54"></a>  │            │    │              │   │ Devnet       │
+<a id="__codelineno-0-55" name="__codelineno-0-55"></a>  └────────────┘    └──────────────┘   └──────────────┘
+</code></pre></div></td></tr></table></div>
+<h2 id="data-flow">Data Flow<a class="headerlink" href="#data-flow" title="Permanent link">&para;</a></h2>
+<h3 id="chat-message-flow">Chat Message Flow<a class="headerlink" href="#chat-message-flow" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>User Input
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>    ↓
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>[Browser] validateInput()
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>    ↓
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>[API] POST /api/chat { message, conversationId }
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>    ↓
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>[Middleware] checkLimit(userId, ipAddress)
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    ↓
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>    ├─ If rate limited:
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>    │   return 402 Payment Required
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>    │
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>    └─ If allowed:
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>        [Service] Pinecone.search(message)
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>            ├─ Embed message (OpenAI)
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>            ├─ Search vector DB
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>            └─ Return top 5 documents
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>        ↓
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>        [Service] OpenAI.generate(message, documents)
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>            ├─ Create prompt with context
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>            ├─ Call GPT-5 nano
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>            └─ Return response with citations
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>        ↓
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>        [Middleware] incrementUsage(userId)
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>        ↓
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>        [Response] {
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>          success: true,
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>          response: &quot;...&quot;,
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>          sources: [...],
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>          tokensUsed: 150
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>        }
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>        ↓
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a>        [Browser] displayResponse()
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a>        ↓
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>        [Browser] saveHistory(localStorage)
+</code></pre></div></td></tr></table></div>
+<h3 id="payment-flow">Payment Flow<a class="headerlink" href="#payment-flow" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span>
+<span class="normal"><a href="#__codelineno-2-39">39</a></span>
+<span class="normal"><a href="#__codelineno-2-40">40</a></span>
+<span class="normal"><a href="#__codelineno-2-41">41</a></span>
+<span class="normal"><a href="#__codelineno-2-42">42</a></span>
+<span class="normal"><a href="#__codelineno-2-43">43</a></span>
+<span class="normal"><a href="#__codelineno-2-44">44</a></span>
+<span class="normal"><a href="#__codelineno-2-45">45</a></span>
+<span class="normal"><a href="#__codelineno-2-46">46</a></span>
+<span class="normal"><a href="#__codelineno-2-47">47</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>Rate Limit Exceeded
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>    ↓
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>[UI] showPaymentModal()
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>    ↓
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>[UI] User selects amount (slider)
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>    ↓
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>[UI] User clicks &quot;Pay with Solana&quot;
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>    ↓
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>[Service] Phantom.connect()
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>    ↓
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>[Service] buildUSDCTransaction()
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>    ├─ Calculate token accounts
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>    ├─ Create TransferChecked instruction
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>    └─ Build transaction
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>    ↓
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>[Service] Phantom.signAndSendTransaction()
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>    ↓
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>[API] POST /api/payment { signature, amount }
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>    ↓
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>[Service] Solana.verifyTransaction(signature, amount)
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>    ├─ Fetch transaction from RPC
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>    ├─ Check token balance changes
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>    ├─ Validate recipient
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>    └─ Return true/false
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>    ↓
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>    ├─ If invalid:
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>    │   return 400 Bad Request
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>    │
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a>    └─ If valid:
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a>        [Service] SolanaService.markTransactionUsed(signature)
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a>        ↓
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>        [Service] RateLimiter.grantQueries(userId, queriesGranted)
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a>            ├─ Calculate: queriesGranted = amount * 1000
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a>            ├─ Update KV store
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a>            └─ Verify grant
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a>        ↓
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a>        [Response] {
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a>          success: true,
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a>          queriesGranted: 10,
+<a id="__codelineno-2-40" name="__codelineno-2-40"></a>          rateLimit: { remaining: 10, ... }
+<a id="__codelineno-2-41" name="__codelineno-2-41"></a>        }
+<a id="__codelineno-2-42" name="__codelineno-2-42"></a>        ↓
+<a id="__codelineno-2-43" name="__codelineno-2-43"></a>        [UI] updateQueryCount()
+<a id="__codelineno-2-44" name="__codelineno-2-44"></a>        ↓
+<a id="__codelineno-2-45" name="__codelineno-2-45"></a>        [UI] closePaymentModal()
+<a id="__codelineno-2-46" name="__codelineno-2-46"></a>        ↓
+<a id="__codelineno-2-47" name="__codelineno-2-47"></a>        Chat resumes
+</code></pre></div></td></tr></table></div>
+<h2 id="architecture-patterns">Architecture Patterns<a class="headerlink" href="#architecture-patterns" title="Permanent link">&para;</a></h2>
+<h3 id="1-service-oriented-architecture">1. Service-Oriented Architecture<a class="headerlink" href="#1-service-oriented-architecture" title="Permanent link">&para;</a></h3>
+<p>Each external integration is wrapped in a service:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>┌─ OpenAIService
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>│  └─ Handles all OpenAI API calls
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>│     ├─ Embedding
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>│     ├─ Text generation
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>│     └─ Error handling
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>│
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>├─ PineconeService
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>│  └─ Handles vector DB operations
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>│     ├─ Vector search
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>│     ├─ Caching
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>│     └─ Error handling
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>│
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>├─ SolanaVerificationService
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>│  └─ Handles blockchain verification
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>│     ├─ Transaction fetching
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>│     ├─ Balance validation
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>│     └─ Error handling
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>│
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>└─ RateLimiter
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>   └─ Handles rate limiting
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>      ├─ Query tracking
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>      ├─ Limit checking
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>      └─ Grant management
+</code></pre></div></td></tr></table></div>
+<h3 id="2-middleware-pipeline">2. Middleware Pipeline<a class="headerlink" href="#2-middleware-pipeline" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-4-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-4-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-4-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-4-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-4-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-4-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-4-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-4-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-4-10">10</a></span>
+<span class="normal"><a href="#__codelineno-4-11">11</a></span>
+<span class="normal"><a href="#__codelineno-4-12">12</a></span>
+<span class="normal"><a href="#__codelineno-4-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>Request
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a>  ↓
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a>[CORS] Check origin
+<a id="__codelineno-4-4" name="__codelineno-4-4"></a>  ↓
+<a id="__codelineno-4-5" name="__codelineno-4-5"></a>[Logging] Log request
+<a id="__codelineno-4-6" name="__codelineno-4-6"></a>  ↓
+<a id="__codelineno-4-7" name="__codelineno-4-7"></a>[RateLimiter] Check rate limit
+<a id="__codelineno-4-8" name="__codelineno-4-8"></a>  ↓
+<a id="__codelineno-4-9" name="__codelineno-4-9"></a>[Handler] Process request
+<a id="__codelineno-4-10" name="__codelineno-4-10"></a>  ↓
+<a id="__codelineno-4-11" name="__codelineno-4-11"></a>[Logging] Log response
+<a id="__codelineno-4-12" name="__codelineno-4-12"></a>  ↓
+<a id="__codelineno-4-13" name="__codelineno-4-13"></a>Response
+</code></pre></div></td></tr></table></div>
+<h3 id="3-error-handling-strategy">3. Error Handling Strategy<a class="headerlink" href="#3-error-handling-strategy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span>
+<span class="normal"><a href="#__codelineno-5-7">7</a></span>
+<span class="normal"><a href="#__codelineno-5-8">8</a></span>
+<span class="normal"><a href="#__codelineno-5-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>Try
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>  ├─ Call external service
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>  └─ Handle service errors
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>        ├─ Retry? (with backoff)
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>        ├─ Fallback? (cached data)
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a>        └─ Return error response
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a>Catch
+<a id="__codelineno-5-8" name="__codelineno-5-8"></a>  └─ Log error
+<a id="__codelineno-5-9" name="__codelineno-5-9"></a>  └─ Return 500 with generic message
+</code></pre></div></td></tr></table></div>
+<h2 id="state-management">State Management<a class="headerlink" href="#state-management" title="Permanent link">&para;</a></h2>
+<h3 id="deno-kv-schema">Deno KV Schema<a class="headerlink" href="#deno-kv-schema" title="Permanent link">&para;</a></h3>
+<p><strong>Rate Limiting</strong>:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>Key:   [&#39;rate_limit&#39;, &#39;user:192.168.1.1&#39;, &#39;2025-11-04&#39;]
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>Value: 2  // number of queries used today
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>TTL:   25 hours
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Used Transactions</strong>:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>Key:   [&#39;used_transactions&#39;, &#39;3xMqyz4f...&#39;]
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>Value: true
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>TTL:   30 days
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Rate Limit Index</strong> (for cleanup):
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>Key:   [&#39;rate_limit_users&#39;, &#39;user:192.168.1.1&#39;]
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a>Value: [&#39;2025-11-04&#39;, &#39;2025-11-03&#39;]
+</code></pre></div></td></tr></table></div></p>
+<h2 id="code-organization">Code Organization<a class="headerlink" href="#code-organization" title="Permanent link">&para;</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span>
+<span class="normal"><a href="#__codelineno-9-30">30</a></span>
+<span class="normal"><a href="#__codelineno-9-31">31</a></span>
+<span class="normal"><a href="#__codelineno-9-32">32</a></span>
+<span class="normal"><a href="#__codelineno-9-33">33</a></span>
+<span class="normal"><a href="#__codelineno-9-34">34</a></span>
+<span class="normal"><a href="#__codelineno-9-35">35</a></span>
+<span class="normal"><a href="#__codelineno-9-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a>src/
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>├── main.ts                          # Server entry point
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>│   ├─ Initialize Hono server
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>│   ├─ Register middleware
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>│   ├─ Register routes
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>│   └─ Start listening
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>│
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>├── handlers/                        # HTTP request handlers
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>│   ├─ chat.ts                       # Chat endpoint
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>│   │  ├─ Validate message
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a>│   │  ├─ Call services
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>│   │  └─ Return response
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a>│   │
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a>│   └─ payment.ts                    # Payment endpoint
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a>│      ├─ Validate signature/amount
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a>│      ├─ Call Solana service
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a>│      ├─ Grant queries
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a>│      └─ Return confirmation
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a>│
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a>├── middleware/                      # Request middleware
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a>│   └─ rateLimit.ts                  # Rate limiting
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a>│      ├─ getUserId()
+<a id="__codelineno-9-23" name="__codelineno-9-23"></a>│      ├─ checkLimit()
+<a id="__codelineno-9-24" name="__codelineno-9-24"></a>│      ├─ incrementUsage()
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a>│      └─ grantQueries()
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a>│
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a>├── services/                        # External integrations
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a>│   ├─ openai.ts                     # GPT integration
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a>│   ├─ pinecone.ts                   # Vector DB
+<a id="__codelineno-9-30" name="__codelineno-9-30"></a>│   ├─ solana.ts                     # Blockchain verification
+<a id="__codelineno-9-31" name="__codelineno-9-31"></a>│   └─ logger.ts                     # Logging
+<a id="__codelineno-9-32" name="__codelineno-9-32"></a>│
+<a id="__codelineno-9-33" name="__codelineno-9-33"></a>└── utils/                           # Utilities
+<a id="__codelineno-9-34" name="__codelineno-9-34"></a>    ├─ config.ts                     # Configuration loading
+<a id="__codelineno-9-35" name="__codelineno-9-35"></a>    ├─ logger.ts                     # Logging setup
+<a id="__codelineno-9-36" name="__codelineno-9-36"></a>    └─ types.ts                      # TypeScript types
+</code></pre></div></td></tr></table></div>
+<h2 id="technology-choices">Technology Choices<a class="headerlink" href="#technology-choices" title="Permanent link">&para;</a></h2>
+<h3 id="deno-runtime">Deno Runtime<a class="headerlink" href="#deno-runtime" title="Permanent link">&para;</a></h3>
+<p><strong>Why Deno?</strong>
+- ✅ Built-in TypeScript support (no build step)
+- ✅ Secure by default (explicit permissions)
+- ✅ Modern JavaScript features
+- ✅ Better developer experience
+- ✅ Easy to deploy (single binary)</p>
+<p><strong>Drawbacks</strong>
+- ⚠️ Smaller ecosystem than Node.js
+- ⚠️ Less third-party library support</p>
+<h3 id="hono-framework">Hono Framework<a class="headerlink" href="#hono-framework" title="Permanent link">&para;</a></h3>
+<p><strong>Why Hono?</strong>
+- ✅ Lightweight (optimized for edge computing)
+- ✅ Works with Deno
+- ✅ TypeScript first
+- ✅ Minimal boilerplate
+- ✅ Built-in middleware support</p>
+<p><strong>Alternative</strong>: Express (Node.js)</p>
+<h3 id="pinecone-for-vectors">Pinecone for Vectors<a class="headerlink" href="#pinecone-for-vectors" title="Permanent link">&para;</a></h3>
+<p><strong>Why Pinecone?</strong>
+- ✅ Managed vector database (no ops)
+- ✅ Semantic search built-in
+- ✅ Scales automatically
+- ✅ Free tier available</p>
+<p><strong>Alternatives</strong>:
+- Weaviate (open source)
+- Milvus (open source)
+- Qdrant (open source)</p>
+<h3 id="openai-for-generation">OpenAI for Generation<a class="headerlink" href="#openai-for-generation" title="Permanent link">&para;</a></h3>
+<p><strong>Why OpenAI?</strong>
+- ✅ GPT-5 nano is very cheap
+- ✅ High quality responses
+- ✅ Easy API
+- ✅ Well documented</p>
+<p><strong>Alternatives</strong>:
+- Claude (Anthropic)
+- Llama 2 (Meta, open source)
+- Mistral (open source)</p>
+<h3 id="solana-for-payments">Solana for Payments<a class="headerlink" href="#solana-for-payments" title="Permanent link">&para;</a></h3>
+<p><strong>Why Solana?</strong>
+- ✅ Low transaction fees (~$0.00025)
+- ✅ Fast confirmation (1-2 seconds)
+- ✅ USDC widely available
+- ✅ Developer friendly</p>
+<p><strong>Alternatives</strong>:
+- Ethereum (expensive gas fees)
+- Polygon (cheaper alternative)
+- Lightning Network (Bitcoin)</p>
+<h3 id="deno-kv-for-storage">Deno KV for Storage<a class="headerlink" href="#deno-kv-for-storage" title="Permanent link">&para;</a></h3>
+<p><strong>Why Deno KV?</strong>
+- ✅ Distributed key-value store
+- ✅ Built into Deno Deploy
+- ✅ Atomic operations
+- ✅ TTL support
+- ✅ No external service to manage</p>
+<p><strong>Alternatives</strong>:
+- Redis (requires separate deployment)
+- PostgreSQL (more overhead)
+- MongoDB (overkill for this use case)</p>
+<h2 id="performance-considerations">Performance Considerations<a class="headerlink" href="#performance-considerations" title="Permanent link">&para;</a></h2>
+<h3 id="query-response-time-target-2-seconds">Query Response Time Target: &lt; 2 seconds<a class="headerlink" href="#query-response-time-target-2-seconds" title="Permanent link">&para;</a></h3>
+<p>Breakdown:
+1. <strong>Pinecone search</strong>: ~500ms (network + embedding)
+2. <strong>OpenAI generation</strong>: ~1000ms (API call)
+3. <strong>Other overhead</strong>: ~200ms (parsing, formatting)
+4. <strong>Total</strong>: ~1.7 seconds</p>
+<h3 id="optimization-strategies">Optimization Strategies<a class="headerlink" href="#optimization-strategies" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Parallel requests</strong>:
+   <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="c1">// Bad: Sequential</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">embedding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">openai</span><span class="p">.</span><span class="nx">embed</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">docs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">pinecone</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">embedding</span><span class="p">);</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="c1">// Good: Parallel</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">openai</span><span class="p">.</span><span class="nx">generate</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="nx">docs</span><span class="p">);</span>
+</code></pre></div></td></tr></table></div></p>
+</li>
+<li>
+<p><strong>Caching</strong>:</p>
+</li>
+<li>Cache common questions</li>
+<li>Cache document embeddings</li>
+<li>
+<p>Cache OpenAI responses</p>
+</li>
+<li>
+<p><strong>Batching</strong>:</p>
+</li>
+<li>Batch payment verification</li>
+<li>Batch rate limit checks</li>
+</ol>
+<h3 id="cost-optimization">Cost Optimization<a class="headerlink" href="#cost-optimization" title="Permanent link">&para;</a></h3>
+<p><strong>Current costs per query</strong>:
+- OpenAI: ~$0.000133 (GPT-5 nano @ $0.15/1M tokens)
+- Pinecone: ~$0 (free tier)
+- Solana: ~$0 (negligible)
+- <strong>Total: ~$0.000133</strong></p>
+<p><strong>Revenue per query</strong>: $0.001
+<strong>Profit margin</strong>: ~87%</p>
+<p><strong>Cost reduction opportunities</strong>:
+1. Cache common responses (reduce OpenAI calls)
+2. Use cron job for batch processing
+3. Migrate to open source models (Llama 2)
+4. Implement query deduplication</p>
+<h2 id="security-architecture">Security Architecture<a class="headerlink" href="#security-architecture" title="Permanent link">&para;</a></h2>
+<h3 id="input-validation">Input Validation<a class="headerlink" href="#input-validation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1">// Message validation</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">message</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">message</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">length</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">  </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;Message cannot be empty&#39;</span><span class="p">);</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="p">}</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="c1">// Amount validation</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">amount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.01</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">amount</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="w">  </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;Invalid amount&#39;</span><span class="p">);</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="p">}</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="c1">// Signature validation</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">isValidSolanaSignature</span><span class="p">(</span><span class="nx">signature</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="w">  </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;Invalid signature format&#39;</span><span class="p">);</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
+<p>The chatbot uses <strong>IP-based identification</strong> (not authentication):
+- Each request gets a user ID based on IP
+- Rate limits are tracked per IP
+- Suitable for public documentation</p>
+<p><strong>Not suitable for</strong>:
+- User accounts
+- Sensitive data
+- Enterprise use</p>
+<h3 id="authorization">Authorization<a class="headerlink" href="#authorization" title="Permanent link">&para;</a></h3>
+<p>All endpoints are public (no authorization required):
+- Anyone can chat
+- Anyone can pay
+- No authentication credentials needed</p>
+<p><strong>Future enhancement</strong>: Add API keys for enterprise deployments</p>
+<h3 id="data-privacy">Data Privacy<a class="headerlink" href="#data-privacy" title="Permanent link">&para;</a></h3>
+<p><strong>What we store</strong>:
+- ✅ Rate limit counts (KV, auto-expiring)
+- ✅ Used transaction signatures (KV, 30-day TTL)
+- ❌ Not storing chat history (ephemeral)
+- ❌ Not storing personal data</p>
+<p><strong>What third parties see</strong>:
+- OpenAI: Chat messages (covered by their privacy policy)
+- Pinecone: Chat messages (covered by their privacy policy)
+- Solana: Only public transaction data</p>
+<h2 id="scalability-architecture">Scalability Architecture<a class="headerlink" href="#scalability-architecture" title="Permanent link">&para;</a></h2>
+<h3 id="horizontal-scaling">Horizontal Scaling<a class="headerlink" href="#horizontal-scaling" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span>
+<span class="normal"><a href="#__codelineno-12-13">13</a></span>
+<span class="normal"><a href="#__codelineno-12-14">14</a></span>
+<span class="normal"><a href="#__codelineno-12-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a>┌─────────────────────────┐
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a>│   Load Balancer         │
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a>│   (Nginx/HAProxy)       │
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>└──────────┬──────────────┘
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a>           │
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a>    ┌──────┼──────┬───────┐
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a>    ↓      ↓      ↓       ↓
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a>  [Pod1] [Pod2] [Pod3] [Pod4]
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a>    │      │      │       │
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a>    └──────┴──────┴───────┘
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a>           │
+<a id="__codelineno-12-12" name="__codelineno-12-12"></a>    ┌──────┴──────┐
+<a id="__codelineno-12-13" name="__codelineno-12-13"></a>    ↓             ↓
+<a id="__codelineno-12-14" name="__codelineno-12-14"></a>[Pinecone]  [Deno KV]
+<a id="__codelineno-12-15" name="__codelineno-12-15"></a>           (shared storage)
+</code></pre></div></td></tr></table></div>
+<h3 id="vertical-scaling">Vertical Scaling<a class="headerlink" href="#vertical-scaling" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Increase memory: 512MB → 2GB</li>
+<li>Increase CPU: 1 core → 4 cores</li>
+<li>Cache more aggressively</li>
+<li>Use CDN for static assets</li>
+</ul>
+<h3 id="rate-limiting-strategy">Rate Limiting Strategy<a class="headerlink" href="#rate-limiting-strategy" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Per-IP</strong>: 3 free queries/day</li>
+<li><strong>Per-endpoint</strong>: 100 req/s (DDoS protection)</li>
+<li><strong>Per-user-paid</strong>: 1000 queries/day</li>
+</ol>
+<h2 id="monitoring-and-observability">Monitoring and Observability<a class="headerlink" href="#monitoring-and-observability" title="Permanent link">&para;</a></h2>
+<h3 id="key-metrics">Key Metrics<a class="headerlink" href="#key-metrics" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-13-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-13-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-13-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-13-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-13-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-13-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-13-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-13-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-13-10">10</a></span>
+<span class="normal"><a href="#__codelineno-13-11">11</a></span>
+<span class="normal"><a href="#__codelineno-13-12">12</a></span>
+<span class="normal"><a href="#__codelineno-13-13">13</a></span>
+<span class="normal"><a href="#__codelineno-13-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>Request Latency
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>├─ P50: &lt; 1s
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>├─ P95: &lt; 2s
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>└─ P99: &lt; 5s
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6"></a>Error Rate
+<a id="__codelineno-13-7" name="__codelineno-13-7"></a>├─ &lt; 1% API errors
+<a id="__codelineno-13-8" name="__codelineno-13-8"></a>├─ &lt; 0.1% payment failures
+<a id="__codelineno-13-9" name="__codelineno-13-9"></a>└─ &lt; 0.01% data loss
+<a id="__codelineno-13-10" name="__codelineno-13-10"></a>
+<a id="__codelineno-13-11" name="__codelineno-13-11"></a>Cost
+<a id="__codelineno-13-12" name="__codelineno-13-12"></a>├─ OpenAI: ${cost per day}
+<a id="__codelineno-13-13" name="__codelineno-13-13"></a>├─ Pinecone: ${cost per day}
+<a id="__codelineno-13-14" name="__codelineno-13-14"></a>└─ Solana: ${cost per day}
+</code></pre></div></td></tr></table></div>
+<h3 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="nx">logger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s1">&#39;Chat request&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">userId</span><span class="p">,</span><span class="w"> </span><span class="nx">messageLength</span><span class="p">,</span><span class="w"> </span><span class="nx">ipAddress</span><span class="w"> </span><span class="p">});</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="nx">logger</span><span class="p">.</span><span class="nx">warn</span><span class="p">(</span><span class="s1">&#39;Rate limit exceeded&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">userId</span><span class="p">,</span><span class="w"> </span><span class="nx">queries</span><span class="w"> </span><span class="p">});</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="nx">logger</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Payment verification failed&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">signature</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="alerting">Alerting<a class="headerlink" href="#alerting" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>IF error_rate &gt; 5% THEN alert(&quot;High error rate&quot;)
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a>IF avg_latency &gt; 3s THEN alert(&quot;Slow response times&quot;)
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>IF openai_cost &gt; $100/day THEN alert(&quot;High OpenAI costs&quot;)
+</code></pre></div></td></tr></table></div>
+<h2 id="testing-strategy">Testing Strategy<a class="headerlink" href="#testing-strategy" title="Permanent link">&para;</a></h2>
+<h3 id="unit-tests">Unit Tests<a class="headerlink" href="#unit-tests" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Service methods</li>
+<li>Rate limiter logic</li>
+<li>Payment verification</li>
+</ul>
+<h3 id="integration-tests">Integration Tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Chat endpoint</li>
+<li>Payment endpoint</li>
+<li>Rate limiting</li>
+</ul>
+<h3 id="e2e-tests">E2E Tests<a class="headerlink" href="#e2e-tests" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Full chat flow</li>
+<li>Full payment flow</li>
+<li>Rate limit reset</li>
+</ul>
+<h3 id="load-testing">Load Testing<a class="headerlink" href="#load-testing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>100 concurrent users</li>
+<li>1000 msg/sec throughput</li>
+<li>Validate cost per user</li>
+</ul>
+<h2 id="disaster-recovery">Disaster Recovery<a class="headerlink" href="#disaster-recovery" title="Permanent link">&para;</a></h2>
+<h3 id="backup-strategy">Backup Strategy<a class="headerlink" href="#backup-strategy" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Daily Deno KV snapshots</li>
+<li>Version control for code</li>
+<li>Environment variable backups (encrypted)</li>
+</ul>
+<h3 id="failover-plan">Failover Plan<a class="headerlink" href="#failover-plan" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Spin up new instance</li>
+<li>Restore KV data</li>
+<li>Verify blockchain payments still work</li>
+<li>Re-check Pinecone access</li>
+</ul>
+<h3 id="rtorpo">RTO/RPO<a class="headerlink" href="#rtorpo" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>RTO</strong> (Recovery Time Objective): 1 hour</li>
+<li><strong>RPO</strong> (Recovery Point Objective): 24 hours</li>
+</ul>
+<h2 id="future-enhancements">Future Enhancements<a class="headerlink" href="#future-enhancements" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Multi-LLM Support</strong>: Swap between Claude, Llama, GPT</li>
+<li><strong>Subscription Plans</strong>: Monthly recurring payments</li>
+<li><strong>User Accounts</strong>: Per-user rate limiting instead of IP</li>
+<li><strong>Analytics</strong>: Track usage patterns</li>
+<li><strong>A/B Testing</strong>: Test different prompts</li>
+<li><strong>Feedback Loop</strong>: Learn from user interactions</li>
+<li><strong>Multi-language</strong>: Support non-English queries</li>
+<li><strong>Voice Chat</strong>: Accept voice input</li>
+<li><strong>Export History</strong>: Allow users to export conversations</li>
+<li><strong>Custom Models</strong>: Fine-tune on documentation</li>
+</ol>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://deno.land/manual">Deno Documentation</a></li>
+<li><a href="https://hono.dev">Hono Framework</a></li>
+<li><a href="https://docs.pinecone.io">Pinecone API</a></li>
+<li><a href="https://platform.openai.com/docs">OpenAI API</a></li>
+<li><a href="https://docs.solana.com">Solana Docs</a></li>
+<li><a href="https://www.promptingguide.ai/techniques/rag">RAG Pattern</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/openlibx402" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top", "navigation.tabs", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  <!-- Buffer polyfill for Solana Web3.js -->
+  <script>
+    // Minimal Buffer polyfill for Solana Web3.js
+    (function() {
+      const base64 = {
+        byteLength: function(b64) {
+          const lens = getLens(b64);
+          return (lens[0] * 3 + lens[1]) / 4 - lens[2];
+        },
+        toByteArray: function(b64) {
+          const lens = getLens(b64);
+          const arr = new Uint8Array(base64.byteLength(b64));
+          decode(b64, arr, 0, lens[0], lens[1]);
+          return arr;
+        },
+        fromByteArray: function(uint8) {
+          const len = uint8.length;
+          const extraBytes = len % 3;
+          const parts = [];
+          const maxChunkLength = 16383;
+          for (let i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+            parts.push(encodeChunk(uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)));
+          }
+          if (extraBytes === 1) {
+            const tmp = uint8[len - 1];
+            parts.push(lookup[tmp >> 2] + lookup[(tmp << 4) & 0x3F] + '==');
+          } else if (extraBytes === 2) {
+            const tmp = (uint8[len - 2] << 8) + uint8[len - 1];
+            parts.push(lookup[tmp >> 10] + lookup[(tmp >> 4) & 0x3F] + lookup[(tmp << 2) & 0x3F] + '=');
+          }
+          return parts.join('');
+        }
+      };
+
+      const lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+      const revLookup = [];
+      for (let i = 0; i < lookup.length; i++) revLookup[lookup.charCodeAt(i)] = i;
+
+      function getLens(b64) {
+        const len = b64.length;
+        let validLen = b64.indexOf('=');
+        if (validLen === -1) validLen = len;
+        const placeHoldersLen = validLen === len ? 0 : 4 - (validLen % 4);
+        return [validLen, placeHoldersLen, placeHoldersLen > 0 ? placeHoldersLen : 0];
+      }
+
+      function decode(b64, arr, offset, len, placeHoldersLen) {
+        let tmp;
+        let curByte = 0;
+        const validLen = len + placeHoldersLen;
+        for (let i = 0; i < len; i += 4) {
+          tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)];
+          arr[offset + curByte++] = (tmp >> 16) & 0xFF;
+          arr[offset + curByte++] = (tmp >> 8) & 0xFF;
+          arr[offset + curByte++] = tmp & 0xFF;
+        }
+        if (placeHoldersLen === 2) {
+          tmp = (revLookup[b64.charCodeAt(i)] << 2) | (revLookup[b64.charCodeAt(i + 1)] >> 4);
+          arr[offset + curByte++] = tmp & 0xFF;
+        } else if (placeHoldersLen === 1) {
+          tmp = (revLookup[b64.charCodeAt(i)] << 10) | (revLookup[b64.charCodeAt(i + 1)] << 4) | (revLookup[b64.charCodeAt(i + 2)] >> 2);
+          arr[offset + curByte++] = (tmp >> 8) & 0xFF;
+          arr[offset + curByte++] = tmp & 0xFF;
+        }
+      }
+
+      function encodeChunk(uint8, start, end) {
+        let tmp;
+        const output = [];
+        for (let i = start; i < end; i += 3) {
+          tmp = ((uint8[i] << 16) & 0xFF0000) + ((uint8[i + 1] << 8) & 0xFF00) + (uint8[i + 2] & 0xFF);
+          output.push(lookup[(tmp >> 18) & 0x3F] + lookup[(tmp >> 12) & 0x3F] + lookup[(tmp >> 6) & 0x3F] + lookup[tmp & 0x3F]);
+        }
+        return output.join('');
+      }
+
+      class Buffer extends Uint8Array {
+        constructor(arg, encodingOrOffset, length) {
+          if (typeof arg === 'number') {
+            super(arg);
+          } else if (typeof arg === 'string') {
+            const enc = encodingOrOffset || 'utf8';
+            if (enc === 'base64') {
+              super(base64.toByteArray(arg));
+            } else {
+              const arr = new TextEncoder().encode(arg);
+              super(arr);
+            }
+          } else if (arg instanceof Uint8Array) {
+            super(arg);
+          } else {
+            super(arg, encodingOrOffset, length);
+          }
+        }
+
+        static from(value, encodingOrOffset, length) {
+          return new Buffer(value, encodingOrOffset, length);
+        }
+
+        static alloc(size, fill, encoding) {
+          const buf = new Buffer(size);
+          if (fill !== undefined) buf.fill(fill, 0, size, encoding);
+          return buf;
+        }
+
+        static isBuffer(obj) {
+          return obj instanceof Buffer;
+        }
+
+        toString(encoding = 'utf8') {
+          if (encoding === 'base64') {
+            return base64.fromByteArray(this);
+          }
+          return new TextDecoder().decode(this);
+        }
+
+        writeUInt32LE(value, offset) {
+          this[offset] = value & 0xff;
+          this[offset + 1] = (value >> 8) & 0xff;
+          this[offset + 2] = (value >> 16) & 0xff;
+          this[offset + 3] = (value >> 24) & 0xff;
+          return offset + 4;
+        }
+
+        writeBigUInt64LE(value, offset) {
+          const bigValue = BigInt(value);
+          for (let i = 0; i < 8; i++) {
+            this[offset + i] = Number((bigValue >> BigInt(i * 8)) & BigInt(0xff));
+          }
+          return offset + 8;
+        }
+
+        readUInt32LE(offset) {
+          return (
+            this[offset] |
+            (this[offset + 1] << 8) |
+            (this[offset + 2] << 16) |
+            (this[offset + 3] << 24)
+          ) >>> 0;
+        }
+
+        readBigUInt64LE(offset) {
+          let value = BigInt(0);
+          for (let i = 0; i < 8; i++) {
+            value |= BigInt(this[offset + i]) << BigInt(i * 8);
+          }
+          return value;
+        }
+      }
+
+      window.Buffer = Buffer;
+    })();
+  </script>
+  <!-- Solana Web3.js for Phantom wallet integration -->
+  <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.min.js"></script>
+  <!-- Note: @solana/spl-token doesn't have an IIFE bundle, we'll create token transfers manually -->
+  <!-- Chatbot Widget Script -->
+  <script>
+    // Configure chatbot API URL from mkdocs.yml config
+    // Supports environment-based configuration:
+    // - Development: http://localhost:3000 (or http://localhost:8000 for Deno)
+    // - Production: https://api.chatbot.openlibx402.com
+
+    // Detect if we're in production based on hostname
+    const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+
+    // Set API URL based on environment
+    window.CHATBOT_API_URL = isProduction
+      ? 'https://openlibx402-openlibx402.deno.dev'
+      : 'http://localhost:3000';
+
+    // Set Solana network based on environment
+    window.CHATBOT_SOLANA_NETWORK = isProduction
+      ? 'mainnet-beta'
+      : 'devnet';
+
+    // Set Solana RPC URL based on environment
+    window.CHATBOT_SOLANA_RPC = isProduction
+      ? 'https://api.mainnet-beta.solana.com'
+      : 'https://api.devnet.solana.com';
+
+    console.log('✅ Chatbot configured:', {
+      environment: isProduction ? 'production' : 'development',
+      apiUrl: window.CHATBOT_API_URL,
+      network: window.CHATBOT_SOLANA_NETWORK,
+      rpcUrl: window.CHATBOT_SOLANA_RPC
+    });
+
+    // Force cache bust
+    const chatbotScript = document.createElement('script');
+    chatbotScript.src = '../../assets/javascripts/chatbot.js?t=' + Date.now();
+    document.head.appendChild(chatbotScript);
+  </script>
+
+  </body>
+</html>

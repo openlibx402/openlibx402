@@ -1,0 +1,5485 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for the OpenLibx402 autonomous payments ecosystem">
+      
+      
+      
+        <link rel="canonical" href="https://openlibx402.github.io/docs/kotlin/getting-started/installation/">
+      
+      
+        <link rel="prev" href="../../../java/getting-started/client-quickstart/">
+      
+      
+        <link rel="next" href="../client-quickstart/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>Installation - OpenLibx402 Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  <!-- Chatbot Widget Styles -->
+  <link rel="stylesheet" href="../../../assets/stylesheets/chatbot.css?v=2">
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kotlin-installation-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="OpenLibx402 Docs" class="md-header__button md-logo" aria-label="OpenLibx402 Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenLibx402 Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/openlibx402/docs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../openlibx402-technical-spec/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Technical Specification
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quick-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chatbot/" class="md-tabs__link">
+          
+  
+  
+  Chatbot
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../packages/python/openlibx402-core/" class="md-tabs__link">
+          
+  
+  
+  Packages
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../examples/" class="md-tabs__link">
+          
+  
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../go/getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../go/reference/api-reference/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="OpenLibx402 Docs" class="md-nav__button md-logo" aria-label="OpenLibx402 Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenLibx402 Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/openlibx402/docs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../openlibx402-technical-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Technical Specification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quick-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Chatbot
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chatbot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/payments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Payment System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/TABLE_OF_CONTENTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentation Map
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Packages
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Packages
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/python/openlibx402-core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/python/openlibx402-fastapi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FastAPI Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/python/openlibx402-client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/python/openlibx402-langchain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/python/openlibx402-langgraph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    TypeScript
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            TypeScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client SDK
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-express/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Express Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-nextjs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Next.js Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-langchain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-langgraph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/middleware/nethttp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    net/http Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/middleware/echo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Echo Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/middleware/rocket/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rocket Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/middleware/actix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Actix Web Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/python/fastapi-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FastAPI Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/python/langchain-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/python/langgraph-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    TypeScript
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            TypeScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/express-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Express Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/nextjs-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Next.js App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/nuxtjs-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nuxt.js App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/astro-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Astro App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/vue-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vue.js App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/langchain-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/langgraph-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/examples/nethttp-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    net/http Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/examples/echo-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Echo Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/examples/rocket-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rocket Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/examples/actix-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Actix Web Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/examples/basic-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_7" id="__nav_6_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_7">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/basic-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/getting-started/server-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/getting-started/server-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kotlin-and-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kotlin and JDK
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Tool
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-gradle-kotlin-dsl-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Gradle Kotlin DSL (Recommended)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-gradle-groovy-dsl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Gradle Groovy DSL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 3: Maven
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-4-local-installation-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 4: Local Installation (Development)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-new-kotlin-project-with-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a New Kotlin Project with Gradle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-your-first-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Your First Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build and Run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-as-jar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run as JAR
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-installation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Package Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-package-openlibx402-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Package (openlibx402-core)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-package-openlibx402-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client Package (openlibx402-client)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typical Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ide-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      IDE Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IDE Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intellij-idea-recommended-for-kotlin" class="md-nav__link">
+    <span class="md-ellipsis">
+      IntelliJ IDEA (Recommended for Kotlin)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#android-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Android Studio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      VS Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eclipse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eclipse
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unresolved-reference-openlibx402" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Unresolved reference: openlibx402"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kotlin-compiler-version-mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Kotlin compiler version mismatch"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unsupported-class-file-major-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Unsupported class file major version"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coroutines-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coroutines Not Working
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serialization-plugin-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serialization Plugin Error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradle-daemon-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gradle Daemon Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solana-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solana Account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coroutine-dispatcher-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coroutine Dispatcher Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version Updates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Support
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1" id="__nav_8_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../go/reference/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/reference/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_3" id="__nav_8_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_4" id="__nav_8_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kotlin-and-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kotlin and JDK
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Tool
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation Methods
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-gradle-kotlin-dsl-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Gradle Kotlin DSL (Recommended)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-gradle-groovy-dsl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Gradle Groovy DSL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 3: Maven
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-4-local-installation-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 4: Local Installation (Development)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-new-kotlin-project-with-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a New Kotlin Project with Gradle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-your-first-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Your First Application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build and Run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-as-jar" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run as JAR
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-installation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify Installation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Package Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Package Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-package-openlibx402-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Package (openlibx402-core)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-package-openlibx402-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client Package (openlibx402-client)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typical Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ide-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      IDE Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IDE Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intellij-idea-recommended-for-kotlin" class="md-nav__link">
+    <span class="md-ellipsis">
+      IntelliJ IDEA (Recommended for Kotlin)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#android-studio" class="md-nav__link">
+    <span class="md-ellipsis">
+      Android Studio
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      VS Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eclipse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eclipse
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unresolved-reference-openlibx402" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Unresolved reference: openlibx402"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kotlin-compiler-version-mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Kotlin compiler version mismatch"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unsupported-class-file-major-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      "Unsupported class file major version"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coroutines-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coroutines Not Working
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serialization-plugin-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Serialization Plugin Error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradle-daemon-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gradle Daemon Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solana-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solana Account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coroutine-dispatcher-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coroutine Dispatcher Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version Updates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Support
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/openlibx402/docs/edit/master/docs/kotlin/getting-started/installation.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="kotlin-installation-guide">Kotlin Installation Guide<a class="headerlink" href="#kotlin-installation-guide" title="Permanent link">&para;</a></h1>
+<p>This guide walks you through installing and setting up the OpenLibX402 Kotlin SDK with coroutines support.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h3 id="kotlin-and-jdk">Kotlin and JDK<a class="headerlink" href="#kotlin-and-jdk" title="Permanent link">&para;</a></h3>
+<p>OpenLibX402 Kotlin SDK requires:
+- Kotlin 1.9.0 or higher
+- JDK 11 or higher</p>
+<h4 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># Using Homebrew</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>brew<span class="w"> </span>install<span class="w"> </span>openjdk@11
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>brew<span class="w"> </span>install<span class="w"> </span>kotlin
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="c1"># Or use SDKMAN!</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;https://get.sdkman.io&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>sdk<span class="w"> </span>install<span class="w"> </span>java<span class="w"> </span><span class="m">11</span>.0.20-tem
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>sdk<span class="w"> </span>install<span class="w"> </span>kotlin
+</code></pre></div></td></tr></table></div>
+<h4 id="ubuntudebian">Ubuntu/Debian<a class="headerlink" href="#ubuntudebian" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>openjdk-11-jdk
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1"># Install Kotlin</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;https://get.sdkman.io&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>sdk<span class="w"> </span>install<span class="w"> </span>kotlin
+</code></pre></div></td></tr></table></div>
+<h4 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h4>
+<p>Download and install:
+- JDK from <a href="https://www.oracle.com/java/technologies/downloads/">Oracle</a> or <a href="https://adoptium.net/">Adoptium</a>
+- Kotlin from <a href="https://kotlinlang.org/docs/command-line.html">kotlinlang.org</a></p>
+<h4 id="verify-installation">Verify Installation<a class="headerlink" href="#verify-installation" title="Permanent link">&para;</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>java<span class="w"> </span>-version
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="c1"># Should show: openjdk version &quot;11.0.x&quot; or higher</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a>kotlin<span class="w"> </span>-version
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="c1"># Should show: Kotlin version 1.9.x or higher</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="build-tool">Build Tool<a class="headerlink" href="#build-tool" title="Permanent link">&para;</a></h3>
+<p>Choose either Gradle or Maven. Gradle is recommended for Kotlin projects.</p>
+<h4 id="gradle-recommended-for-kotlin">Gradle (Recommended for Kotlin)<a class="headerlink" href="#gradle-recommended-for-kotlin" title="Permanent link">&para;</a></h4>
+<p><strong>macOS:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>brew<span class="w"> </span>install<span class="w"> </span>gradle
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Ubuntu/Debian:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>sdk<span class="w"> </span>install<span class="w"> </span>gradle<span class="w"> </span><span class="m">8</span>.4
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Windows:</strong>
+Download from <a href="https://gradle.org/install/">Gradle's website</a> and add to PATH.</p>
+<p><strong>Verify:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a>gradle<span class="w"> </span>-version
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="c1"># Should show: Gradle 7.x or higher</span>
+</code></pre></div></td></tr></table></div></p>
+<h4 id="maven">Maven<a class="headerlink" href="#maven" title="Permanent link">&para;</a></h4>
+<p><strong>macOS:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>brew<span class="w"> </span>install<span class="w"> </span>maven
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Ubuntu/Debian:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>maven
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Verify:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>mvn<span class="w"> </span>-version
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="c1"># Should show: Apache Maven 3.6.x or higher</span>
+</code></pre></div></td></tr></table></div></p>
+<h2 id="installation-methods">Installation Methods<a class="headerlink" href="#installation-methods" title="Permanent link">&para;</a></h2>
+<h3 id="option-1-gradle-kotlin-dsl-recommended">Option 1: Gradle Kotlin DSL (Recommended)<a class="headerlink" href="#option-1-gradle-kotlin-dsl-recommended" title="Permanent link">&para;</a></h3>
+<p>Add to your <code>build.gradle.kts</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span>
+<span class="normal"><a href="#__codelineno-9-20">20</a></span>
+<span class="normal"><a href="#__codelineno-9-21">21</a></span>
+<span class="normal"><a href="#__codelineno-9-22">22</a></span>
+<span class="normal"><a href="#__codelineno-9-23">23</a></span>
+<span class="normal"><a href="#__codelineno-9-24">24</a></span>
+<span class="normal"><a href="#__codelineno-9-25">25</a></span>
+<span class="normal"><a href="#__codelineno-9-26">26</a></span>
+<span class="normal"><a href="#__codelineno-9-27">27</a></span>
+<span class="normal"><a href="#__codelineno-9-28">28</a></span>
+<span class="normal"><a href="#__codelineno-9-29">29</a></span>
+<span class="normal"><a href="#__codelineno-9-30">30</a></span>
+<span class="normal"><a href="#__codelineno-9-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">plugins</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;jvm&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;1.9.20&quot;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;plugin.serialization&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;1.9.20&quot;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="p">}</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="n">repositories</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">    </span><span class="n">mavenCentral</span><span class="p">()</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="p">}</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="w">    </span><span class="c1">// OpenLibX402 packages</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.openlibx402:openlibx402-core:0.1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.openlibx402:openlibx402-client:0.1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="w">    </span><span class="c1">// Kotlin coroutines</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17"></a>
+<a id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="w">    </span><span class="c1">// Kotlinx serialization</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20"></a>
+<a id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="w">    </span><span class="c1">// Kotlinx datetime</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-datetime:0.4.1&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23"></a>
+<a id="__codelineno-9-24" name="__codelineno-9-24"></a><span class="w">    </span><span class="c1">// Optional: Logging</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;io.github.microutils:kotlin-logging-jvm:3.0.5&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;ch.qos.logback:logback-classic:1.4.11&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27"></a><span class="p">}</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28"></a>
+<a id="__codelineno-9-29" name="__codelineno-9-29"></a><span class="n">kotlin</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30"></a><span class="w">    </span><span class="n">jvmToolchain</span><span class="p">(</span><span class="m">11</span><span class="p">)</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Install dependencies:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a>gradle<span class="w"> </span>build
+</code></pre></div></td></tr></table></div>
+<h3 id="option-2-gradle-groovy-dsl">Option 2: Gradle Groovy DSL<a class="headerlink" href="#option-2-gradle-groovy-dsl" title="Permanent link">&para;</a></h3>
+<p>Add to your <code>build.gradle</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span>
+<span class="normal"><a href="#__codelineno-11-11">11</a></span>
+<span class="normal"><a href="#__codelineno-11-12">12</a></span>
+<span class="normal"><a href="#__codelineno-11-13">13</a></span>
+<span class="normal"><a href="#__codelineno-11-14">14</a></span>
+<span class="normal"><a href="#__codelineno-11-15">15</a></span>
+<span class="normal"><a href="#__codelineno-11-16">16</a></span>
+<span class="normal"><a href="#__codelineno-11-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="n">plugins</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;org.jetbrains.kotlin.jvm&#39;</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s1">&#39;1.9.20&#39;</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;org.jetbrains.kotlin.plugin.serialization&#39;</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s1">&#39;1.9.20&#39;</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="o">}</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="n">repositories</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">    </span><span class="n">mavenCentral</span><span class="o">()</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="o">}</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.openlibx402:openlibx402-core:0.1.0&#39;</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.openlibx402:openlibx402-client:0.1.0&#39;</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13"></a>
+<a id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3&#39;</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0&#39;</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.jetbrains.kotlinx:kotlinx-datetime:0.4.1&#39;</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17"></a><span class="o">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="option-3-maven">Option 3: Maven<a class="headerlink" href="#option-3-maven" title="Permanent link">&para;</a></h3>
+<p>Add to your <code>pom.xml</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span>
+<span class="normal"><a href="#__codelineno-12-12">12</a></span>
+<span class="normal"><a href="#__codelineno-12-13">13</a></span>
+<span class="normal"><a href="#__codelineno-12-14">14</a></span>
+<span class="normal"><a href="#__codelineno-12-15">15</a></span>
+<span class="normal"><a href="#__codelineno-12-16">16</a></span>
+<span class="normal"><a href="#__codelineno-12-17">17</a></span>
+<span class="normal"><a href="#__codelineno-12-18">18</a></span>
+<span class="normal"><a href="#__codelineno-12-19">19</a></span>
+<span class="normal"><a href="#__codelineno-12-20">20</a></span>
+<span class="normal"><a href="#__codelineno-12-21">21</a></span>
+<span class="normal"><a href="#__codelineno-12-22">22</a></span>
+<span class="normal"><a href="#__codelineno-12-23">23</a></span>
+<span class="normal"><a href="#__codelineno-12-24">24</a></span>
+<span class="normal"><a href="#__codelineno-12-25">25</a></span>
+<span class="normal"><a href="#__codelineno-12-26">26</a></span>
+<span class="normal"><a href="#__codelineno-12-27">27</a></span>
+<span class="normal"><a href="#__codelineno-12-28">28</a></span>
+<span class="normal"><a href="#__codelineno-12-29">29</a></span>
+<span class="normal"><a href="#__codelineno-12-30">30</a></span>
+<span class="normal"><a href="#__codelineno-12-31">31</a></span>
+<span class="normal"><a href="#__codelineno-12-32">32</a></span>
+<span class="normal"><a href="#__codelineno-12-33">33</a></span>
+<span class="normal"><a href="#__codelineno-12-34">34</a></span>
+<span class="normal"><a href="#__codelineno-12-35">35</a></span>
+<span class="normal"><a href="#__codelineno-12-36">36</a></span>
+<span class="normal"><a href="#__codelineno-12-37">37</a></span>
+<span class="normal"><a href="#__codelineno-12-38">38</a></span>
+<span class="normal"><a href="#__codelineno-12-39">39</a></span>
+<span class="normal"><a href="#__codelineno-12-40">40</a></span>
+<span class="normal"><a href="#__codelineno-12-41">41</a></span>
+<span class="normal"><a href="#__codelineno-12-42">42</a></span>
+<span class="normal"><a href="#__codelineno-12-43">43</a></span>
+<span class="normal"><a href="#__codelineno-12-44">44</a></span>
+<span class="normal"><a href="#__codelineno-12-45">45</a></span>
+<span class="normal"><a href="#__codelineno-12-46">46</a></span>
+<span class="normal"><a href="#__codelineno-12-47">47</a></span>
+<span class="normal"><a href="#__codelineno-12-48">48</a></span>
+<span class="normal"><a href="#__codelineno-12-49">49</a></span>
+<span class="normal"><a href="#__codelineno-12-50">50</a></span>
+<span class="normal"><a href="#__codelineno-12-51">51</a></span>
+<span class="normal"><a href="#__codelineno-12-52">52</a></span>
+<span class="normal"><a href="#__codelineno-12-53">53</a></span>
+<span class="normal"><a href="#__codelineno-12-54">54</a></span>
+<span class="normal"><a href="#__codelineno-12-55">55</a></span>
+<span class="normal"><a href="#__codelineno-12-56">56</a></span>
+<span class="normal"><a href="#__codelineno-12-57">57</a></span>
+<span class="normal"><a href="#__codelineno-12-58">58</a></span>
+<span class="normal"><a href="#__codelineno-12-59">59</a></span>
+<span class="normal"><a href="#__codelineno-12-60">60</a></span>
+<span class="normal"><a href="#__codelineno-12-61">61</a></span>
+<span class="normal"><a href="#__codelineno-12-62">62</a></span>
+<span class="normal"><a href="#__codelineno-12-63">63</a></span>
+<span class="normal"><a href="#__codelineno-12-64">64</a></span>
+<span class="normal"><a href="#__codelineno-12-65">65</a></span>
+<span class="normal"><a href="#__codelineno-12-66">66</a></span>
+<span class="normal"><a href="#__codelineno-12-67">67</a></span>
+<span class="normal"><a href="#__codelineno-12-68">68</a></span>
+<span class="normal"><a href="#__codelineno-12-69">69</a></span>
+<span class="normal"><a href="#__codelineno-12-70">70</a></span>
+<span class="normal"><a href="#__codelineno-12-71">71</a></span>
+<span class="normal"><a href="#__codelineno-12-72">72</a></span>
+<span class="normal"><a href="#__codelineno-12-73">73</a></span>
+<span class="normal"><a href="#__codelineno-12-74">74</a></span>
+<span class="normal"><a href="#__codelineno-12-75">75</a></span>
+<span class="normal"><a href="#__codelineno-12-76">76</a></span>
+<span class="normal"><a href="#__codelineno-12-77">77</a></span>
+<span class="normal"><a href="#__codelineno-12-78">78</a></span>
+<span class="normal"><a href="#__codelineno-12-79">79</a></span>
+<span class="normal"><a href="#__codelineno-12-80">80</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="nt">&lt;project&gt;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">    </span><span class="nt">&lt;properties&gt;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="w">        </span><span class="nt">&lt;kotlin.version&gt;</span>1.9.20<span class="nt">&lt;/kotlin.version&gt;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="w">        </span><span class="nt">&lt;kotlinx.coroutines.version&gt;</span>1.7.3<span class="nt">&lt;/kotlinx.coroutines.version&gt;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="w">        </span><span class="nt">&lt;kotlinx.serialization.version&gt;</span>1.6.0<span class="nt">&lt;/kotlinx.serialization.version&gt;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a><span class="w">    </span><span class="nt">&lt;/properties&gt;</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a>
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="w">    </span><span class="nt">&lt;dependencies&gt;</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a><span class="w">        </span><span class="cm">&lt;!-- OpenLibX402 --&gt;</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a><span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a><span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.openlibx402<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12"></a><span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>openlibx402-core<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13"></a><span class="w">            </span><span class="nt">&lt;version&gt;</span>0.1.0<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14"></a><span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15"></a><span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16"></a><span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.openlibx402<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17"></a><span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>openlibx402-client<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18"></a><span class="w">            </span><span class="nt">&lt;version&gt;</span>0.1.0<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19"></a><span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20"></a>
+<a id="__codelineno-12-21" name="__codelineno-12-21"></a><span class="w">        </span><span class="cm">&lt;!-- Kotlin stdlib --&gt;</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22"></a><span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23"></a><span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.jetbrains.kotlin<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-12-24" name="__codelineno-12-24"></a><span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>kotlin-stdlib<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-12-25" name="__codelineno-12-25"></a><span class="w">            </span><span class="nt">&lt;version&gt;</span>${kotlin.version}<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-12-26" name="__codelineno-12-26"></a><span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-12-27" name="__codelineno-12-27"></a>
+<a id="__codelineno-12-28" name="__codelineno-12-28"></a><span class="w">        </span><span class="cm">&lt;!-- Coroutines --&gt;</span>
+<a id="__codelineno-12-29" name="__codelineno-12-29"></a><span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-12-30" name="__codelineno-12-30"></a><span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.jetbrains.kotlinx<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-12-31" name="__codelineno-12-31"></a><span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>kotlinx-coroutines-core<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-12-32" name="__codelineno-12-32"></a><span class="w">            </span><span class="nt">&lt;version&gt;</span>${kotlinx.coroutines.version}<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-12-33" name="__codelineno-12-33"></a><span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-12-34" name="__codelineno-12-34"></a>
+<a id="__codelineno-12-35" name="__codelineno-12-35"></a><span class="w">        </span><span class="cm">&lt;!-- Serialization --&gt;</span>
+<a id="__codelineno-12-36" name="__codelineno-12-36"></a><span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-12-37" name="__codelineno-12-37"></a><span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.jetbrains.kotlinx<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-12-38" name="__codelineno-12-38"></a><span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>kotlinx-serialization-json<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-12-39" name="__codelineno-12-39"></a><span class="w">            </span><span class="nt">&lt;version&gt;</span>${kotlinx.serialization.version}<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-12-40" name="__codelineno-12-40"></a><span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-12-41" name="__codelineno-12-41"></a>
+<a id="__codelineno-12-42" name="__codelineno-12-42"></a><span class="w">        </span><span class="cm">&lt;!-- DateTime --&gt;</span>
+<a id="__codelineno-12-43" name="__codelineno-12-43"></a><span class="w">        </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-12-44" name="__codelineno-12-44"></a><span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.jetbrains.kotlinx<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-12-45" name="__codelineno-12-45"></a><span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>kotlinx-datetime<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-12-46" name="__codelineno-12-46"></a><span class="w">            </span><span class="nt">&lt;version&gt;</span>0.4.1<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-12-47" name="__codelineno-12-47"></a><span class="w">        </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-12-48" name="__codelineno-12-48"></a><span class="w">    </span><span class="nt">&lt;/dependencies&gt;</span>
+<a id="__codelineno-12-49" name="__codelineno-12-49"></a>
+<a id="__codelineno-12-50" name="__codelineno-12-50"></a><span class="w">    </span><span class="nt">&lt;build&gt;</span>
+<a id="__codelineno-12-51" name="__codelineno-12-51"></a><span class="w">        </span><span class="nt">&lt;plugins&gt;</span>
+<a id="__codelineno-12-52" name="__codelineno-12-52"></a><span class="w">            </span><span class="nt">&lt;plugin&gt;</span>
+<a id="__codelineno-12-53" name="__codelineno-12-53"></a><span class="w">                </span><span class="nt">&lt;groupId&gt;</span>org.jetbrains.kotlin<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-12-54" name="__codelineno-12-54"></a><span class="w">                </span><span class="nt">&lt;artifactId&gt;</span>kotlin-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-12-55" name="__codelineno-12-55"></a><span class="w">                </span><span class="nt">&lt;version&gt;</span>${kotlin.version}<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-12-56" name="__codelineno-12-56"></a><span class="w">                </span><span class="nt">&lt;executions&gt;</span>
+<a id="__codelineno-12-57" name="__codelineno-12-57"></a><span class="w">                    </span><span class="nt">&lt;execution&gt;</span>
+<a id="__codelineno-12-58" name="__codelineno-12-58"></a><span class="w">                        </span><span class="nt">&lt;id&gt;</span>compile<span class="nt">&lt;/id&gt;</span>
+<a id="__codelineno-12-59" name="__codelineno-12-59"></a><span class="w">                        </span><span class="nt">&lt;phase&gt;</span>compile<span class="nt">&lt;/phase&gt;</span>
+<a id="__codelineno-12-60" name="__codelineno-12-60"></a><span class="w">                        </span><span class="nt">&lt;goals&gt;</span>
+<a id="__codelineno-12-61" name="__codelineno-12-61"></a><span class="w">                            </span><span class="nt">&lt;goal&gt;</span>compile<span class="nt">&lt;/goal&gt;</span>
+<a id="__codelineno-12-62" name="__codelineno-12-62"></a><span class="w">                        </span><span class="nt">&lt;/goals&gt;</span>
+<a id="__codelineno-12-63" name="__codelineno-12-63"></a><span class="w">                    </span><span class="nt">&lt;/execution&gt;</span>
+<a id="__codelineno-12-64" name="__codelineno-12-64"></a><span class="w">                </span><span class="nt">&lt;/executions&gt;</span>
+<a id="__codelineno-12-65" name="__codelineno-12-65"></a><span class="w">                </span><span class="nt">&lt;configuration&gt;</span>
+<a id="__codelineno-12-66" name="__codelineno-12-66"></a><span class="w">                    </span><span class="nt">&lt;compilerPlugins&gt;</span>
+<a id="__codelineno-12-67" name="__codelineno-12-67"></a><span class="w">                        </span><span class="nt">&lt;plugin&gt;</span>kotlinx-serialization<span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-12-68" name="__codelineno-12-68"></a><span class="w">                    </span><span class="nt">&lt;/compilerPlugins&gt;</span>
+<a id="__codelineno-12-69" name="__codelineno-12-69"></a><span class="w">                </span><span class="nt">&lt;/configuration&gt;</span>
+<a id="__codelineno-12-70" name="__codelineno-12-70"></a><span class="w">                </span><span class="nt">&lt;dependencies&gt;</span>
+<a id="__codelineno-12-71" name="__codelineno-12-71"></a><span class="w">                    </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-12-72" name="__codelineno-12-72"></a><span class="w">                        </span><span class="nt">&lt;groupId&gt;</span>org.jetbrains.kotlin<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-12-73" name="__codelineno-12-73"></a><span class="w">                        </span><span class="nt">&lt;artifactId&gt;</span>kotlin-maven-serialization<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-12-74" name="__codelineno-12-74"></a><span class="w">                        </span><span class="nt">&lt;version&gt;</span>${kotlin.version}<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-12-75" name="__codelineno-12-75"></a><span class="w">                    </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-12-76" name="__codelineno-12-76"></a><span class="w">                </span><span class="nt">&lt;/dependencies&gt;</span>
+<a id="__codelineno-12-77" name="__codelineno-12-77"></a><span class="w">            </span><span class="nt">&lt;/plugin&gt;</span>
+<a id="__codelineno-12-78" name="__codelineno-12-78"></a><span class="w">        </span><span class="nt">&lt;/plugins&gt;</span>
+<a id="__codelineno-12-79" name="__codelineno-12-79"></a><span class="w">    </span><span class="nt">&lt;/build&gt;</span>
+<a id="__codelineno-12-80" name="__codelineno-12-80"></a><span class="nt">&lt;/project&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p>Install dependencies:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>mvn<span class="w"> </span>clean<span class="w"> </span>install
+</code></pre></div></td></tr></table></div>
+<h3 id="option-4-local-installation-development">Option 4: Local Installation (Development)<a class="headerlink" href="#option-4-local-installation-development" title="Permanent link">&para;</a></h3>
+<p>For local development or testing unreleased versions:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-14-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-14-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-14-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-14-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-14-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-14-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-14-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-14-10">10</a></span>
+<span class="normal"><a href="#__codelineno-14-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="c1"># Clone repository</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/openlibx402/openlibx402.git
+<a id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="nb">cd</span><span class="w"> </span>openlibx402
+<a id="__codelineno-14-4" name="__codelineno-14-4"></a>
+<a id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="c1"># Install core package</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="nb">cd</span><span class="w"> </span>packages/kotlin/openlibx402-core
+<a id="__codelineno-14-7" name="__codelineno-14-7"></a>gradle<span class="w"> </span>publishToMavenLocal
+<a id="__codelineno-14-8" name="__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9"></a><span class="c1"># Install client package</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="nb">cd</span><span class="w"> </span>../openlibx402-client
+<a id="__codelineno-14-11" name="__codelineno-14-11"></a>gradle<span class="w"> </span>publishToMavenLocal
+</code></pre></div></td></tr></table></div>
+<p>Then use in your project with the same Gradle/Maven configuration as above.</p>
+<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<h3 id="create-a-new-kotlin-project-with-gradle">Create a New Kotlin Project with Gradle<a class="headerlink" href="#create-a-new-kotlin-project-with-gradle" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-15-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-15-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-15-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-15-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-15-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-15-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-15-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-15-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-15-10">10</a></span>
+<span class="normal"><a href="#__codelineno-15-11">11</a></span>
+<span class="normal"><a href="#__codelineno-15-12">12</a></span>
+<span class="normal"><a href="#__codelineno-15-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a>mkdir<span class="w"> </span>my-x402-app
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="nb">cd</span><span class="w"> </span>my-x402-app
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="c1"># Initialize Gradle project</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a>gradle<span class="w"> </span>init<span class="w"> </span>--type<span class="w"> </span>kotlin-application<span class="w"> </span>--dsl<span class="w"> </span>kotlin
+<a id="__codelineno-15-6" name="__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7"></a><span class="c1"># Or with specific settings</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8"></a>gradle<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9"></a><span class="w">    </span>--type<span class="w"> </span>kotlin-application<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10"></a><span class="w">    </span>--dsl<span class="w"> </span>kotlin<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11"></a><span class="w">    </span>--test-framework<span class="w"> </span>kotlintest<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12"></a><span class="w">    </span>--package<span class="w"> </span>com.example<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13"></a><span class="w">    </span>--project-name<span class="w"> </span>my-x402-app
+</code></pre></div></td></tr></table></div>
+<p>Edit <code>build.gradle.kts</code> to add OpenLibX402 dependencies:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-16-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-16-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-16-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-16-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-16-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-16-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-16-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-16-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-16-10">10</a></span>
+<span class="normal"><a href="#__codelineno-16-11">11</a></span>
+<span class="normal"><a href="#__codelineno-16-12">12</a></span>
+<span class="normal"><a href="#__codelineno-16-13">13</a></span>
+<span class="normal"><a href="#__codelineno-16-14">14</a></span>
+<span class="normal"><a href="#__codelineno-16-15">15</a></span>
+<span class="normal"><a href="#__codelineno-16-16">16</a></span>
+<span class="normal"><a href="#__codelineno-16-17">17</a></span>
+<span class="normal"><a href="#__codelineno-16-18">18</a></span>
+<span class="normal"><a href="#__codelineno-16-19">19</a></span>
+<span class="normal"><a href="#__codelineno-16-20">20</a></span>
+<span class="normal"><a href="#__codelineno-16-21">21</a></span>
+<span class="normal"><a href="#__codelineno-16-22">22</a></span>
+<span class="normal"><a href="#__codelineno-16-23">23</a></span>
+<span class="normal"><a href="#__codelineno-16-24">24</a></span>
+<span class="normal"><a href="#__codelineno-16-25">25</a></span>
+<span class="normal"><a href="#__codelineno-16-26">26</a></span>
+<span class="normal"><a href="#__codelineno-16-27">27</a></span>
+<span class="normal"><a href="#__codelineno-16-28">28</a></span>
+<span class="normal"><a href="#__codelineno-16-29">29</a></span>
+<span class="normal"><a href="#__codelineno-16-30">30</a></span>
+<span class="normal"><a href="#__codelineno-16-31">31</a></span>
+<span class="normal"><a href="#__codelineno-16-32">32</a></span>
+<span class="normal"><a href="#__codelineno-16-33">33</a></span>
+<span class="normal"><a href="#__codelineno-16-34">34</a></span>
+<span class="normal"><a href="#__codelineno-16-35">35</a></span>
+<span class="normal"><a href="#__codelineno-16-36">36</a></span>
+<span class="normal"><a href="#__codelineno-16-37">37</a></span>
+<span class="normal"><a href="#__codelineno-16-38">38</a></span>
+<span class="normal"><a href="#__codelineno-16-39">39</a></span>
+<span class="normal"><a href="#__codelineno-16-40">40</a></span>
+<span class="normal"><a href="#__codelineno-16-41">41</a></span>
+<span class="normal"><a href="#__codelineno-16-42">42</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="n">plugins</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;jvm&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;1.9.20&quot;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3"></a><span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;plugin.serialization&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;1.9.20&quot;</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="w">    </span><span class="n">application</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5"></a><span class="p">}</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7"></a><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;com.example&quot;</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1.0.0&quot;</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9"></a>
+<a id="__codelineno-16-10" name="__codelineno-16-10"></a><span class="n">repositories</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11"></a><span class="w">    </span><span class="n">mavenCentral</span><span class="p">()</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12"></a><span class="p">}</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13"></a>
+<a id="__codelineno-16-14" name="__codelineno-16-14"></a><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15"></a><span class="w">    </span><span class="c1">// OpenLibX402</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.openlibx402:openlibx402-core:0.1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.openlibx402:openlibx402-client:0.1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18"></a>
+<a id="__codelineno-16-19" name="__codelineno-16-19"></a><span class="w">    </span><span class="c1">// Kotlin coroutines</span>
+<a id="__codelineno-16-20" name="__codelineno-16-20"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21"></a>
+<a id="__codelineno-16-22" name="__codelineno-16-22"></a><span class="w">    </span><span class="c1">// Kotlinx serialization</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24"></a>
+<a id="__codelineno-16-25" name="__codelineno-16-25"></a><span class="w">    </span><span class="c1">// Kotlinx datetime</span>
+<a id="__codelineno-16-26" name="__codelineno-16-26"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-datetime:0.4.1&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-27" name="__codelineno-16-27"></a>
+<a id="__codelineno-16-28" name="__codelineno-16-28"></a><span class="w">    </span><span class="c1">// Testing</span>
+<a id="__codelineno-16-29" name="__codelineno-16-29"></a><span class="w">    </span><span class="n">testImplementation</span><span class="p">(</span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">))</span>
+<a id="__codelineno-16-30" name="__codelineno-16-30"></a><span class="p">}</span>
+<a id="__codelineno-16-31" name="__codelineno-16-31"></a>
+<a id="__codelineno-16-32" name="__codelineno-16-32"></a><span class="n">kotlin</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-33" name="__codelineno-16-33"></a><span class="w">    </span><span class="n">jvmToolchain</span><span class="p">(</span><span class="m">11</span><span class="p">)</span>
+<a id="__codelineno-16-34" name="__codelineno-16-34"></a><span class="p">}</span>
+<a id="__codelineno-16-35" name="__codelineno-16-35"></a>
+<a id="__codelineno-16-36" name="__codelineno-16-36"></a><span class="n">application</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-37" name="__codelineno-16-37"></a><span class="w">    </span><span class="n">mainClass</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;com.example.AppKt&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-38" name="__codelineno-16-38"></a><span class="p">}</span>
+<a id="__codelineno-16-39" name="__codelineno-16-39"></a>
+<a id="__codelineno-16-40" name="__codelineno-16-40"></a><span class="n">tasks</span><span class="p">.</span><span class="na">test</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-41" name="__codelineno-16-41"></a><span class="w">    </span><span class="n">useJUnitPlatform</span><span class="p">()</span>
+<a id="__codelineno-16-42" name="__codelineno-16-42"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="create-your-first-application">Create Your First Application<a class="headerlink" href="#create-your-first-application" title="Permanent link">&para;</a></h3>
+<p>Create <code>src/main/kotlin/com/example/App.kt</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-17-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-17-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-17-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-17-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-17-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-17-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-17-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-17-10">10</a></span>
+<span class="normal"><a href="#__codelineno-17-11">11</a></span>
+<span class="normal"><a href="#__codelineno-17-12">12</a></span>
+<span class="normal"><a href="#__codelineno-17-13">13</a></span>
+<span class="normal"><a href="#__codelineno-17-14">14</a></span>
+<span class="normal"><a href="#__codelineno-17-15">15</a></span>
+<span class="normal"><a href="#__codelineno-17-16">16</a></span>
+<span class="normal"><a href="#__codelineno-17-17">17</a></span>
+<span class="normal"><a href="#__codelineno-17-18">18</a></span>
+<span class="normal"><a href="#__codelineno-17-19">19</a></span>
+<span class="normal"><a href="#__codelineno-17-20">20</a></span>
+<span class="normal"><a href="#__codelineno-17-21">21</a></span>
+<span class="normal"><a href="#__codelineno-17-22">22</a></span>
+<span class="normal"><a href="#__codelineno-17-23">23</a></span>
+<span class="normal"><a href="#__codelineno-17-24">24</a></span>
+<span class="normal"><a href="#__codelineno-17-25">25</a></span>
+<span class="normal"><a href="#__codelineno-17-26">26</a></span>
+<span class="normal"><a href="#__codelineno-17-27">27</a></span>
+<span class="normal"><a href="#__codelineno-17-28">28</a></span>
+<span class="normal"><a href="#__codelineno-17-29">29</a></span>
+<span class="normal"><a href="#__codelineno-17-30">30</a></span>
+<span class="normal"><a href="#__codelineno-17-31">31</a></span>
+<span class="normal"><a href="#__codelineno-17-32">32</a></span>
+<span class="normal"><a href="#__codelineno-17-33">33</a></span>
+<span class="normal"><a href="#__codelineno-17-34">34</a></span>
+<span class="normal"><a href="#__codelineno-17-35">35</a></span>
+<span class="normal"><a href="#__codelineno-17-36">36</a></span>
+<span class="normal"><a href="#__codelineno-17-37">37</a></span>
+<span class="normal"><a href="#__codelineno-17-38">38</a></span>
+<span class="normal"><a href="#__codelineno-17-39">39</a></span>
+<span class="normal"><a href="#__codelineno-17-40">40</a></span>
+<span class="normal"><a href="#__codelineno-17-41">41</a></span>
+<span class="normal"><a href="#__codelineno-17-42">42</a></span>
+<span class="normal"><a href="#__codelineno-17-43">43</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="k">package</span><span class="w"> </span><span class="nn">com.example</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.coroutines.runBlocking</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.openlibx402.client.X402AutoClient</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.openlibx402.core.errors.X402Error</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.p2p.solanaj.core.Account</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7"></a>
+<a id="__codelineno-17-8" name="__codelineno-17-8"></a><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9"></a><span class="w">    </span><span class="c1">// Create Solana account</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">account</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Account</span><span class="p">()</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Public Key: </span><span class="si">${</span><span class="n">account</span><span class="p">.</span><span class="na">publicKey</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12"></a>
+<a id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="w">    </span><span class="c1">// Create client with DSL</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X402AutoClient</span><span class="p">(</span><span class="n">account</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15"></a><span class="w">        </span><span class="n">rpcUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://api.devnet.solana.com&quot;</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16"></a><span class="w">        </span><span class="n">maxPaymentAmount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1.0&quot;</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17"></a><span class="w">        </span><span class="n">allowLocal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w">  </span><span class="c1">// Development only</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19"></a>
+<a id="__codelineno-17-20" name="__codelineno-17-20"></a><span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="na">use</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-21" name="__codelineno-17-21"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-22" name="__codelineno-17-22"></a><span class="w">            </span><span class="c1">// Make payment-enabled request</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23"></a><span class="w">            </span><span class="kd">val</span><span class="w"> </span><span class="nv">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">it</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;https://api.example.com/data&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-24" name="__codelineno-17-24"></a><span class="w">            </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Success: </span><span class="si">${</span><span class="n">response</span><span class="p">.</span><span class="na">body</span><span class="o">?.</span><span class="na">string</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-25" name="__codelineno-17-25"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">:</span><span class="w"> </span><span class="n">X402Error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-26" name="__codelineno-17-26"></a><span class="w">            </span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-27" name="__codelineno-17-27"></a><span class="w">                </span><span class="k">is</span><span class="w"> </span><span class="n">X402Error</span><span class="p">.</span><span class="na">InsufficientFunds</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-28" name="__codelineno-17-28"></a><span class="w">                    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Insufficient funds!&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-29" name="__codelineno-17-29"></a><span class="w">                    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Required: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">requiredAmount</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-30" name="__codelineno-17-30"></a><span class="w">                    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Available: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">availableAmount</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-31" name="__codelineno-17-31"></a><span class="w">                </span><span class="p">}</span>
+<a id="__codelineno-17-32" name="__codelineno-17-32"></a><span class="w">                </span><span class="k">else</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-33" name="__codelineno-17-33"></a><span class="w">                    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Error: </span><span class="si">${</span><span class="n">e</span><span class="p">.</span><span class="na">message</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-34" name="__codelineno-17-34"></a><span class="w">                </span><span class="p">}</span>
+<a id="__codelineno-17-35" name="__codelineno-17-35"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-17-36" name="__codelineno-17-36"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-17-37" name="__codelineno-17-37"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-17-38" name="__codelineno-17-38"></a><span class="p">}</span>
+<a id="__codelineno-17-39" name="__codelineno-17-39"></a>
+<a id="__codelineno-17-40" name="__codelineno-17-40"></a><span class="c1">// For gradle run compatibility</span>
+<a id="__codelineno-17-41" name="__codelineno-17-41"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runBlocking</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-42" name="__codelineno-17-42"></a><span class="w">    </span><span class="n">main</span><span class="p">()</span>
+<a id="__codelineno-17-43" name="__codelineno-17-43"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="build-and-run">Build and Run<a class="headerlink" href="#build-and-run" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span>
+<span class="normal"><a href="#__codelineno-18-3">3</a></span>
+<span class="normal"><a href="#__codelineno-18-4">4</a></span>
+<span class="normal"><a href="#__codelineno-18-5">5</a></span>
+<span class="normal"><a href="#__codelineno-18-6">6</a></span>
+<span class="normal"><a href="#__codelineno-18-7">7</a></span>
+<span class="normal"><a href="#__codelineno-18-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="c1"># Build</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a>gradle<span class="w"> </span>build
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="c1"># Run</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5"></a>gradle<span class="w"> </span>run
+<a id="__codelineno-18-6" name="__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="c1"># Or with arguments</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8"></a>gradle<span class="w"> </span>run<span class="w"> </span>--args<span class="o">=</span><span class="s2">&quot;argument1 argument2&quot;</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="run-as-jar">Run as JAR<a class="headerlink" href="#run-as-jar" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span>
+<span class="normal"><a href="#__codelineno-19-4">4</a></span>
+<span class="normal"><a href="#__codelineno-19-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="c1"># Build JAR</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a>gradle<span class="w"> </span>jar
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a>
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="c1"># Run JAR</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5"></a>java<span class="w"> </span>-jar<span class="w"> </span>build/libs/my-x402-app-1.0.0.jar
+</code></pre></div></td></tr></table></div>
+<h2 id="verify-installation_1">Verify Installation<a class="headerlink" href="#verify-installation_1" title="Permanent link">&para;</a></h2>
+<p>Create a test file to verify everything is working:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-20-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-20-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-20-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-20-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-20-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-20-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-20-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-20-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-20-10">10</a></span>
+<span class="normal"><a href="#__codelineno-20-11">11</a></span>
+<span class="normal"><a href="#__codelineno-20-12">12</a></span>
+<span class="normal"><a href="#__codelineno-20-13">13</a></span>
+<span class="normal"><a href="#__codelineno-20-14">14</a></span>
+<span class="normal"><a href="#__codelineno-20-15">15</a></span>
+<span class="normal"><a href="#__codelineno-20-16">16</a></span>
+<span class="normal"><a href="#__codelineno-20-17">17</a></span>
+<span class="normal"><a href="#__codelineno-20-18">18</a></span>
+<span class="normal"><a href="#__codelineno-20-19">19</a></span>
+<span class="normal"><a href="#__codelineno-20-20">20</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.openlibx402.core.models.PaymentRequest</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">org.openlibx402.client.X402Client</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.datetime.Clock</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlin.time.Duration.Companion.minutes</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;OpenLibX402 Kotlin SDK installed successfully!&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Core version: 0.1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Client version: 0.1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10"></a>
+<a id="__codelineno-20-11" name="__codelineno-20-11"></a><span class="w">    </span><span class="c1">// Test imports</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;PaymentRequest: </span><span class="si">${</span><span class="n">PaymentRequest</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">simpleName</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-13" name="__codelineno-20-13"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;X402Client: </span><span class="si">${</span><span class="n">X402Client</span><span class="o">::</span><span class="n">class</span><span class="p">.</span><span class="na">simpleName</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-14" name="__codelineno-20-14"></a>
+<a id="__codelineno-20-15" name="__codelineno-20-15"></a><span class="w">    </span><span class="c1">// Test kotlinx libraries</span>
+<a id="__codelineno-20-16" name="__codelineno-20-16"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Current time: </span><span class="si">${</span><span class="n">Clock</span><span class="p">.</span><span class="na">System</span><span class="p">.</span><span class="na">now</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-17" name="__codelineno-20-17"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Duration: </span><span class="si">${</span><span class="m">5.</span><span class="n">minutes</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-18" name="__codelineno-20-18"></a>
+<a id="__codelineno-20-19" name="__codelineno-20-19"></a><span class="w">    </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;\nAll imports working!&quot;</span><span class="p">)</span>
+<a id="__codelineno-20-20" name="__codelineno-20-20"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Run:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a>gradle<span class="w"> </span>run
+</code></pre></div></td></tr></table></div></p>
+<p>Expected output:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span>
+<span class="normal"><a href="#__codelineno-22-3">3</a></span>
+<span class="normal"><a href="#__codelineno-22-4">4</a></span>
+<span class="normal"><a href="#__codelineno-22-5">5</a></span>
+<span class="normal"><a href="#__codelineno-22-6">6</a></span>
+<span class="normal"><a href="#__codelineno-22-7">7</a></span>
+<span class="normal"><a href="#__codelineno-22-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a>OpenLibX402 Kotlin SDK installed successfully!
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a>Core version: 0.1.0
+<a id="__codelineno-22-3" name="__codelineno-22-3"></a>Client version: 0.1.0
+<a id="__codelineno-22-4" name="__codelineno-22-4"></a>PaymentRequest: PaymentRequest
+<a id="__codelineno-22-5" name="__codelineno-22-5"></a>X402Client: X402Client
+<a id="__codelineno-22-6" name="__codelineno-22-6"></a>Current time: 2025-11-05T10:30:00Z
+<a id="__codelineno-22-7" name="__codelineno-22-7"></a>Duration: 5m
+<a id="__codelineno-22-8" name="__codelineno-22-8"></a>All imports working!
+</code></pre></div></td></tr></table></div></p>
+<h2 id="package-structure">Package Structure<a class="headerlink" href="#package-structure" title="Permanent link">&para;</a></h2>
+<p>OpenLibX402 Kotlin SDK is split into two packages:</p>
+<h3 id="core-package-openlibx402-core">Core Package (<code>openlibx402-core</code>)<a class="headerlink" href="#core-package-openlibx402-core" title="Permanent link">&para;</a></h3>
+<p>Provides core functionality:
+- Payment models (<code>PaymentRequest</code>, <code>PaymentAuthorization</code>) as data classes
+- Sealed class error hierarchy (<code>X402Error</code>)
+- Blockchain integration (<code>SolanaPaymentProcessor</code>)
+- kotlinx.serialization support
+- kotlinx.datetime integration</p>
+<p><strong>When to use:</strong>
+- Building custom payment logic
+- Integrating with existing HTTP clients
+- Creating middleware or frameworks</p>
+<h3 id="client-package-openlibx402-client">Client Package (<code>openlibx402-client</code>)<a class="headerlink" href="#client-package-openlibx402-client" title="Permanent link">&para;</a></h3>
+<p>Provides HTTP client implementations with coroutines:
+- <code>X402Client</code> - Manual payment control with suspend functions
+- <code>X402AutoClient</code> - Automatic payment handling with DSL builder</p>
+<p><strong>When to use:</strong>
+- Making HTTP requests with payments
+- Quick integration with automatic payments
+- Coroutine-based applications</p>
+<h3 id="typical-setup">Typical Setup<a class="headerlink" href="#typical-setup" title="Permanent link">&para;</a></h3>
+<p>Most applications need both packages plus Kotlin dependencies:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-23-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-23-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-23-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-23-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-23-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-23-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-23-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-23-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-23-10">10</a></span>
+<span class="normal"><a href="#__codelineno-23-11">11</a></span>
+<span class="normal"><a href="#__codelineno-23-12">12</a></span>
+<span class="normal"><a href="#__codelineno-23-13">13</a></span>
+<span class="normal"><a href="#__codelineno-23-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a><span class="w">    </span><span class="c1">// Both core and client</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.openlibx402:openlibx402-core:0.1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.openlibx402:openlibx402-client:0.1.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5"></a>
+<a id="__codelineno-23-6" name="__codelineno-23-6"></a><span class="w">    </span><span class="c1">// Kotlin coroutines (required)</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3&quot;</span><span class="p">)</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8"></a>
+<a id="__codelineno-23-9" name="__codelineno-23-9"></a><span class="w">    </span><span class="c1">// Kotlinx serialization (required)</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0&quot;</span><span class="p">)</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11"></a>
+<a id="__codelineno-23-12" name="__codelineno-23-12"></a><span class="w">    </span><span class="c1">// Kotlinx datetime (required)</span>
+<a id="__codelineno-23-13" name="__codelineno-23-13"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-datetime:0.4.1&quot;</span><span class="p">)</span>
+<a id="__codelineno-23-14" name="__codelineno-23-14"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="ide-setup">IDE Setup<a class="headerlink" href="#ide-setup" title="Permanent link">&para;</a></h2>
+<h3 id="intellij-idea-recommended-for-kotlin">IntelliJ IDEA (Recommended for Kotlin)<a class="headerlink" href="#intellij-idea-recommended-for-kotlin" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Open Project:</strong></li>
+<li>File → Open → Select your <code>build.gradle.kts</code> or project directory</li>
+<li>
+<p>IntelliJ will automatically detect Gradle and import dependencies</p>
+</li>
+<li>
+<p><strong>Refresh Dependencies:</strong></p>
+</li>
+<li>Click the "Load Gradle Changes" icon in the toolbar</li>
+<li>
+<p>Or: View → Tool Windows → Gradle → Click refresh icon</p>
+</li>
+<li>
+<p><strong>Enable Kotlin Plugin:</strong></p>
+</li>
+<li>IntelliJ comes with Kotlin plugin pre-installed</li>
+<li>
+<p>File → Settings → Plugins → Verify "Kotlin" is enabled</p>
+</li>
+<li>
+<p><strong>Verify:</strong></p>
+</li>
+<li>Check that dependencies appear in External Libraries</li>
+<li>Try auto-complete for <code>import org.openlibx402.*</code></li>
+<li>Coroutine support should be available</li>
+</ol>
+<h3 id="android-studio">Android Studio<a class="headerlink" href="#android-studio" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Same as IntelliJ IDEA</strong> - Android Studio is built on IntelliJ</p>
+</li>
+<li>
+<p><strong>Additional Setup for Android:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span>
+<span class="normal"><a href="#__codelineno-24-2">2</a></span>
+<span class="normal"><a href="#__codelineno-24-3">3</a></span>
+<span class="normal"><a href="#__codelineno-24-4">4</a></span>
+<span class="normal"><a href="#__codelineno-24-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="n">android</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2"></a><span class="w">    </span><span class="n">kotlinOptions</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3"></a><span class="w">        </span><span class="n">jvmTarget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;11&quot;</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+</li>
+</ol>
+<h3 id="vs-code">VS Code<a class="headerlink" href="#vs-code" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Install Extensions:</strong></li>
+<li>Kotlin Language</li>
+<li>Gradle for Java</li>
+<li>
+<p>Extension Pack for Java</p>
+</li>
+<li>
+<p><strong>Open Project:</strong></p>
+</li>
+<li>File → Open Folder → Select project directory</li>
+<li>
+<p>VS Code will detect <code>build.gradle.kts</code> automatically</p>
+</li>
+<li>
+<p><strong>Refresh:</strong></p>
+</li>
+<li>Command Palette (Cmd/Ctrl+Shift+P) → "Gradle: Refresh Dependencies"</li>
+</ol>
+<h3 id="eclipse">Eclipse<a class="headerlink" href="#eclipse" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Install Kotlin Plugin:</strong></li>
+<li>Help → Eclipse Marketplace → Search "Kotlin"</li>
+<li>
+<p>Install "Kotlin Plugin for Eclipse"</p>
+</li>
+<li>
+<p><strong>Import Gradle Project:</strong></p>
+</li>
+<li>File → Import → Gradle → Existing Gradle Project</li>
+<li>
+<p>Select project directory</p>
+</li>
+<li>
+<p><strong>Update Dependencies:</strong></p>
+</li>
+<li>Right-click project → Gradle → Refresh Gradle Project</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="unresolved-reference-openlibx402">"Unresolved reference: openlibx402"<a class="headerlink" href="#unresolved-reference-openlibx402" title="Permanent link">&para;</a></h3>
+<p><strong>Solution:</strong> Refresh dependencies:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span>
+<span class="normal"><a href="#__codelineno-25-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a>gradle<span class="w"> </span>build<span class="w"> </span>--refresh-dependencies
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a><span class="c1"># or</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a>mvn<span class="w"> </span>clean<span class="w"> </span>install<span class="w"> </span>-U
+</code></pre></div></td></tr></table></div></p>
+<h3 id="kotlin-compiler-version-mismatch">"Kotlin compiler version mismatch"<a class="headerlink" href="#kotlin-compiler-version-mismatch" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> Mismatched Kotlin versions.</p>
+<p><strong>Solution:</strong> Ensure all Kotlin dependencies use the same version:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span>
+<span class="normal"><a href="#__codelineno-26-2">2</a></span>
+<span class="normal"><a href="#__codelineno-26-3">3</a></span>
+<span class="normal"><a href="#__codelineno-26-4">4</a></span>
+<span class="normal"><a href="#__codelineno-26-5">5</a></span>
+<span class="normal"><a href="#__codelineno-26-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="kd">val</span><span class="w"> </span><span class="nv">kotlinVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;1.9.20&quot;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2"></a>
+<a id="__codelineno-26-3" name="__codelineno-26-3"></a><span class="n">plugins</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;jvm&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="n">kotlinVersion</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5"></a><span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;plugin.serialization&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="n">kotlinVersion</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="unsupported-class-file-major-version">"Unsupported class file major version"<a class="headerlink" href="#unsupported-class-file-major-version" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> Using Java 8 or older.</p>
+<p><strong>Solution:</strong> Upgrade to Java 11 or higher:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span>
+<span class="normal"><a href="#__codelineno-27-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a>java<span class="w"> </span>-version<span class="w">  </span><span class="c1"># Check current version</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2"></a>sdk<span class="w"> </span>install<span class="w"> </span>java<span class="w"> </span><span class="m">11</span>.0.20-tem<span class="w">  </span><span class="c1"># Install Java 11</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="coroutines-not-working">Coroutines Not Working<a class="headerlink" href="#coroutines-not-working" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> Missing coroutines dependency.</p>
+<p><strong>Solution:</strong> Add kotlinx-coroutines:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span>
+<span class="normal"><a href="#__codelineno-28-2">2</a></span>
+<span class="normal"><a href="#__codelineno-28-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3&quot;</span><span class="p">)</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="serialization-plugin-error">Serialization Plugin Error<a class="headerlink" href="#serialization-plugin-error" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> Missing serialization plugin.</p>
+<p><strong>Solution:</strong> Add plugin to <code>build.gradle.kts</code>:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1">1</a></span>
+<span class="normal"><a href="#__codelineno-29-2">2</a></span>
+<span class="normal"><a href="#__codelineno-29-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1"></a><span class="n">plugins</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2"></a><span class="w">    </span><span class="n">kotlin</span><span class="p">(</span><span class="s">&quot;plugin.serialization&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s">&quot;1.9.20&quot;</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="gradle-daemon-issues">Gradle Daemon Issues<a class="headerlink" href="#gradle-daemon-issues" title="Permanent link">&para;</a></h3>
+<p><strong>Symptoms:</strong> Slow builds or stuck processes.</p>
+<p><strong>Solution:</strong> Restart Gradle daemon:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1">1</a></span>
+<span class="normal"><a href="#__codelineno-30-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1"></a>gradle<span class="w"> </span>--stop
+<a id="__codelineno-30-2" name="__codelineno-30-2"></a>gradle<span class="w"> </span>build
+</code></pre></div></td></tr></table></div></p>
+<h2 id="environment-setup">Environment Setup<a class="headerlink" href="#environment-setup" title="Permanent link">&para;</a></h2>
+<h3 id="solana-account">Solana Account<a class="headerlink" href="#solana-account" title="Permanent link">&para;</a></h3>
+<p>For development, you can use a test account:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span>
+<span class="normal"><a href="#__codelineno-31-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1"></a><span class="c1"># Set environment variable</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SOLANA_SECRET_KEY</span><span class="o">=</span><span class="s2">&quot;your-base64-encoded-key&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>In Kotlin:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1">1</a></span>
+<span class="normal"><a href="#__codelineno-32-2">2</a></span>
+<span class="normal"><a href="#__codelineno-32-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1"></a><span class="kd">val</span><span class="w"> </span><span class="nv">keyString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">getenv</span><span class="p">(</span><span class="s">&quot;SOLANA_SECRET_KEY&quot;</span><span class="p">)</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2"></a><span class="kd">val</span><span class="w"> </span><span class="nv">secretKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">Base64</span><span class="p">.</span><span class="na">getDecoder</span><span class="p">().</span><span class="na">decode</span><span class="p">(</span><span class="n">keyString</span><span class="p">)</span>
+<a id="__codelineno-32-3" name="__codelineno-32-3"></a><span class="kd">val</span><span class="w"> </span><span class="nv">account</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Account</span><span class="p">(</span><span class="n">secretKey</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="network-configuration">Network Configuration<a class="headerlink" href="#network-configuration" title="Permanent link">&para;</a></h3>
+<p><strong>Devnet (Testing):</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-1">1</a></span>
+<span class="normal"><a href="#__codelineno-33-2">2</a></span>
+<span class="normal"><a href="#__codelineno-33-3">3</a></span>
+<span class="normal"><a href="#__codelineno-33-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1"></a><span class="kd">val</span><span class="w"> </span><span class="nv">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X402Client</span><span class="p">(</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2"></a><span class="w">    </span><span class="n">walletAccount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">account</span><span class="p">,</span>
+<a id="__codelineno-33-3" name="__codelineno-33-3"></a><span class="w">    </span><span class="n">rpcUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://api.devnet.solana.com&quot;</span>
+<a id="__codelineno-33-4" name="__codelineno-33-4"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Mainnet (Production):</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-34-1">1</a></span>
+<span class="normal"><a href="#__codelineno-34-2">2</a></span>
+<span class="normal"><a href="#__codelineno-34-3">3</a></span>
+<span class="normal"><a href="#__codelineno-34-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1"></a><span class="kd">val</span><span class="w"> </span><span class="nv">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X402Client</span><span class="p">(</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2"></a><span class="w">    </span><span class="n">walletAccount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">account</span><span class="p">,</span>
+<a id="__codelineno-34-3" name="__codelineno-34-3"></a><span class="w">    </span><span class="n">rpcUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://api.mainnet-beta.solana.com&quot;</span>
+<a id="__codelineno-34-4" name="__codelineno-34-4"></a><span class="p">)</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="coroutine-dispatcher-configuration">Coroutine Dispatcher Configuration<a class="headerlink" href="#coroutine-dispatcher-configuration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-35-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-35-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-35-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-35-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-35-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-35-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-35-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-35-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-35-10">10</a></span>
+<span class="normal"><a href="#__codelineno-35-11">11</a></span>
+<span class="normal"><a href="#__codelineno-35-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.coroutines.Dispatchers</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">kotlinx.coroutines.asCoroutineDispatcher</span>
+<a id="__codelineno-35-3" name="__codelineno-35-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">java.util.concurrent.Executors</span>
+<a id="__codelineno-35-4" name="__codelineno-35-4"></a>
+<a id="__codelineno-35-5" name="__codelineno-35-5"></a><span class="c1">// Custom dispatcher for payment operations</span>
+<a id="__codelineno-35-6" name="__codelineno-35-6"></a><span class="kd">val</span><span class="w"> </span><span class="nv">paymentDispatcher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Executors</span><span class="p">.</span><span class="na">newFixedThreadPool</span><span class="p">(</span><span class="m">4</span><span class="p">)</span>
+<a id="__codelineno-35-7" name="__codelineno-35-7"></a><span class="w">    </span><span class="p">.</span><span class="na">asCoroutineDispatcher</span><span class="p">()</span>
+<a id="__codelineno-35-8" name="__codelineno-35-8"></a>
+<a id="__codelineno-35-9" name="__codelineno-35-9"></a><span class="c1">// Use in client operations</span>
+<a id="__codelineno-35-10" name="__codelineno-35-10"></a><span class="n">withContext</span><span class="p">(</span><span class="n">paymentDispatcher</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-35-11" name="__codelineno-35-11"></a><span class="w">    </span><span class="n">client</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<a id="__codelineno-35-12" name="__codelineno-35-12"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p>Now that you have OpenLibX402 Kotlin SDK installed:</p>
+<ol>
+<li><a href="../client-quickstart/">Client Quickstart</a> - Build your first payment-enabled client with coroutines</li>
+<li><a href="../../examples/basic-usage/">Basic Usage Examples</a> - Learn common patterns with suspend functions</li>
+<li><a href="../../reference/api-reference/">API Reference</a> - Explore the full API</li>
+<li><a href="../../reference/errors/">Error Handling</a> - Master sealed class error handling</li>
+</ol>
+<h2 id="version-updates">Version Updates<a class="headerlink" href="#version-updates" title="Permanent link">&para;</a></h2>
+<p>Check for updates:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-36-1">1</a></span>
+<span class="normal"><a href="#__codelineno-36-2">2</a></span>
+<span class="normal"><a href="#__codelineno-36-3">3</a></span>
+<span class="normal"><a href="#__codelineno-36-4">4</a></span>
+<span class="normal"><a href="#__codelineno-36-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1"></a><span class="c1"># Gradle</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2"></a>gradle<span class="w"> </span>dependencyUpdates
+<a id="__codelineno-36-3" name="__codelineno-36-3"></a>
+<a id="__codelineno-36-4" name="__codelineno-36-4"></a><span class="c1"># Or check Maven Central</span>
+<a id="__codelineno-36-5" name="__codelineno-36-5"></a>https://search.maven.org/artifact/org.openlibx402/openlibx402-core
+</code></pre></div></td></tr></table></div></p>
+<p>Update to latest version in your <code>build.gradle.kts</code>:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-1">1</a></span>
+<span class="normal"><a href="#__codelineno-37-2">2</a></span>
+<span class="normal"><a href="#__codelineno-37-3">3</a></span>
+<span class="normal"><a href="#__codelineno-37-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.openlibx402:openlibx402-core:LATEST_VERSION&quot;</span><span class="p">)</span>
+<a id="__codelineno-37-3" name="__codelineno-37-3"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;org.openlibx402:openlibx402-client:LATEST_VERSION&quot;</span><span class="p">)</span>
+<a id="__codelineno-37-4" name="__codelineno-37-4"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<h2 id="support">Support<a class="headerlink" href="#support" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Documentation:</strong> <a href="https://docs.openlibx402.org">https://docs.openlibx402.org</a></li>
+<li><strong>GitHub Issues:</strong> <a href="https://github.com/openlibx402/openlibx402/issues">https://github.com/openlibx402/openlibx402/issues</a></li>
+<li><strong>Examples:</strong> <a href="https://github.com/openlibx402/openlibx402/tree/main/examples/kotlin">https://github.com/openlibx402/openlibx402/tree/main/examples/kotlin</a></li>
+<li><strong>Kotlin Docs:</strong> <a href="https://kotlinlang.org/docs/home.html">https://kotlinlang.org/docs/home.html</a></li>
+<li><strong>Coroutines Guide:</strong> <a href="https://kotlinlang.org/docs/coroutines-guide.html">https://kotlinlang.org/docs/coroutines-guide.html</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/openlibx402" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.top", "navigation.tabs", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  <!-- Buffer polyfill for Solana Web3.js -->
+  <script>
+    // Minimal Buffer polyfill for Solana Web3.js
+    (function() {
+      const base64 = {
+        byteLength: function(b64) {
+          const lens = getLens(b64);
+          return (lens[0] * 3 + lens[1]) / 4 - lens[2];
+        },
+        toByteArray: function(b64) {
+          const lens = getLens(b64);
+          const arr = new Uint8Array(base64.byteLength(b64));
+          decode(b64, arr, 0, lens[0], lens[1]);
+          return arr;
+        },
+        fromByteArray: function(uint8) {
+          const len = uint8.length;
+          const extraBytes = len % 3;
+          const parts = [];
+          const maxChunkLength = 16383;
+          for (let i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+            parts.push(encodeChunk(uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)));
+          }
+          if (extraBytes === 1) {
+            const tmp = uint8[len - 1];
+            parts.push(lookup[tmp >> 2] + lookup[(tmp << 4) & 0x3F] + '==');
+          } else if (extraBytes === 2) {
+            const tmp = (uint8[len - 2] << 8) + uint8[len - 1];
+            parts.push(lookup[tmp >> 10] + lookup[(tmp >> 4) & 0x3F] + lookup[(tmp << 2) & 0x3F] + '=');
+          }
+          return parts.join('');
+        }
+      };
+
+      const lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+      const revLookup = [];
+      for (let i = 0; i < lookup.length; i++) revLookup[lookup.charCodeAt(i)] = i;
+
+      function getLens(b64) {
+        const len = b64.length;
+        let validLen = b64.indexOf('=');
+        if (validLen === -1) validLen = len;
+        const placeHoldersLen = validLen === len ? 0 : 4 - (validLen % 4);
+        return [validLen, placeHoldersLen, placeHoldersLen > 0 ? placeHoldersLen : 0];
+      }
+
+      function decode(b64, arr, offset, len, placeHoldersLen) {
+        let tmp;
+        let curByte = 0;
+        const validLen = len + placeHoldersLen;
+        for (let i = 0; i < len; i += 4) {
+          tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)];
+          arr[offset + curByte++] = (tmp >> 16) & 0xFF;
+          arr[offset + curByte++] = (tmp >> 8) & 0xFF;
+          arr[offset + curByte++] = tmp & 0xFF;
+        }
+        if (placeHoldersLen === 2) {
+          tmp = (revLookup[b64.charCodeAt(i)] << 2) | (revLookup[b64.charCodeAt(i + 1)] >> 4);
+          arr[offset + curByte++] = tmp & 0xFF;
+        } else if (placeHoldersLen === 1) {
+          tmp = (revLookup[b64.charCodeAt(i)] << 10) | (revLookup[b64.charCodeAt(i + 1)] << 4) | (revLookup[b64.charCodeAt(i + 2)] >> 2);
+          arr[offset + curByte++] = (tmp >> 8) & 0xFF;
+          arr[offset + curByte++] = tmp & 0xFF;
+        }
+      }
+
+      function encodeChunk(uint8, start, end) {
+        let tmp;
+        const output = [];
+        for (let i = start; i < end; i += 3) {
+          tmp = ((uint8[i] << 16) & 0xFF0000) + ((uint8[i + 1] << 8) & 0xFF00) + (uint8[i + 2] & 0xFF);
+          output.push(lookup[(tmp >> 18) & 0x3F] + lookup[(tmp >> 12) & 0x3F] + lookup[(tmp >> 6) & 0x3F] + lookup[tmp & 0x3F]);
+        }
+        return output.join('');
+      }
+
+      class Buffer extends Uint8Array {
+        constructor(arg, encodingOrOffset, length) {
+          if (typeof arg === 'number') {
+            super(arg);
+          } else if (typeof arg === 'string') {
+            const enc = encodingOrOffset || 'utf8';
+            if (enc === 'base64') {
+              super(base64.toByteArray(arg));
+            } else {
+              const arr = new TextEncoder().encode(arg);
+              super(arr);
+            }
+          } else if (arg instanceof Uint8Array) {
+            super(arg);
+          } else {
+            super(arg, encodingOrOffset, length);
+          }
+        }
+
+        static from(value, encodingOrOffset, length) {
+          return new Buffer(value, encodingOrOffset, length);
+        }
+
+        static alloc(size, fill, encoding) {
+          const buf = new Buffer(size);
+          if (fill !== undefined) buf.fill(fill, 0, size, encoding);
+          return buf;
+        }
+
+        static isBuffer(obj) {
+          return obj instanceof Buffer;
+        }
+
+        toString(encoding = 'utf8') {
+          if (encoding === 'base64') {
+            return base64.fromByteArray(this);
+          }
+          return new TextDecoder().decode(this);
+        }
+
+        writeUInt32LE(value, offset) {
+          this[offset] = value & 0xff;
+          this[offset + 1] = (value >> 8) & 0xff;
+          this[offset + 2] = (value >> 16) & 0xff;
+          this[offset + 3] = (value >> 24) & 0xff;
+          return offset + 4;
+        }
+
+        writeBigUInt64LE(value, offset) {
+          const bigValue = BigInt(value);
+          for (let i = 0; i < 8; i++) {
+            this[offset + i] = Number((bigValue >> BigInt(i * 8)) & BigInt(0xff));
+          }
+          return offset + 8;
+        }
+
+        readUInt32LE(offset) {
+          return (
+            this[offset] |
+            (this[offset + 1] << 8) |
+            (this[offset + 2] << 16) |
+            (this[offset + 3] << 24)
+          ) >>> 0;
+        }
+
+        readBigUInt64LE(offset) {
+          let value = BigInt(0);
+          for (let i = 0; i < 8; i++) {
+            value |= BigInt(this[offset + i]) << BigInt(i * 8);
+          }
+          return value;
+        }
+      }
+
+      window.Buffer = Buffer;
+    })();
+  </script>
+  <!-- Solana Web3.js for Phantom wallet integration -->
+  <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.min.js"></script>
+  <!-- Note: @solana/spl-token doesn't have an IIFE bundle, we'll create token transfers manually -->
+  <!-- Chatbot Widget Script -->
+  <script>
+    // Configure chatbot API URL from mkdocs.yml config
+    // Supports environment-based configuration:
+    // - Development: http://localhost:3000 (or http://localhost:8000 for Deno)
+    // - Production: https://api.chatbot.openlibx402.com
+
+    // Detect if we're in production based on hostname
+    const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+
+    // Set API URL based on environment
+    window.CHATBOT_API_URL = isProduction
+      ? 'https://openlibx402-openlibx402.deno.dev'
+      : 'http://localhost:3000';
+
+    // Set Solana network based on environment
+    window.CHATBOT_SOLANA_NETWORK = isProduction
+      ? 'mainnet-beta'
+      : 'devnet';
+
+    // Set Solana RPC URL based on environment
+    window.CHATBOT_SOLANA_RPC = isProduction
+      ? 'https://api.mainnet-beta.solana.com'
+      : 'https://api.devnet.solana.com';
+
+    console.log('✅ Chatbot configured:', {
+      environment: isProduction ? 'production' : 'development',
+      apiUrl: window.CHATBOT_API_URL,
+      network: window.CHATBOT_SOLANA_NETWORK,
+      rpcUrl: window.CHATBOT_SOLANA_RPC
+    });
+
+    // Force cache bust
+    const chatbotScript = document.createElement('script');
+    chatbotScript.src = '../../../assets/javascripts/chatbot.js?t=' + Date.now();
+    document.head.appendChild(chatbotScript);
+  </script>
+
+  </body>
+</html>

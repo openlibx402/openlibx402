@@ -1,0 +1,5164 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for the OpenLibx402 autonomous payments ecosystem">
+      
+      
+      
+        <link rel="canonical" href="https://openlibx402.github.io/docs/go/examples/nethttp-server/">
+      
+      
+        <link rel="prev" href="../../../examples/typescript/langgraph-workflow/">
+      
+      
+        <link rel="next" href="../echo-server/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>net/http Server - OpenLibx402 Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  <!-- Chatbot Widget Styles -->
+  <link rel="stylesheet" href="../../../assets/stylesheets/chatbot.css?v=2">
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nethttp-server-example" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="OpenLibx402 Docs" class="md-header__button md-logo" aria-label="OpenLibx402 Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenLibx402 Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              net/http Server
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/openlibx402/docs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../openlibx402-technical-spec/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Technical Specification
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quick-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../chatbot/" class="md-tabs__link">
+          
+  
+  
+  Chatbot
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../packages/python/openlibx402-core/" class="md-tabs__link">
+          
+  
+  
+  Packages
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../examples/" class="md-tabs__link">
+          
+  
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/api-reference/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="OpenLibx402 Docs" class="md-nav__button md-logo" aria-label="OpenLibx402 Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenLibx402 Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/openlibx402/docs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../openlibx402-technical-spec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Technical Specification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quick-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Chatbot
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chatbot
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/payments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Payment System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../chatbot/TABLE_OF_CONTENTS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentation Map
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Packages
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Packages
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/python/openlibx402-core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/python/openlibx402-fastapi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FastAPI Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/python/openlibx402-client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/python/openlibx402-langchain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/python/openlibx402-langgraph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    TypeScript
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            TypeScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client SDK
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-express/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Express Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-nextjs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Next.js Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-langchain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../packages/typescript/openlibx402-langgraph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../middleware/nethttp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    net/http Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../middleware/echo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Echo Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/middleware/rocket/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rocket Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/middleware/actix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Actix Web Middleware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kotlin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kotlin/libraries/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kotlin/libraries/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Library
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Python
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/python/fastapi-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FastAPI Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/python/langchain-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/python/langgraph-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    TypeScript
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            TypeScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/express-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Express Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/nextjs-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Next.js App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/nuxtjs-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Nuxt.js App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/astro-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Astro App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/vue-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vue.js App
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/langchain-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangChain Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/typescript/langgraph-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LangGraph Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    net/http Server
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    net/http Server
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the Example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-setup-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Setup Environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Install Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-run-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Run Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-test-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Test Endpoints
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endpoint-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoint Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client Example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Client Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-payment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatic Payment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-client-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Auto Client Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicit-client-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Explicit Client Code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpoint-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoint Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Endpoint Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apifree-data-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      /api/free-data (Free)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apipremium-data-010" class="md-nav__link">
+    <span class="md-ellipsis">
+      /api/premium-data ($0.10)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apiexpensive-data-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      /api/expensive-data ($1.00)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apiprocess-050" class="md-nav__link">
+    <span class="md-ellipsis">
+      /api/process ($0.50)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handler-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handler Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Handler Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#free-handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Free Handler
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#premium-handler-with-payment-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Premium Handler (with Payment Access)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-endpoint-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-Endpoint Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Locally
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Locally">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-without-real-payments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Without Real Payments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mock-payment-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mock Payment Response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Production Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Production Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-use-mainnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Use Mainnet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-enable-https" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Enable HTTPS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-add-rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Add Rate Limiting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-add-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Add Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-monitor-payments" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Monitor Payments
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#402-responses-even-after-payment" class="md-nav__link">
+    <span class="md-ellipsis">
+      402 responses even after payment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-connection-refused" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client connection refused
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#payment-verification-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Payment verification failures
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extended-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extended Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extended Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-pricing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Pricing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subscription-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subscription-Based
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../echo-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Echo Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/examples/rocket-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rocket Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/examples/actix-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Actix Web Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/examples/basic-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_7" id="__nav_6_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_7">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kotlin/examples/basic-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Basic Usage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/server-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/getting-started/server-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Server Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kotlin/getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kotlin/getting-started/client-quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1" id="__nav_8_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Go
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_1">
+            <span class="md-nav__icon md-icon"></span>
+            Go
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Rust
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            Rust
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../rust/reference/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_3" id="__nav_8_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Java
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            Java
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java/reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_4" id="__nav_8_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kotlin/reference/api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kotlin/reference/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Handling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the Example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-setup-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Setup Environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Install Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-run-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Run Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-test-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Test Endpoints
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Server Code
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endpoint-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoint Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client Example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Client Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-payment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatic Payment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-client-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Auto Client Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicit-client-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Explicit Client Code
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Project Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#endpoint-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Endpoint Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Endpoint Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apifree-data-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      /api/free-data (Free)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apipremium-data-010" class="md-nav__link">
+    <span class="md-ellipsis">
+      /api/premium-data ($0.10)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apiexpensive-data-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      /api/expensive-data ($1.00)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apiprocess-050" class="md-nav__link">
+    <span class="md-ellipsis">
+      /api/process ($0.50)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handler-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handler Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Handler Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#free-handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Free Handler
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#premium-handler-with-payment-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Premium Handler (with Payment Access)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-endpoint-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-Endpoint Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Locally
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Locally">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-without-real-payments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Without Real Payments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mock-payment-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mock Payment Response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#production-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Production Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Production Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-use-mainnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Use Mainnet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-enable-https" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Enable HTTPS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-add-rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Add Rate Limiting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-add-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Add Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-monitor-payments" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Monitor Payments
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#402-responses-even-after-payment" class="md-nav__link">
+    <span class="md-ellipsis">
+      402 responses even after payment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-connection-refused" class="md-nav__link">
+    <span class="md-ellipsis">
+      Client connection refused
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#payment-verification-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Payment verification failures
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extended-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extended Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extended Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-pricing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Pricing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subscription-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subscription-Based
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/openlibx402/docs/edit/master/docs/go/examples/nethttp-server.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="nethttp-server-example">net/http Server Example<a class="headerlink" href="#nethttp-server-example" title="Permanent link">&para;</a></h1>
+<p>Complete working example of an X402-enabled server using Go's standard <code>net/http</code> package.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>This example demonstrates:</p>
+<ul>
+<li>Free and paid endpoints</li>
+<li>Multiple pricing tiers</li>
+<li>Payment verification</li>
+<li>Processing payment details in handlers</li>
+</ul>
+<h2 id="running-the-example">Running the Example<a class="headerlink" href="#running-the-example" title="Permanent link">&para;</a></h2>
+<h3 id="1-setup-environment">1. Setup Environment<a class="headerlink" href="#1-setup-environment" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># Clone and navigate to example</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>examples/go/nethttp-server
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1"># Set your Solana wallet</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">X402_PAYMENT_ADDRESS</span><span class="o">=</span><span class="s2">&quot;YOUR_SOLANA_WALLET_ADDRESS&quot;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="nb">export</span><span class="w"> </span><span class="nv">X402_TOKEN_MINT</span><span class="o">=</span><span class="s2">&quot;EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&quot;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="nb">export</span><span class="w"> </span><span class="nv">X402_NETWORK</span><span class="o">=</span><span class="s2">&quot;solana-devnet&quot;</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="2-install-dependencies">2. Install Dependencies<a class="headerlink" href="#2-install-dependencies" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>go<span class="w"> </span>mod<span class="w"> </span>tidy
+</code></pre></div></td></tr></table></div>
+<h3 id="3-run-server">3. Run Server<a class="headerlink" href="#3-run-server" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>go<span class="w"> </span>run<span class="w"> </span>main.go
+</code></pre></div></td></tr></table></div>
+<p>Output:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a>🚀 X402 Server starting on port 8080
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>📍 Network: solana-devnet
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>💰 Payment Address: YOUR_WALLET_ADDRESS
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>🪙 Token Mint: EPjFWdd5...
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>Available endpoints:
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>  GET  /api/free-data       - Free access (no payment)
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>  GET  /api/premium-data    - $0.10 USDC
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>  GET  /api/expensive-data  - $1.00 USDC
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>  POST /api/process         - $0.50 USDC
+</code></pre></div></td></tr></table></div></p>
+<h3 id="4-test-endpoints">4. Test Endpoints<a class="headerlink" href="#4-test-endpoints" title="Permanent link">&para;</a></h3>
+<p><strong>Free endpoint (no payment needed):</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a>curl<span class="w"> </span>http://localhost:8080/api/free-data
+</code></pre></div></td></tr></table></div></p>
+<p>Response:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span>
+<span class="normal"><a href="#__codelineno-5-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This is free public data&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="w">    </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-01T00:00:00Z&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="w">    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;basic information&quot;</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Premium endpoint (payment required):</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>curl<span class="w"> </span>http://localhost:8080/api/premium-data
+</code></pre></div></td></tr></table></div></p>
+<p>Response (402 Payment Required):
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;max_amount_required&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.10&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;asset_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SPL&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">  </span><span class="nt">&quot;asset_address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">  </span><span class="nt">&quot;payment_address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;YOUR_WALLET_ADDRESS&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="w">  </span><span class="nt">&quot;network&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;solana-devnet&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="w">  </span><span class="nt">&quot;expires_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-01-01T00:05:00Z&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="w">  </span><span class="nt">&quot;nonce&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123...&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="w">  </span><span class="nt">&quot;payment_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;def456...&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="w">  </span><span class="nt">&quot;resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/api/premium-data&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Premium market data access&quot;</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<h2 id="server-code">Server Code<a class="headerlink" href="#server-code" title="Permanent link">&para;</a></h2>
+<p>The server (<code>main.go</code>) contains:</p>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nx">nethttp</span><span class="p">.</span><span class="nx">InitX402</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">nethttp</span><span class="p">.</span><span class="nx">Config</span><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="w">    </span><span class="nx">PaymentAddress</span><span class="p">:</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">Getenv</span><span class="p">(</span><span class="s">&quot;X402_PAYMENT_ADDRESS&quot;</span><span class="p">),</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">    </span><span class="nx">TokenMint</span><span class="p">:</span><span class="w">      </span><span class="nx">os</span><span class="p">.</span><span class="nx">Getenv</span><span class="p">(</span><span class="s">&quot;X402_TOKEN_MINT&quot;</span><span class="p">),</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">    </span><span class="nx">Network</span><span class="p">:</span><span class="w">        </span><span class="s">&quot;solana-devnet&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">    </span><span class="nx">AutoVerify</span><span class="p">:</span><span class="w">     </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="endpoint-setup">Endpoint Setup<a class="headerlink" href="#endpoint-setup" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span>
+<span class="normal"><a href="#__codelineno-9-7">7</a></span>
+<span class="normal"><a href="#__codelineno-9-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1">// Free endpoint</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="nx">mux</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/api/free-data&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">freeDataHandler</span><span class="p">)</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="c1">// Premium endpoints with different prices</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="nx">mux</span><span class="p">.</span><span class="nx">Handle</span><span class="p">(</span><span class="s">&quot;/api/premium-data&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">nethttp</span><span class="p">.</span><span class="nx">PaymentRequired</span><span class="p">(</span><span class="nx">nethttp</span><span class="p">.</span><span class="nx">PaymentRequiredOptions</span><span class="p">{</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="w">    </span><span class="nx">Amount</span><span class="p">:</span><span class="w">      </span><span class="s">&quot;0.10&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">    </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Premium market data access&quot;</span><span class="p">,</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="p">})(</span><span class="nx">http</span><span class="p">.</span><span class="nx">HandlerFunc</span><span class="p">(</span><span class="nx">premiumDataHandler</span><span class="p">)))</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="client-example">Client Example<a class="headerlink" href="#client-example" title="Permanent link">&para;</a></h2>
+<h3 id="automatic-payment">Automatic Payment<a class="headerlink" href="#automatic-payment" title="Permanent link">&para;</a></h3>
+<p>The <code>client_example.go</code> shows automatic payment:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="c1"># Set your wallet private key</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">X402_PRIVATE_KEY</span><span class="o">=</span><span class="s2">&quot;your-base58-private-key&quot;</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="c1"># Run client</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>go<span class="w"> </span>run<span class="w"> </span>client_example.go
+</code></pre></div></td></tr></table></div>
+<p>The client will:
+1. Request protected endpoint
+2. Receive 402 response
+3. Parse payment request
+4. Create payment transaction
+5. Broadcast to Solana
+6. Retry with payment authorization
+7. Display response</p>
+<h3 id="auto-client-code">Auto Client Code<a class="headerlink" href="#auto-client-code" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span>
+<span class="normal"><a href="#__codelineno-11-4">4</a></span>
+<span class="normal"><a href="#__codelineno-11-5">5</a></span>
+<span class="normal"><a href="#__codelineno-11-6">6</a></span>
+<span class="normal"><a href="#__codelineno-11-7">7</a></span>
+<span class="normal"><a href="#__codelineno-11-8">8</a></span>
+<span class="normal"><a href="#__codelineno-11-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="nx">client</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">NewAutoClient</span><span class="p">(</span><span class="nx">walletKeypair</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">client</span><span class="p">.</span><span class="nx">AutoClientOptions</span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="w">    </span><span class="nx">MaxPaymentAmount</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;10.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">    </span><span class="nx">AutoRetry</span><span class="p">:</span><span class="w">        </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">    </span><span class="nx">AllowLocal</span><span class="p">:</span><span class="w">       </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="p">})</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="k">defer</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="c1">// Automatically handles payment</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="nx">resp</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">Background</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;http://localhost:8080/api/premium-data&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="explicit-client-code">Explicit Client Code<a class="headerlink" href="#explicit-client-code" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-12-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-12-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-12-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-12-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-12-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-12-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-12-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-12-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-12-10">10</a></span>
+<span class="normal"><a href="#__codelineno-12-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="c1">// Manual payment control</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="nx">client</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">NewX402Client</span><span class="p">(</span><span class="nx">walletKeypair</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="k">defer</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="nx">resp</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="k">if</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">PaymentRequired</span><span class="p">(</span><span class="nx">resp</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="w">    </span><span class="nx">paymentReq</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">ParsePaymentRequest</span><span class="p">(</span><span class="nx">resp</span><span class="p">)</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9"></a><span class="w">    </span><span class="nx">auth</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">CreatePayment</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">paymentReq</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10"></a><span class="w">    </span><span class="nx">resp</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span><span class="w"> </span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">auth</span><span class="p">)</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="project-structure">Project Structure<a class="headerlink" href="#project-structure" title="Permanent link">&para;</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1"></a>nethttp-server/
+<a id="__codelineno-13-2" name="__codelineno-13-2"></a>├── main.go              # Server with multiple endpoints
+<a id="__codelineno-13-3" name="__codelineno-13-3"></a>├── client_example.go    # Example clients (auto and explicit)
+<a id="__codelineno-13-4" name="__codelineno-13-4"></a>├── go.mod              # Module definition
+<a id="__codelineno-13-5" name="__codelineno-13-5"></a>└── README.md           # This file
+</code></pre></div></td></tr></table></div>
+<h2 id="endpoint-details">Endpoint Details<a class="headerlink" href="#endpoint-details" title="Permanent link">&para;</a></h2>
+<h3 id="apifree-data-free">/api/free-data (Free)<a class="headerlink" href="#apifree-data-free" title="Permanent link">&para;</a></h3>
+<p>No payment required. Returns basic data.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1"></a>curl<span class="w"> </span>http://localhost:8080/api/free-data<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+</code></pre></div></td></tr></table></div>
+<h3 id="apipremium-data-010">/api/premium-data ($0.10)<a class="headerlink" href="#apipremium-data-010" title="Permanent link">&para;</a></h3>
+<p>Requires $0.10 USDC payment. Returns market data.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="c1"># First request returns 402</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2"></a>curl<span class="w"> </span>http://localhost:8080/api/premium-data
+<a id="__codelineno-15-3" name="__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="c1"># After payment with auth header</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;X-Payment-Authorization: &lt;base64&gt;&quot;</span><span class="w"> </span>http://localhost:8080/api/premium-data
+</code></pre></div></td></tr></table></div>
+<h3 id="apiexpensive-data-100">/api/expensive-data ($1.00)<a class="headerlink" href="#apiexpensive-data-100" title="Permanent link">&para;</a></h3>
+<p>Requires $1.00 USDC payment. Returns exclusive insights.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1"></a>curl<span class="w"> </span>http://localhost:8080/api/expensive-data
+</code></pre></div></td></tr></table></div>
+<h3 id="apiprocess-050">/api/process ($0.50)<a class="headerlink" href="#apiprocess-050" title="Permanent link">&para;</a></h3>
+<p>POST endpoint requiring $0.50 USDC. Processes data.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;data&quot;: &quot;to process&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="w">  </span>http://localhost:8080/api/process
+</code></pre></div></td></tr></table></div>
+<h2 id="handler-examples">Handler Examples<a class="headerlink" href="#handler-examples" title="Permanent link">&para;</a></h2>
+<h3 id="free-handler">Free Handler<a class="headerlink" href="#free-handler" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-18-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-18-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-18-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-18-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-18-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-18-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-18-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-18-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-18-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="kd">func</span><span class="w"> </span><span class="nx">freeDataHandler</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="w">    </span><span class="nx">data</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="w">        </span><span class="s">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;This is free public data&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="w">        </span><span class="s">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="w">            </span><span class="s">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2024-01-01T00:00:00Z&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="w">            </span><span class="s">&quot;value&quot;</span><span class="p">:</span><span class="w">     </span><span class="s">&quot;basic information&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9"></a><span class="w">    </span><span class="nx">respondJSON</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="premium-handler-with-payment-access">Premium Handler (with Payment Access)<a class="headerlink" href="#premium-handler-with-payment-access" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-19-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-19-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-19-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-19-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-19-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-19-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-19-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-19-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-19-10">10</a></span>
+<span class="normal"><a href="#__codelineno-19-11">11</a></span>
+<span class="normal"><a href="#__codelineno-19-12">12</a></span>
+<span class="normal"><a href="#__codelineno-19-13">13</a></span>
+<span class="normal"><a href="#__codelineno-19-14">14</a></span>
+<span class="normal"><a href="#__codelineno-19-15">15</a></span>
+<span class="normal"><a href="#__codelineno-19-16">16</a></span>
+<span class="normal"><a href="#__codelineno-19-17">17</a></span>
+<span class="normal"><a href="#__codelineno-19-18">18</a></span>
+<span class="normal"><a href="#__codelineno-19-19">19</a></span>
+<span class="normal"><a href="#__codelineno-19-20">20</a></span>
+<span class="normal"><a href="#__codelineno-19-21">21</a></span>
+<span class="normal"><a href="#__codelineno-19-22">22</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="kd">func</span><span class="w"> </span><span class="nx">premiumDataHandler</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2"></a><span class="w">    </span><span class="c1">// Access payment details if needed</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="w">    </span><span class="nx">auth</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">nethttp</span><span class="p">.</span><span class="nx">GetPaymentAuthorization</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">auth</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5"></a><span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;✅ Payment received: %s USDC from %s&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6"></a><span class="w">            </span><span class="nx">auth</span><span class="p">.</span><span class="nx">ActualAmount</span><span class="p">,</span><span class="w"> </span><span class="nx">auth</span><span class="p">.</span><span class="nx">PublicKey</span><span class="p">)</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8"></a>
+<a id="__codelineno-19-9" name="__codelineno-19-9"></a><span class="w">    </span><span class="nx">data</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10"></a><span class="w">        </span><span class="s">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;This is premium data (paid $0.10)&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11"></a><span class="w">        </span><span class="s">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12"></a><span class="w">            </span><span class="s">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2024-01-01T00:00:00Z&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13"></a><span class="w">            </span><span class="s">&quot;value&quot;</span><span class="p">:</span><span class="w">     </span><span class="s">&quot;premium market data&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14"></a><span class="w">            </span><span class="s">&quot;metrics&quot;</span><span class="p">:</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}{</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15"></a><span class="w">                </span><span class="s">&quot;price&quot;</span><span class="p">:</span><span class="w">  </span><span class="mf">42.50</span><span class="p">,</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16"></a><span class="w">                </span><span class="s">&quot;volume&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000000</span><span class="p">,</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17"></a><span class="w">                </span><span class="s">&quot;trend&quot;</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;bullish&quot;</span><span class="p">,</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18"></a><span class="w">            </span><span class="p">},</span>
+<a id="__codelineno-19-19" name="__codelineno-19-19"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-19-20" name="__codelineno-19-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-19-21" name="__codelineno-19-21"></a><span class="w">    </span><span class="nx">respondJSON</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span>
+<a id="__codelineno-19-22" name="__codelineno-19-22"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="configuration-options">Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link">&para;</a></h2>
+<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span>
+<span class="normal"><a href="#__codelineno-20-3">3</a></span>
+<span class="normal"><a href="#__codelineno-20-4">4</a></span>
+<span class="normal"><a href="#__codelineno-20-5">5</a></span>
+<span class="normal"><a href="#__codelineno-20-6">6</a></span>
+<span class="normal"><a href="#__codelineno-20-7">7</a></span>
+<span class="normal"><a href="#__codelineno-20-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="c1"># Required</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="nv">X402_PAYMENT_ADDRESS</span><span class="o">=</span><span class="s2">&quot;YOUR_SOLANA_WALLET&quot;</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="nv">X402_TOKEN_MINT</span><span class="o">=</span><span class="s2">&quot;EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&quot;</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a><span class="c1"># Optional</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="nv">X402_NETWORK</span><span class="o">=</span><span class="s2">&quot;solana-devnet&quot;</span><span class="w">  </span><span class="c1"># or solana-mainnet</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="nv">X402_RPC_URL</span><span class="o">=</span><span class="s2">&quot;https://api.devnet.solana.com&quot;</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="nv">PORT</span><span class="o">=</span><span class="m">8080</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="per-endpoint-configuration">Per-Endpoint Configuration<a class="headerlink" href="#per-endpoint-configuration" title="Permanent link">&para;</a></h3>
+<p>In <code>main.go</code>, modify the <code>PaymentRequiredOptions</code>:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span>
+<span class="normal"><a href="#__codelineno-21-3">3</a></span>
+<span class="normal"><a href="#__codelineno-21-4">4</a></span>
+<span class="normal"><a href="#__codelineno-21-5">5</a></span>
+<span class="normal"><a href="#__codelineno-21-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="nx">nethttp</span><span class="p">.</span><span class="nx">PaymentRequired</span><span class="p">(</span><span class="nx">nethttp</span><span class="p">.</span><span class="nx">PaymentRequiredOptions</span><span class="p">{</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2"></a><span class="w">    </span><span class="nx">Amount</span><span class="p">:</span><span class="w">      </span><span class="s">&quot;0.10&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="w">    </span><span class="nx">Description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Custom description&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4"></a><span class="w">    </span><span class="nx">ExpiresIn</span><span class="p">:</span><span class="w">   </span><span class="mi">300</span><span class="p">,</span><span class="w">  </span><span class="c1">// Seconds</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5"></a><span class="w">    </span><span class="nx">AutoVerify</span><span class="p">:</span><span class="w">  </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// Verify on-chain</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6"></a><span class="p">})</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="testing-locally">Testing Locally<a class="headerlink" href="#testing-locally" title="Permanent link">&para;</a></h2>
+<h3 id="test-without-real-payments">Test Without Real Payments<a class="headerlink" href="#test-without-real-payments" title="Permanent link">&para;</a></h3>
+<p>For development, you can test the payment flow without real transactions:</p>
+<ol>
+<li>Use devnet tokens (free from faucet)</li>
+<li>Set <code>AutoVerify: false</code> to skip on-chain verification</li>
+<li>Use client with <code>AllowLocal: true</code></li>
+</ol>
+<h3 id="mock-payment-response">Mock Payment Response<a class="headerlink" href="#mock-payment-response" title="Permanent link">&para;</a></h3>
+<p>For testing without a server:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span>
+<span class="normal"><a href="#__codelineno-22-3">3</a></span>
+<span class="normal"><a href="#__codelineno-22-4">4</a></span>
+<span class="normal"><a href="#__codelineno-22-5">5</a></span>
+<span class="normal"><a href="#__codelineno-22-6">6</a></span>
+<span class="normal"><a href="#__codelineno-22-7">7</a></span>
+<span class="normal"><a href="#__codelineno-22-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="c1">// Simulate 402 response</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2"></a><span class="nx">resp</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Response</span><span class="p">{</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3"></a><span class="w">    </span><span class="nx">StatusCode</span><span class="p">:</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusPaymentRequired</span><span class="p">,</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4"></a><span class="w">    </span><span class="nx">Body</span><span class="p">:</span><span class="w">       </span><span class="nx">io</span><span class="p">.</span><span class="nx">NopCloser</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">NewBufferString</span><span class="p">(</span><span class="nx">paymentJSON</span><span class="p">)),</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5"></a><span class="p">}</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6"></a>
+<a id="__codelineno-22-7" name="__codelineno-22-7"></a><span class="c1">// Test parsing</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8"></a><span class="nx">paymentReq</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">client</span><span class="p">.</span><span class="nx">ParsePaymentRequest</span><span class="p">(</span><span class="nx">resp</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="production-considerations">Production Considerations<a class="headerlink" href="#production-considerations" title="Permanent link">&para;</a></h2>
+<h3 id="1-use-mainnet">1. Use Mainnet<a class="headerlink" href="#1-use-mainnet" title="Permanent link">&para;</a></h3>
+<p>Update environment:
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">X402_NETWORK</span><span class="o">=</span><span class="s2">&quot;solana-mainnet&quot;</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">X402_RPC_URL</span><span class="o">=</span><span class="s2">&quot;https://api.mainnet-beta.solana.com&quot;</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="2-enable-https">2. Enable HTTPS<a class="headerlink" href="#2-enable-https" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServeTLS</span><span class="p">(</span><span class="s">&quot;:443&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;cert.pem&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;key.pem&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">mux</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="3-add-rate-limiting">3. Add Rate Limiting<a class="headerlink" href="#3-add-rate-limiting" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-25-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-25-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-25-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-25-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-25-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-25-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-25-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-25-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-25-10">10</a></span>
+<span class="normal"><a href="#__codelineno-25-11">11</a></span>
+<span class="normal"><a href="#__codelineno-25-12">12</a></span>
+<span class="normal"><a href="#__codelineno-25-13">13</a></span>
+<span class="normal"><a href="#__codelineno-25-14">14</a></span>
+<span class="normal"><a href="#__codelineno-25-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;golang.org/x/time/rate&quot;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3"></a><span class="kd">var</span><span class="w"> </span><span class="nx">limiter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">rate</span><span class="p">.</span><span class="nx">NewLimiter</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4"></a>
+<a id="__codelineno-25-5" name="__codelineno-25-5"></a><span class="kd">func</span><span class="w"> </span><span class="nx">rateLimited</span><span class="p">(</span><span class="nx">h</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">HandlerFunc</span><span class="p">)</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">HandlerFunc</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">Allow</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8"></a><span class="w">            </span><span class="nx">http</span><span class="p">.</span><span class="nx">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Too many requests&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusTooManyRequests</span><span class="p">)</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9"></a><span class="w">            </span><span class="k">return</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-25-11" name="__codelineno-25-11"></a><span class="w">        </span><span class="nx">h</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">)</span>
+<a id="__codelineno-25-12" name="__codelineno-25-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-25-13" name="__codelineno-25-13"></a><span class="p">}</span>
+<a id="__codelineno-25-14" name="__codelineno-25-14"></a>
+<a id="__codelineno-25-15" name="__codelineno-25-15"></a><span class="nx">mux</span><span class="p">.</span><span class="nx">Handle</span><span class="p">(</span><span class="s">&quot;/api/premium&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">rateLimited</span><span class="p">(</span><span class="nx">premiumHandler</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="4-add-logging">4. Add Logging<a class="headerlink" href="#4-add-logging" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span>
+<span class="normal"><a href="#__codelineno-26-2">2</a></span>
+<span class="normal"><a href="#__codelineno-26-3">3</a></span>
+<span class="normal"><a href="#__codelineno-26-4">4</a></span>
+<span class="normal"><a href="#__codelineno-26-5">5</a></span>
+<span class="normal"><a href="#__codelineno-26-6">6</a></span>
+<span class="normal"><a href="#__codelineno-26-7">7</a></span>
+<span class="normal"><a href="#__codelineno-26-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="kn">import</span><span class="w"> </span><span class="s">&quot;log&quot;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2"></a>
+<a id="__codelineno-26-3" name="__codelineno-26-3"></a><span class="kd">func</span><span class="w"> </span><span class="nx">logRequest</span><span class="p">(</span><span class="nx">handler</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">HandlerFunc</span><span class="p">)</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">HandlerFunc</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5"></a><span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Method</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6"></a><span class="w">        </span><span class="nx">handler</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">)</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="5-monitor-payments">5. Monitor Payments<a class="headerlink" href="#5-monitor-payments" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span>
+<span class="normal"><a href="#__codelineno-27-2">2</a></span>
+<span class="normal"><a href="#__codelineno-27-3">3</a></span>
+<span class="normal"><a href="#__codelineno-27-4">4</a></span>
+<span class="normal"><a href="#__codelineno-27-5">5</a></span>
+<span class="normal"><a href="#__codelineno-27-6">6</a></span>
+<span class="normal"><a href="#__codelineno-27-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="kd">func</span><span class="w"> </span><span class="nx">logPayment</span><span class="p">(</span><span class="nx">auth</span><span class="w"> </span><span class="o">*</span><span class="nx">core</span><span class="p">.</span><span class="nx">PaymentAuthorization</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2"></a><span class="w">    </span><span class="nx">log</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;[PAYMENT] ID:%s Amount:%s Payer:%s TX:%s&quot;</span><span class="p">,</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3"></a><span class="w">        </span><span class="nx">auth</span><span class="p">.</span><span class="nx">PaymentID</span><span class="p">,</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4"></a><span class="w">        </span><span class="nx">auth</span><span class="p">.</span><span class="nx">ActualAmount</span><span class="p">,</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5"></a><span class="w">        </span><span class="nx">auth</span><span class="p">.</span><span class="nx">PublicKey</span><span class="p">[:</span><span class="mi">8</span><span class="p">],</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6"></a><span class="w">        </span><span class="nx">auth</span><span class="p">.</span><span class="nx">TransactionHash</span><span class="p">[:</span><span class="mi">8</span><span class="p">])</span>
+<a id="__codelineno-27-7" name="__codelineno-27-7"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="402-responses-even-after-payment">402 responses even after payment<a class="headerlink" href="#402-responses-even-after-payment" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Check payment amount matches exactly</li>
+<li>Verify payment address is correct</li>
+<li>Ensure RPC endpoint is accessible</li>
+<li>Check network configuration (devnet vs mainnet)</li>
+</ul>
+<h3 id="client-connection-refused">Client connection refused<a class="headerlink" href="#client-connection-refused" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ensure server is running: <code>go run main.go</code></li>
+<li>Check port is correct: <code>lsof -i :8080</code></li>
+<li>Verify localhost is accessible</li>
+</ul>
+<h3 id="payment-verification-failures">Payment verification failures<a class="headerlink" href="#payment-verification-failures" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Disable <code>AutoVerify: false</code> temporarily for testing</li>
+<li>Check Solana network is operational</li>
+<li>Verify RPC endpoint is responding</li>
+</ul>
+<h2 id="extended-examples">Extended Examples<a class="headerlink" href="#extended-examples" title="Permanent link">&para;</a></h2>
+<h3 id="dynamic-pricing">Dynamic Pricing<a class="headerlink" href="#dynamic-pricing" title="Permanent link">&para;</a></h3>
+<p>Modify the endpoint setup:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-28-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-28-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-28-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-28-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-28-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-28-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-28-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-28-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-28-10">10</a></span>
+<span class="normal"><a href="#__codelineno-28-11">11</a></span>
+<span class="normal"><a href="#__codelineno-28-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="kd">func</span><span class="w"> </span><span class="nx">getPriceTier</span><span class="p">(</span><span class="nx">endpoint</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2"></a><span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="nx">endpoint</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3"></a><span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;/api/basic&quot;</span><span class="p">:</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;0.05&quot;</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5"></a><span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;/api/premium&quot;</span><span class="p">:</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;0.10&quot;</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7"></a><span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;/api/ultimate&quot;</span><span class="p">:</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;1.00&quot;</span>
+<a id="__codelineno-28-9" name="__codelineno-28-9"></a><span class="w">    </span><span class="k">default</span><span class="p">:</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;0.05&quot;</span>
+<a id="__codelineno-28-11" name="__codelineno-28-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-28-12" name="__codelineno-28-12"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="subscription-based">Subscription-Based<a class="headerlink" href="#subscription-based" title="Permanent link">&para;</a></h3>
+<p>Track payments and allow multiple requests:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-29-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-29-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-29-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-29-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-29-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-29-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-29-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-29-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-29-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1"></a><span class="kd">type</span><span class="w"> </span><span class="nx">Subscription</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2"></a><span class="w">    </span><span class="nx">Address</span><span class="w">    </span><span class="kt">string</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3"></a><span class="w">    </span><span class="nx">PaidUntil</span><span class="w">  </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4"></a><span class="w">    </span><span class="nx">Requests</span><span class="w">   </span><span class="kt">int</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5"></a><span class="p">}</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6"></a>
+<a id="__codelineno-29-7" name="__codelineno-29-7"></a><span class="kd">func</span><span class="w"> </span><span class="nx">checkSubscription</span><span class="p">(</span><span class="nx">auth</span><span class="w"> </span><span class="o">*</span><span class="nx">core</span><span class="p">.</span><span class="nx">PaymentAuthorization</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-29-8" name="__codelineno-29-8"></a><span class="w">    </span><span class="c1">// Check if payer has active subscription</span>
+<a id="__codelineno-29-9" name="__codelineno-29-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-29-10" name="__codelineno-29-10"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../echo-server/">Echo Server Example</a></li>
+<li><a href="../../getting-started/server-quickstart/">Server Quick Start</a></li>
+<li><a href="../../middleware/nethttp/">net/http Middleware Docs</a></li>
+<li><a href="../../libraries/client/">Client Library Docs</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/openlibx402" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.top", "navigation.tabs", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  <!-- Buffer polyfill for Solana Web3.js -->
+  <script>
+    // Minimal Buffer polyfill for Solana Web3.js
+    (function() {
+      const base64 = {
+        byteLength: function(b64) {
+          const lens = getLens(b64);
+          return (lens[0] * 3 + lens[1]) / 4 - lens[2];
+        },
+        toByteArray: function(b64) {
+          const lens = getLens(b64);
+          const arr = new Uint8Array(base64.byteLength(b64));
+          decode(b64, arr, 0, lens[0], lens[1]);
+          return arr;
+        },
+        fromByteArray: function(uint8) {
+          const len = uint8.length;
+          const extraBytes = len % 3;
+          const parts = [];
+          const maxChunkLength = 16383;
+          for (let i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+            parts.push(encodeChunk(uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)));
+          }
+          if (extraBytes === 1) {
+            const tmp = uint8[len - 1];
+            parts.push(lookup[tmp >> 2] + lookup[(tmp << 4) & 0x3F] + '==');
+          } else if (extraBytes === 2) {
+            const tmp = (uint8[len - 2] << 8) + uint8[len - 1];
+            parts.push(lookup[tmp >> 10] + lookup[(tmp >> 4) & 0x3F] + lookup[(tmp << 2) & 0x3F] + '=');
+          }
+          return parts.join('');
+        }
+      };
+
+      const lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+      const revLookup = [];
+      for (let i = 0; i < lookup.length; i++) revLookup[lookup.charCodeAt(i)] = i;
+
+      function getLens(b64) {
+        const len = b64.length;
+        let validLen = b64.indexOf('=');
+        if (validLen === -1) validLen = len;
+        const placeHoldersLen = validLen === len ? 0 : 4 - (validLen % 4);
+        return [validLen, placeHoldersLen, placeHoldersLen > 0 ? placeHoldersLen : 0];
+      }
+
+      function decode(b64, arr, offset, len, placeHoldersLen) {
+        let tmp;
+        let curByte = 0;
+        const validLen = len + placeHoldersLen;
+        for (let i = 0; i < len; i += 4) {
+          tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)];
+          arr[offset + curByte++] = (tmp >> 16) & 0xFF;
+          arr[offset + curByte++] = (tmp >> 8) & 0xFF;
+          arr[offset + curByte++] = tmp & 0xFF;
+        }
+        if (placeHoldersLen === 2) {
+          tmp = (revLookup[b64.charCodeAt(i)] << 2) | (revLookup[b64.charCodeAt(i + 1)] >> 4);
+          arr[offset + curByte++] = tmp & 0xFF;
+        } else if (placeHoldersLen === 1) {
+          tmp = (revLookup[b64.charCodeAt(i)] << 10) | (revLookup[b64.charCodeAt(i + 1)] << 4) | (revLookup[b64.charCodeAt(i + 2)] >> 2);
+          arr[offset + curByte++] = (tmp >> 8) & 0xFF;
+          arr[offset + curByte++] = tmp & 0xFF;
+        }
+      }
+
+      function encodeChunk(uint8, start, end) {
+        let tmp;
+        const output = [];
+        for (let i = start; i < end; i += 3) {
+          tmp = ((uint8[i] << 16) & 0xFF0000) + ((uint8[i + 1] << 8) & 0xFF00) + (uint8[i + 2] & 0xFF);
+          output.push(lookup[(tmp >> 18) & 0x3F] + lookup[(tmp >> 12) & 0x3F] + lookup[(tmp >> 6) & 0x3F] + lookup[tmp & 0x3F]);
+        }
+        return output.join('');
+      }
+
+      class Buffer extends Uint8Array {
+        constructor(arg, encodingOrOffset, length) {
+          if (typeof arg === 'number') {
+            super(arg);
+          } else if (typeof arg === 'string') {
+            const enc = encodingOrOffset || 'utf8';
+            if (enc === 'base64') {
+              super(base64.toByteArray(arg));
+            } else {
+              const arr = new TextEncoder().encode(arg);
+              super(arr);
+            }
+          } else if (arg instanceof Uint8Array) {
+            super(arg);
+          } else {
+            super(arg, encodingOrOffset, length);
+          }
+        }
+
+        static from(value, encodingOrOffset, length) {
+          return new Buffer(value, encodingOrOffset, length);
+        }
+
+        static alloc(size, fill, encoding) {
+          const buf = new Buffer(size);
+          if (fill !== undefined) buf.fill(fill, 0, size, encoding);
+          return buf;
+        }
+
+        static isBuffer(obj) {
+          return obj instanceof Buffer;
+        }
+
+        toString(encoding = 'utf8') {
+          if (encoding === 'base64') {
+            return base64.fromByteArray(this);
+          }
+          return new TextDecoder().decode(this);
+        }
+
+        writeUInt32LE(value, offset) {
+          this[offset] = value & 0xff;
+          this[offset + 1] = (value >> 8) & 0xff;
+          this[offset + 2] = (value >> 16) & 0xff;
+          this[offset + 3] = (value >> 24) & 0xff;
+          return offset + 4;
+        }
+
+        writeBigUInt64LE(value, offset) {
+          const bigValue = BigInt(value);
+          for (let i = 0; i < 8; i++) {
+            this[offset + i] = Number((bigValue >> BigInt(i * 8)) & BigInt(0xff));
+          }
+          return offset + 8;
+        }
+
+        readUInt32LE(offset) {
+          return (
+            this[offset] |
+            (this[offset + 1] << 8) |
+            (this[offset + 2] << 16) |
+            (this[offset + 3] << 24)
+          ) >>> 0;
+        }
+
+        readBigUInt64LE(offset) {
+          let value = BigInt(0);
+          for (let i = 0; i < 8; i++) {
+            value |= BigInt(this[offset + i]) << BigInt(i * 8);
+          }
+          return value;
+        }
+      }
+
+      window.Buffer = Buffer;
+    })();
+  </script>
+  <!-- Solana Web3.js for Phantom wallet integration -->
+  <script src="https://unpkg.com/@solana/web3.js@1.73.0/lib/index.iife.min.js"></script>
+  <!-- Note: @solana/spl-token doesn't have an IIFE bundle, we'll create token transfers manually -->
+  <!-- Chatbot Widget Script -->
+  <script>
+    // Configure chatbot API URL from mkdocs.yml config
+    // Supports environment-based configuration:
+    // - Development: http://localhost:3000 (or http://localhost:8000 for Deno)
+    // - Production: https://api.chatbot.openlibx402.com
+
+    // Detect if we're in production based on hostname
+    const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+
+    // Set API URL based on environment
+    window.CHATBOT_API_URL = isProduction
+      ? 'https://openlibx402-openlibx402.deno.dev'
+      : 'http://localhost:3000';
+
+    // Set Solana network based on environment
+    window.CHATBOT_SOLANA_NETWORK = isProduction
+      ? 'mainnet-beta'
+      : 'devnet';
+
+    // Set Solana RPC URL based on environment
+    window.CHATBOT_SOLANA_RPC = isProduction
+      ? 'https://api.mainnet-beta.solana.com'
+      : 'https://api.devnet.solana.com';
+
+    console.log('✅ Chatbot configured:', {
+      environment: isProduction ? 'production' : 'development',
+      apiUrl: window.CHATBOT_API_URL,
+      network: window.CHATBOT_SOLANA_NETWORK,
+      rpcUrl: window.CHATBOT_SOLANA_RPC
+    });
+
+    // Force cache bust
+    const chatbotScript = document.createElement('script');
+    chatbotScript.src = '../../../assets/javascripts/chatbot.js?t=' + Date.now();
+    document.head.appendChild(chatbotScript);
+  </script>
+
+  </body>
+</html>
