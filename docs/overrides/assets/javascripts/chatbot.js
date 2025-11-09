@@ -672,6 +672,42 @@
     console.log('✓ From token account:', fromTokenAccount.toBase58());
     console.log('✓ To token account:', toTokenAccount.toBase58());
 
+    // Check if recipient's token account exists
+    console.log('🔍 Checking if recipient token account exists...');
+    const toAccountInfo = await connection.getAccountInfo(toTokenAccount);
+
+    const transaction = new Transaction({
+      recentBlockhash: blockhash,
+      feePayer: fromPubkey,
+    });
+
+    // If recipient token account doesn't exist, create it first
+    if (!toAccountInfo) {
+      console.log('⚠️  Recipient token account does not exist, creating it...');
+      const ASSOCIATED_TOKEN_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
+      const SYSTEM_PROGRAM_ID = new PublicKey('11111111111111111111111111111111');
+      const SYSVAR_RENT_PUBKEY = new PublicKey('SysvarRent111111111111111111111111111111111');
+
+      // Create Associated Token Account instruction
+      const createAccountInstruction = new TransactionInstruction({
+        keys: [
+          { pubkey: fromPubkey, isSigner: true, isWritable: true },           // payer
+          { pubkey: toTokenAccount, isSigner: false, isWritable: true },      // associated token account
+          { pubkey: toPubkey, isSigner: false, isWritable: false },           // wallet address
+          { pubkey: mintPubkey, isSigner: false, isWritable: false },         // mint
+          { pubkey: SYSTEM_PROGRAM_ID, isSigner: false, isWritable: false },  // system program
+          { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },   // token program
+        ],
+        programId: ASSOCIATED_TOKEN_PROGRAM_ID,
+        data: Buffer.from([]), // No data needed for create instruction
+      });
+
+      transaction.add(createAccountInstruction);
+      console.log('✓ Added create token account instruction');
+    } else {
+      console.log('✓ Recipient token account already exists');
+    }
+
     // USDC has 6 decimals, so 0.01 USDC = 10,000 base units
     const tokenAmount = Math.floor(amount * 1_000_000);
     console.log('💵 Token amount:', tokenAmount, 'base units (', amount, 'USDC)');
@@ -702,10 +738,7 @@
     });
     console.log('✓ Transfer instruction created');
 
-    const transaction = new Transaction({
-      recentBlockhash: blockhash,
-      feePayer: fromPubkey,
-    }).add(transferInstruction);
+    transaction.add(transferInstruction);
     console.log('✓ Transaction created');
 
     console.log('📝 Requesting signature from Phantom...');
