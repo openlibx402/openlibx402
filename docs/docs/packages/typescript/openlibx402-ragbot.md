@@ -87,7 +87,7 @@ async function answerQuestion(query: string) {
 }
 
 // Usage
-const result = await answerQuestion('How do I use OpenLibx402 with FastAPI?');
+const result = await answerQuestion('How do I use OpenLibx402 with Express?');
 console.log(result.answer);
 console.log('Sources:', result.sources);
 ```
@@ -562,9 +562,13 @@ class RAGChatbot {
       const content = readFileSync(join(docsDir, file), 'utf-8');
       const chunks = chunker.chunk(content);
 
+      // Generate embeddings for each chunk
+      const chunkContents = chunks.map(chunk => chunk.content);
+      const embeddingsArr = await this.rag['embeddingsService'].generateBatchEmbeddings(chunkContents);
+
       const vectors = chunks.map((chunk, i) => ({
         id: `${file}-chunk-${i}`,
-        values: [], // Will be generated in RAG service
+        values: embeddingsArr[i],
         metadata: {
           text: chunk.content,
           source: file,
@@ -573,7 +577,7 @@ class RAGChatbot {
       }));
 
       // Upsert to vector database
-      await this.rag.indexDocuments(vectors);
+      await this.rag['vectorStoreService'].upsert(vectors);
     }
   }
 

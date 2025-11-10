@@ -185,7 +185,7 @@ PaymentExpiredError: Payment request expired at 2025-11-10T16:00:00Z
    # Try multiple endpoints
    RPC_ENDPOINTS = [
        "https://api.devnet.solana.com",
-       "https://api.devnet.solana.com",
+       "https://devnet.helius.xyz",
        "https://devnet.genesysgo.net",
    ]
 
