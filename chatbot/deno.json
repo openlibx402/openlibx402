@@ -20,5 +20,8 @@
       "deno.window",
       "deno.unstable"
     ]
+  },
+  "deploy": {
+    "app": "f373bcd6-8eae-41a6-b5ac-8d10e4cb1fd0"
   }
 }

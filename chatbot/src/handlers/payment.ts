@@ -232,6 +232,7 @@ export async function getPaymentInfo(c: Context) {
     amount: paymentAmount,
     token: 'USDC',
     recipient: recipientAddress,
+    usdcMint: usdcMint,
 
     // Instructions
     payment_methods: [

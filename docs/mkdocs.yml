@@ -120,8 +120,8 @@ theme:
     - content.action.edit
   palette:
     - scheme: default
-      primary: blue
-      accent: light blue
+      primary: deep purple
+      accent: cyan
 
 plugins:
   - search
@@ -163,8 +163,14 @@ extra:
   chatbot:
     enabled: true
     api_url: http://localhost:3000
-    api_url_production: https://api.chatbot.openlib.xyz
+    api_url_production: https://openlibx402-openlibx402.deno.dev
     free_queries_per_day: 3
     min_payment_usdc: 0.01
     max_payment_usdc: 1.0
     usdc_per_query: 0.001
+    # Solana Network Configuration
+    # Development uses devnet, production uses mainnet-beta
+    solana_network_dev: devnet
+    solana_network_prod: mainnet-beta
+    solana_rpc_dev: https://api.devnet.solana.com
+    solana_rpc_prod: https://api.mainnet-beta.solana.com

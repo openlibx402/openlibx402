@@ -8,8 +8,16 @@
 
   // Configuration
   const API_URL = window.CHATBOT_API_URL || 'http://localhost:3000';
+  const SOLANA_NETWORK = window.CHATBOT_SOLANA_NETWORK || 'devnet';
+  const SOLANA_RPC_URL = window.CHATBOT_SOLANA_RPC || 'https://api.devnet.solana.com';
   const STORAGE_KEY = 'openlibx402_chat_history';
   const MAX_HISTORY = 10;
+
+  // Network display names
+  const NETWORK_DISPLAY = {
+    'devnet': 'Solana Devnet',
+    'mainnet-beta': 'Solana Mainnet'
+  };
 
   // Get the base URL for documentation links
   const getDocsBaseUrl = () => {
@@ -510,13 +518,15 @@
 
       // Check if it's a wallet/token account issue
       if (error.message.includes('token account') || error.message.includes('insufficient funds')) {
-        errorMessage = `❌ ${error.message}<br><br>
-          <span style="font-size: 0.9em;">
-            💡 Need devnet USDC? Get free tokens from:<br>
-            <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">
-              spl-token-faucet.com
-            </a>
-          </span>`;
+        const faucetLink = SOLANA_NETWORK === 'devnet'
+          ? `<br><br><span style="font-size: 0.9em;">
+               💡 Need devnet USDC? Get free tokens from:<br>
+               <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">
+                 spl-token-faucet.com
+               </a>
+             </span>`
+          : '';
+        errorMessage = `❌ ${error.message}${faucetLink}`;
         statusEl.innerHTML = errorMessage;
       } else {
         statusEl.textContent = `❌ ${errorMessage}`;
@@ -527,6 +537,71 @@
       payBtn.disabled = false;
     }
   };
+
+  /**
+   * Open settings modal
+   */
+  window.openSettings = function() {
+    const modal = document.getElementById('chatbot-settings-modal');
+    const input = document.getElementById('custom-rpc-url');
+
+    // Load saved RPC URL
+    const savedRpcUrl = localStorage.getItem('chatbot_custom_rpc_url') || '';
+    input.value = savedRpcUrl;
+
+    // Clear any previous status
+    const statusEl = document.getElementById('settings-status');
+    statusEl.style.display = 'none';
+
+    modal.style.display = 'flex';
+  };
+
+  /**
+   * Save RPC settings to localStorage
+   */
+  window.saveRpcSettings = function() {
+    const input = document.getElementById('custom-rpc-url');
+    const statusEl = document.getElementById('settings-status');
+    const rpcUrl = input.value.trim();
+
+    // Validate URL if provided
+    if (rpcUrl) {
+      try {
+        new URL(rpcUrl);
+      } catch (error) {
+        statusEl.textContent = '❌ Invalid URL format';
+        statusEl.style.display = 'block';
+        statusEl.style.background = '#fee';
+        statusEl.style.color = '#c33';
+        return;
+      }
+    }
+
+    // Save to localStorage
+    if (rpcUrl) {
+      localStorage.setItem('chatbot_custom_rpc_url', rpcUrl);
+    } else {
+      localStorage.removeItem('chatbot_custom_rpc_url');
+    }
+
+    // Show success message
+    statusEl.textContent = '✅ Settings saved! Changes will take effect on the next payment.';
+    statusEl.style.display = 'block';
+    statusEl.style.background = '#efe';
+    statusEl.style.color = '#383';
+
+    // Close modal after 2 seconds
+    setTimeout(() => {
+      document.getElementById('chatbot-settings-modal').style.display = 'none';
+    }, 2000);
+  };
+
+  /**
+   * Get custom RPC URL from localStorage
+   */
+  function getCustomRpcUrl() {
+    return localStorage.getItem('chatbot_custom_rpc_url') || null;
+  }
 
   /**
    * Send USDC payment via Phantom wallet
@@ -570,9 +645,12 @@
 
     console.log('✅ Solana Web3 library loaded');
 
-    const rpcUrl = network === 'mainnet-beta'
+    // Use custom RPC URL from settings, then window config, then fallback to network-based selection
+    const customRpc = getCustomRpcUrl();
+    const rpcUrl = customRpc || SOLANA_RPC_URL || (network === 'mainnet-beta'
       ? 'https://api.mainnet-beta.solana.com'
-      : 'https://api.devnet.solana.com';
+      : 'https://api.devnet.solana.com');
+    console.log('🌐 Using RPC:', customRpc ? 'Custom RPC' : 'Default RPC');
     const connection = new Connection(rpcUrl, 'confirmed');
 
     const fromPubkey = new PublicKey(fromAddress);
@@ -593,6 +671,42 @@
 
     console.log('✓ From token account:', fromTokenAccount.toBase58());
     console.log('✓ To token account:', toTokenAccount.toBase58());
+
+    // Check if recipient's token account exists
+    console.log('🔍 Checking if recipient token account exists...');
+    const toAccountInfo = await connection.getAccountInfo(toTokenAccount);
+
+    const transaction = new Transaction({
+      recentBlockhash: blockhash,
+      feePayer: fromPubkey,
+    });
+
+    // If recipient token account doesn't exist, create it first
+    if (!toAccountInfo) {
+      console.log('⚠️  Recipient token account does not exist, creating it...');
+      const ASSOCIATED_TOKEN_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
+      const SYSTEM_PROGRAM_ID = new PublicKey('11111111111111111111111111111111');
+      const SYSVAR_RENT_PUBKEY = new PublicKey('SysvarRent111111111111111111111111111111111');
+
+      // Create Associated Token Account instruction
+      const createAccountInstruction = new TransactionInstruction({
+        keys: [
+          { pubkey: fromPubkey, isSigner: true, isWritable: true },           // payer
+          { pubkey: toTokenAccount, isSigner: false, isWritable: true },      // associated token account
+          { pubkey: toPubkey, isSigner: false, isWritable: false },           // wallet address
+          { pubkey: mintPubkey, isSigner: false, isWritable: false },         // mint
+          { pubkey: SYSTEM_PROGRAM_ID, isSigner: false, isWritable: false },  // system program
+          { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },   // token program
+        ],
+        programId: ASSOCIATED_TOKEN_PROGRAM_ID,
+        data: Buffer.from([]), // No data needed for create instruction
+      });
+
+      transaction.add(createAccountInstruction);
+      console.log('✓ Added create token account instruction');
+    } else {
+      console.log('✓ Recipient token account already exists');
+    }
 
     // USDC has 6 decimals, so 0.01 USDC = 10,000 base units
     const tokenAmount = Math.floor(amount * 1_000_000);
@@ -624,10 +738,7 @@
     });
     console.log('✓ Transfer instruction created');
 
-    const transaction = new Transaction({
-      recentBlockhash: blockhash,
-      feePayer: fromPubkey,
-    }).add(transferInstruction);
+    transaction.add(transferInstruction);
     console.log('✓ Transaction created');
 
     console.log('📝 Requesting signature from Phantom...');
@@ -665,6 +776,7 @@
       <div id="chatbot-widget" class="chatbot-widget">
         <div class="chatbot-header">
           <h3>OpenLibx402 Assistant</h3>
+          <button id="chatbot-settings" title="Settings">⚙️</button>
           <button id="chatbot-clear" title="Clear conversation">🗑️</button>
           <button id="chatbot-toggle" title="Close">✕</button>
         </div>
@@ -750,7 +862,7 @@
             <div class="payment-details">
               <div class="payment-detail-row">
                 <span>Network:</span>
-                <span>Solana Devnet</span>
+                <span id="payment-network-display">${NETWORK_DISPLAY[SOLANA_NETWORK] || 'Solana'}</span>
               </div>
             </div>
             <div class="payment-instructions" style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 0.85em;">
@@ -758,7 +870,7 @@
               <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
                 <li>You must send <strong>USDC tokens</strong> (not SOL)</li>
                 <li>Use the slider to select your desired amount</li>
-                <li>Need devnet USDC? Get free tokens at <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">spl-token-faucet.com</a></li>
+                ${SOLANA_NETWORK === 'devnet' ? '<li>Need devnet USDC? Get free tokens at <a href="https://spl-token-faucet.com/" target="_blank" style="color: #667eea;">spl-token-faucet.com</a></li>' : ''}
               </ul>
             </div>
             <div id="chatbot-payment-status" class="payment-status"></div>
@@ -768,6 +880,53 @@
             <p class="payment-note">
               <small>🔒 Secure payment via Phantom wallet</small>
             </p>
+          </div>
+        </div>
+      </div>
+      <div id="chatbot-settings-modal" class="payment-modal">
+        <div class="payment-modal-content">
+          <div class="payment-modal-header">
+            <h3>⚙️ Settings</h3>
+            <button class="payment-modal-close" onclick="document.getElementById('chatbot-settings-modal').style.display='none'">✕</button>
+          </div>
+          <div class="payment-modal-body">
+            <div class="settings-section">
+              <h4 style="margin-top: 0; margin-bottom: 12px; font-size: 1em; color: #333;">Solana RPC Endpoint</h4>
+              <p style="font-size: 0.85em; color: #666; margin-bottom: 12px;">
+                Configure a custom RPC endpoint for Solana transactions. The default public RPC may be rate-limited.
+              </p>
+              <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 6px; font-size: 0.9em; color: #555;">
+                  Custom RPC URL (optional):
+                </label>
+                <input
+                  type="text"
+                  id="custom-rpc-url"
+                  placeholder="https://mainnet.helius-rpc.com/?api-key=YOUR_KEY"
+                  style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9em; box-sizing: border-box;"
+                />
+                <small style="display: block; margin-top: 6px; color: #999; font-size: 0.8em;">
+                  Leave empty to use default public RPC
+                </small>
+              </div>
+              <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-size: 0.85em;">
+                <strong style="display: block; margin-bottom: 8px;">💡 Free RPC Providers:</strong>
+                <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+                  <li><a href="https://www.helius.dev/" target="_blank" style="color: #667eea;">Helius</a> - Free tier with 100k requests/day</li>
+                  <li><a href="https://www.alchemy.com/solana" target="_blank" style="color: #667eea;">Alchemy</a> - Free tier available</li>
+                  <li><a href="https://www.quicknode.com/" target="_blank" style="color: #667eea;">QuickNode</a> - Free trial available</li>
+                </ul>
+              </div>
+              <div style="margin-top: 16px;">
+                <button
+                  onclick="saveRpcSettings()"
+                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; font-size: 0.95em; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);"
+                >
+                  Save Settings
+                </button>
+              </div>
+              <div id="settings-status" style="margin-top: 12px; padding: 10px; border-radius: 6px; font-size: 0.85em; display: none;"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -796,6 +955,7 @@
     const input = document.getElementById('chatbot-input');
     const sendBtn = document.getElementById('chatbot-send');
     const clearBtn = document.getElementById('chatbot-clear');
+    const settingsBtn = document.getElementById('chatbot-settings');
 
     fab.addEventListener('click', () => {
       widget.classList.add('chatbot-widget-open');
@@ -812,6 +972,10 @@
       if (confirm('Clear conversation history?')) {
         clearConversation();
       }
+    });
+
+    settingsBtn.addEventListener('click', () => {
+      openSettings();
     });
 
     sendBtn.addEventListener('click', () => {

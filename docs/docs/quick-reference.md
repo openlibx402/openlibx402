@@ -8,7 +8,7 @@ pip install openlibx402-core openlibx402-fastapi openlibx402-client
 pip install openlibx402-langchain openlibx402-langgraph
 
 # TypeScript
-npm install @openlibx402/core @openlibx402/fastapi @openlibx402/client
+npm install @openlibx402/core @openlibx402/express @openlibx402/client
 npm install @openlibx402/langchain @openlibx402/langgraph
 ```
 
