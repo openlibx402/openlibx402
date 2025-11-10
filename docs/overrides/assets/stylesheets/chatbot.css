@@ -10,7 +10,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #7E3FF2 0%, #5C68E8 50%, #44E0D6 100%);
   color: white;
   border: none;
   font-size: 28px;
@@ -52,7 +52,7 @@
 
 /* Header */
 .chatbot-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #7E3FF2 0%, #5C68E8 50%, #44E0D6 100%);
   color: white;
   padding: 16px;
   display: flex;
@@ -194,7 +194,7 @@
 }
 
 .chatbot-message-content a {
-  color: #667eea;
+  color: #7E3FF2;
   text-decoration: underline;
 }
 
@@ -203,7 +203,7 @@
 }
 
 .chatbot-message-user .chatbot-message-content {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #7E3FF2 0%, #5C68E8 50%, #44E0D6 100%);
   color: white;
   border-bottom-right-radius: 4px;
 }
@@ -241,7 +241,7 @@
 }
 
 .chatbot-sources a {
-  color: #667eea;
+  color: #7E3FF2;
   text-decoration: none;
   font-weight: 500;
 }
@@ -298,12 +298,12 @@
 }
 
 .chatbot-input-container input:focus {
-  border-color: #667eea;
+  border-color: #7E3FF2;
 }
 
 .chatbot-input-container button {
   padding: 10px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #7E3FF2 0%, #5C68E8 50%, #44E0D6 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -315,7 +315,7 @@
 
 .chatbot-input-container button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 8px rgba(126, 63, 242, 0.3);
 }
 
 .chatbot-input-container button:active {
@@ -419,7 +419,7 @@
 }
 
 .payment-info strong {
-  color: #667eea;
+  color: #7E3FF2;
   font-size: 18px;
 }
 
@@ -470,14 +470,14 @@
 }
 
 .payment-status-success a {
-  color: #667eea;
+  color: #7E3FF2;
   text-decoration: underline;
   font-weight: 600;
   transition: color 0.2s;
 }
 
 .payment-status-success a:hover {
-  color: #5568d3;
+  color: #5C68E8;
 }
 
 .payment-status-error {
@@ -488,7 +488,7 @@
 .payment-button {
   width: 100%;
   padding: 14px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #7E3FF2 0%, #5C68E8 50%, #44E0D6 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -500,7 +500,7 @@
 
 .payment-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(126, 63, 242, 0.4);
 }
 
 .payment-button:active:not(:disabled) {
@@ -550,7 +550,7 @@
   }
 
   .chatbot-sources a {
-    color: #8a9bea;
+    color: #44E0D6;
   }
 
   .chatbot-message-content code {
@@ -562,7 +562,7 @@
   }
 
   .chatbot-message-content a {
-    color: #8a9bea;
+    color: #44E0D6;
   }
 
   .chatbot-loading {
@@ -628,11 +628,11 @@
   }
 
   .payment-status-success a {
-    color: #8a9bea;
+    color: #44E0D6;
   }
 
   .payment-status-success a:hover {
-    color: #9fb0f0;
+    color: #6BF1C0;
   }
 
   .payment-note {

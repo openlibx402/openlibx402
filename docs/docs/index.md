@@ -584,7 +584,7 @@ black packages/python/
 
 ## Roadmap
 
-### ✅ 2024 Q4 (Completed)
+### ✅ 2025 Q4 (Completed)
 
 - ✅ Technical specification
 - ✅ Core libraries (Python, TypeScript, Go, Rust, Java, Kotlin)
@@ -597,7 +597,7 @@ black packages/python/
 - ✅ Comprehensive documentation (75+ pages)
 - ✅ Testing guides and production deployment guides
 
-### 🔜 2025 Q1
+### 🔜 2025 Q4 - 2026 Q1 (pending)
 
 - 🔲 Flask middleware (Python)
 - 🔲 Django middleware (Python)
@@ -606,7 +606,7 @@ black packages/python/
 - 🔲 Additional AI agent frameworks
 - 🔲 Package publishing to npm/PyPI/crates.io
 
-### 🔮 2025 Q2+
+### 🔮 2026
 
 - 🔲 Multi-chain support (Ethereum, Base L2)
 - 🔲 Payment batching & subscriptions

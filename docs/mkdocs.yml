@@ -120,8 +120,8 @@ theme:
     - content.action.edit
   palette:
     - scheme: default
-      primary: blue
-      accent: light blue
+      primary: deep purple
+      accent: cyan
 
 plugins:
   - search
