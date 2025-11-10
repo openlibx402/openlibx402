@@ -28,6 +28,29 @@ initX402(config);
 const app = express();
 app.use(express.json());
 
+// Request logging middleware
+app.use((req: Request, res: Response, next) => {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${req.method} ${req.path}`);
+
+  // Log query parameters if present
+  if (Object.keys(req.query).length > 0) {
+    console.log(`  Query: ${JSON.stringify(req.query)}`);
+  }
+
+  // Log request body for POST/PUT/PATCH requests
+  if (req.body && Object.keys(req.body).length > 0) {
+    console.log(`  Body: ${JSON.stringify(req.body)}`);
+  }
+
+  // Log response status when request completes
+  res.on("finish", () => {
+    console.log(`  → ${res.statusCode} ${req.method} ${req.path}`);
+  });
+
+  next();
+});
+
 // Root endpoint - public (no payment required)
 app.get("/", (req: Request, res: Response) => {
   res.json({

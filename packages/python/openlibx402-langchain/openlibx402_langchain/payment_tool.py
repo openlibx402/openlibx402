@@ -3,12 +3,14 @@ X402 Payment Tool for LangChain
 
 Allows LangChain agents to make payments for API access.
 """
+
 from typing import Optional
 import asyncio
 
 try:
     from langchain.tools import BaseTool
     from pydantic import Field
+
     LANGCHAIN_AVAILABLE = True
 except ImportError:
     LANGCHAIN_AVAILABLE = False
@@ -17,6 +19,7 @@ except ImportError:
 
 try:
     from solders.keypair import Keypair
+
     SOLDERS_AVAILABLE = True
 except ImportError:
     SOLDERS_AVAILABLE = False
@@ -55,6 +58,7 @@ class X402PaymentTool(BaseTool):
     wallet_keypair: Keypair = Field(exclude=True)
     rpc_url: Optional[str] = Field(default=None, exclude=True)
     max_payment: Optional[str] = Field(default="1.0", exclude=True)
+    allow_local: bool = Field(default=False, exclude=True)
 
     def __init__(self, **data):
         if not LANGCHAIN_AVAILABLE:
@@ -67,21 +71,11 @@ class X402PaymentTool(BaseTool):
             )
         super().__init__(**data)
 
-    def _run(
-        self,
-        url: str,
-        method: str = "GET",
-        **kwargs
-    ) -> str:
+    def _run(self, url: str, method: str = "GET", **kwargs) -> str:
         """Synchronous run (calls async version)"""
         return asyncio.run(self._arun(url, method, **kwargs))
 
-    async def _arun(
-        self,
-        url: str,
-        method: str = "GET",
-        **kwargs
-    ) -> str:
+    async def _arun(self, url: str, method: str = "GET", **kwargs) -> str:
         """
         Make paid API request
 
@@ -97,6 +91,7 @@ class X402PaymentTool(BaseTool):
             wallet_keypair=self.wallet_keypair,
             rpc_url=self.rpc_url,
             max_payment_amount=self.max_payment,
+            allow_local=self.allow_local,
         )
 
         try:

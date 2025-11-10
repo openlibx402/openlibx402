@@ -3,11 +3,13 @@ Implicit X402 Client
 
 Automatic payment handling - client automatically pays when receiving 402 response.
 """
+
 from typing import Optional
 import httpx
 
 try:
     from solders.keypair import Keypair
+
     SOLDERS_AVAILABLE = True
 except ImportError:
     SOLDERS_AVAILABLE = False
@@ -40,14 +42,14 @@ class X402AutoClient:
         max_retries: int = 1,
         auto_retry: bool = True,
         max_payment_amount: Optional[str] = None,  # Safety limit
+        allow_local: bool = False,  # Allow localhost for development
     ):
         if not SOLDERS_AVAILABLE:
             raise ImportError(
-                "solders library not installed. "
-                "Install with: pip install solders"
+                "solders library not installed. Install with: pip install solders"
             )
 
-        self.client = X402Client(wallet_keypair, rpc_url)
+        self.client = X402Client(wallet_keypair, rpc_url, allow_local=allow_local)
         self.max_retries = max_retries
         self.auto_retry = auto_retry
         self.max_payment_amount = max_payment_amount
@@ -57,11 +59,7 @@ class X402AutoClient:
         await self.client.close()
 
     async def fetch(
-        self,
-        url: str,
-        method: str = "GET",
-        auto_retry: Optional[bool] = None,
-        **kwargs
+        self, url: str, method: str = "GET", auto_retry: Optional[bool] = None, **kwargs
     ) -> httpx.Response:
         """
         Make HTTP request with automatic payment handling
@@ -96,7 +94,9 @@ class X402AutoClient:
 
             # Safety check
             if self.max_payment_amount:
-                if float(payment_request.max_amount_required) > float(self.max_payment_amount):
+                if float(payment_request.max_amount_required) > float(
+                    self.max_payment_amount
+                ):
                     raise ValueError(
                         f"Payment amount {payment_request.max_amount_required} "
                         f"exceeds max allowed {self.max_payment_amount}"
@@ -117,23 +117,31 @@ class X402AutoClient:
         method: str,
         url: str,
         payment: Optional[PaymentAuthorization] = None,
-        **kwargs
+        **kwargs,
     ) -> httpx.Response:
         """Internal method to make HTTP request"""
         return await self.client.request(method, url, payment=payment, **kwargs)
 
-    async def get(self, url: str, auto_retry: Optional[bool] = None, **kwargs) -> httpx.Response:
+    async def get(
+        self, url: str, auto_retry: Optional[bool] = None, **kwargs
+    ) -> httpx.Response:
         """GET request with auto-payment"""
         return await self.fetch(url, method="GET", auto_retry=auto_retry, **kwargs)
 
-    async def post(self, url: str, auto_retry: Optional[bool] = None, **kwargs) -> httpx.Response:
+    async def post(
+        self, url: str, auto_retry: Optional[bool] = None, **kwargs
+    ) -> httpx.Response:
         """POST request with auto-payment"""
         return await self.fetch(url, method="POST", auto_retry=auto_retry, **kwargs)
 
-    async def put(self, url: str, auto_retry: Optional[bool] = None, **kwargs) -> httpx.Response:
+    async def put(
+        self, url: str, auto_retry: Optional[bool] = None, **kwargs
+    ) -> httpx.Response:
         """PUT request with auto-payment"""
         return await self.fetch(url, method="PUT", auto_retry=auto_retry, **kwargs)
 
-    async def delete(self, url: str, auto_retry: Optional[bool] = None, **kwargs) -> httpx.Response:
+    async def delete(
+        self, url: str, auto_retry: Optional[bool] = None, **kwargs
+    ) -> httpx.Response:
         """DELETE request with auto-payment"""
         return await self.fetch(url, method="DELETE", auto_retry=auto_retry, **kwargs)

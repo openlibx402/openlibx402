@@ -28,6 +28,7 @@ def create_x402_agent(
     tools: Optional[List[Any]] = None,
     rpc_url: Optional[str] = None,
     max_payment: str = "1.0",
+    allow_local: bool = False,
     system_prompt: Optional[str] = None,
     **agent_kwargs,
 ):
@@ -53,6 +54,7 @@ def create_x402_agent(
         tools: Additional tools to include
         rpc_url: Solana RPC URL
         max_payment: Maximum payment amount
+        allow_local: Allow localhost requests for development (default: False)
         system_prompt: Optional system prompt for the agent
         **agent_kwargs: Additional kwargs for create_agent (e.g., debug, checkpointer)
 
@@ -69,6 +71,7 @@ def create_x402_agent(
         wallet_keypair=wallet_keypair,
         rpc_url=rpc_url,
         max_payment=max_payment,
+        allow_local=allow_local,
     )
 
     # Build tool list
