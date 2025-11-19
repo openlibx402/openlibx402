@@ -1,0 +1,19 @@
+{
+  "name": "privy-agent-example",
+  "version": "1.0.0",
+  "description": "Example of using Privy with x402 for agentic payments",
+  "main": "dist/agent.js",
+  "scripts": {
+    "start": "ts-node src/agent.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@openlibx402/privy": "workspace:*",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2",
+    "@types/node": "^20.10.6"
+  }
+}

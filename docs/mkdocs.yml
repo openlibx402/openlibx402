@@ -34,6 +34,7 @@ nav:
           - Next.js Middleware: packages/typescript/openlibx402-nextjs.md
           - LangChain Integration: packages/typescript/openlibx402-langchain.md
           - LangGraph Integration: packages/typescript/openlibx402-langgraph.md
+          - Privy Integration: packages/typescript/openlibx402-privy.md
       - Go:
           - Overview: go/index.md
           - Core Library: go/libraries/core.md
@@ -68,6 +69,7 @@ nav:
           - Vue.js App: examples/typescript/vue-app.md
           - LangChain Agent: examples/typescript/langchain-agent.md
           - LangGraph Workflow: examples/typescript/langgraph-workflow.md
+          - Privy Agent: examples/typescript/privy-agent.md
       - Go:
           - net/http Server: go/examples/nethttp-server.md
           - Echo Server: go/examples/echo-server.md

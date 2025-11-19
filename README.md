@@ -102,6 +102,24 @@ const response = await client.get('https://api.example.com/premium-data');
 const data = response.data;
 ```
 
+### Client (TypeScript - Privy Server Wallet)
+
+```typescript
+import { PrivyX402Client, PrivyX402Config } from '@openlibx402/privy';
+
+const config = new PrivyX402Config({
+  appId: process.env.PRIVY_APP_ID,
+  appSecret: process.env.PRIVY_APP_SECRET,
+  walletId: process.env.PRIVY_WALLET_ID,
+});
+
+const client = new PrivyX402Client(config);
+await client.initialize();
+
+// Automatically handles 402 and pays using Privy server wallet
+const response = await client.get('https://api.example.com/premium-data');
+```
+
 ### LangChain Agent
 
 ```python
@@ -173,7 +191,8 @@ openlibx402/
 │   │   ├── openlibx402-express/       # Express.js middleware
 │   │   ├── openlibx402-client/        # HTTP client (TS)
 │   │   ├── openlibx402-langchain/     # LangChain.js integration
-│   │   └── openlibx402-langgraph/     # LangGraph.js integration
+│   │   ├── openlibx402-langgraph/     # LangGraph.js integration
+│   │   └── openlibx402-privy/         # Privy server wallet integration
 │   │
 │   ├── go/                         # Go packages
 │   │   ├── openlibx402-core/          # Core protocol (Go)
@@ -201,7 +220,8 @@ openlibx402/
 │   │   ├── langchain-agent/        # Python LangChain agent
 │   │   └── langgraph-workflow/     # Python LangGraph workflow
 │   ├── typescript/
-│   │   └── express-server/         # TypeScript Express.js demo
+│   │   ├── express-server/         # TypeScript Express.js demo
+│   │   └── privy-agent/            # Privy server wallet agent
 │   ├── go/
 │   │   ├── nethttp-server/         # Go net/http demo
 │   │   └── echo-server/            # Go Echo demo
