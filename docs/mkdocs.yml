@@ -64,6 +64,7 @@ nav:
       - TypeScript:
           - Express Server: examples/typescript/express-server.md
           - Next.js App: examples/typescript/nextjs-app.md
+          - Next.js + Privy App: examples/typescript/nextjs-privy-app.md
           - Nuxt.js App: examples/typescript/nuxtjs-app.md
           - Astro App: examples/typescript/astro-app.md
           - Vue.js App: examples/typescript/vue-app.md

@@ -13,6 +13,9 @@ examples/
 │
 └── typescript/                  # TypeScript examples
     ├── express-server/          # Express.js server with payment endpoints
+    ├── nextjs-app/              # Next.js app with browser wallet integration
+    ├── nextjs-privy-app/        # Next.js + Privy server wallet integration
+    ├── privy-agent/             # Standalone Privy agent
     ├── langchain-agent/         # LangChain.js agent with autonomous payments
     └── langgraph-workflow/      # LangGraph.js workflow with payment nodes
 ```
@@ -255,10 +258,18 @@ solana airdrop 1 <YOUR_ADDRESS> --url devnet
 
 Each example directory contains its own detailed README:
 
+### Python Examples
+
 - [FastAPI Server](python/fastapi-server.md)
 - [Python LangChain Agent](python/langchain-agent.md)
 - [Python LangGraph Workflow](python/langgraph-workflow.md)
+
+### TypeScript Examples
+
 - [Express.js Server](typescript/express-server.md)
+- [Next.js App](typescript/nextjs-app.md) - Browser wallet integration
+- [Next.js + Privy App](typescript/nextjs-privy-app.md) - Server wallet integration ⭐
+- [Privy Agent](typescript/privy-agent.md) - Standalone autonomous agent
 - [TypeScript LangChain Agent](typescript/langchain-agent.md)
 - [TypeScript LangGraph Workflow](typescript/langgraph-workflow.md)
 
