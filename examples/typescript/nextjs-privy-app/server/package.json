@@ -1,0 +1,24 @@
+{
+  "name": "nextjs-privy-app-server",
+  "version": "0.1.0",
+  "description": "Express server with Privy X402 integration for Next.js frontend",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "NODE_PATH=../node_modules ../node_modules/.bin/ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@openlibx402/privy": "workspace:*",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2"
+  }
+}
